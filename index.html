@@ -15,7 +15,7 @@
       --primary-light: #ecfdf5;
       --border: #e2e8f0;
       --danger: #ef4444;
-      --sidebar-width: 90px;
+      --exam-red: #dc2626;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -24,71 +24,256 @@
       background-color: var(--bg);
       color: var(--text);
       line-height: 1.5;
-      padding: 24px 16px 80px 16px;
+      padding: 16px 12px 60px 12px;
     }
 
-    /* Layout-Container mit Platz für den rechten Fortschrittsbalken */
-    .layout-wrapper {
-      max-width: 980px;
+    /* 3-SPALTIGES MITWANDERNDES LAYOUT */
+    .app-layout {
+      max-width: 1440px;
       margin: 0 auto;
       display: flex;
-      gap: 24px;
+      gap: 18px;
+      align-items: flex-start;
       position: relative;
     }
 
-    .main-content {
-      flex: 1;
-      min-width: 0;
-    }
-
-    /* RECHTS IM HOCHFORMAT MITWANDERNDER GESAMT-FORTSCHRITTSBALKEN */
-    .vertical-progress-sidebar {
-      width: var(--sidebar-width);
+    /* LINKE SPALTE: MITWANDERNDER KALENDER */
+    .calendar-sidebar {
+      width: 250px;
       position: sticky;
-      top: 24px;
-      height: calc(100vh - 48px);
-      max-height: 580px;
+      top: 16px;
+      height: calc(100vh - 32px);
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 16px 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      border-radius: 16px;
+      padding: 14px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      z-index: 40;
+    }
+    .calendar-header {
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 8px;
+    }
+    .calendar-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #0f172a;
+    }
+    .calendar-stats {
+      font-size: 0.78rem;
+      color: var(--primary);
+      font-weight: 700;
+      margin-top: 2px;
+    }
+    .calendar-legend {
+      display: flex;
+      gap: 6px;
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+      flex-wrap: wrap;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .legend-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+    .calendar-scrollable {
+      flex: 1;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+    .month-section {
+      margin-bottom: 14px;
+    }
+    .month-name {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+    .calendar-weekdays {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      text-align: center;
+      font-size: 0.62rem;
+      font-weight: 600;
+      color: #94a3b8;
+      margin-bottom: 2px;
+    }
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 2px;
+    }
+    .cal-day {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.68rem;
+      font-weight: 500;
+      border-radius: 4px;
+      cursor: pointer;
+      border: 1px solid transparent;
+      user-select: none;
+      transition: all 0.1s;
+    }
+    .cal-day:hover {
+      border-color: #cbd5e1;
+    }
+    .cal-empty {
+      visibility: hidden;
+    }
+    .cal-default {
+      background: #f8fafc;
+      color: #334155;
+    }
+    .cal-full {
+      background: #10b981;
+      color: #ffffff;
+      font-weight: 700;
+    }
+    .cal-half {
+      background: #f59e0b;
+      color: #ffffff;
+      font-weight: 700;
+    }
+    .cal-pause {
+      background: #e2e8f0;
+      color: #64748b;
+      text-decoration: line-through;
+    }
+    .cal-exam {
+      background: var(--exam-red) !important;
+      color: #ffffff !important;
+      font-weight: 800 !important;
+      animation: pulse 2s infinite;
+      box-shadow: 0 0 6px rgba(220, 38, 38, 0.4);
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.85; }
+    }
+
+    /* RECHTE SPALTE: LERNTIMER & GESAMT-FORTSCHRITT */
+    .right-sidebar {
+      width: 140px;
+      position: sticky;
+      top: 16px;
+      height: calc(100vh - 32px);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex-shrink: 0;
+      z-index: 40;
+    }
+
+    /* LERNTIMER */
+    .timer-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: space-between;
-      z-index: 50;
+      text-align: center;
     }
-    .sidebar-title {
-      font-size: 0.68rem;
+    .timer-title {
+      font-size: 0.7rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.05em;
       color: var(--text-muted);
-      text-align: center;
     }
-    .sidebar-percent {
+    .timer-display {
       font-size: 1.4rem;
       font-weight: 800;
-      color: var(--primary);
-      text-align: center;
+      color: #0f172a;
+      font-variant-numeric: tabular-nums;
       margin: 4px 0;
     }
-    .sidebar-days-text {
-      font-size: 0.72rem;
+    .timer-modes {
+      display: flex;
+      gap: 4px;
+      width: 100%;
+      margin-bottom: 6px;
+    }
+    .timer-mode-btn {
+      flex: 1;
+      font-size: 0.62rem;
+      padding: 3px 2px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      background: #f8fafc;
+      cursor: pointer;
+      font-weight: 600;
       color: var(--text-muted);
-      text-align: center;
-      line-height: 1.2;
+    }
+    .timer-mode-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+    .timer-actions {
+      display: flex;
+      gap: 4px;
+      width: 100%;
+    }
+    .btn-timer-ctrl {
+      flex: 1;
+      padding: 5px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: #f1f5f9;
+      cursor: pointer;
+    }
+    .btn-timer-ctrl.primary {
+      background: #0f172a;
+      color: #ffffff;
+      border-color: #0f172a;
     }
 
-    /* Der vertikale Thermometer-Balken */
+    /* GESAMT-FORTSCHRITT */
+    .progress-sidebar-card {
+      flex: 1;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 12px 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .sidebar-percent {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin: 2px 0;
+    }
     .vertical-meter-track {
       flex: 1;
       width: 14px;
       background: #e2e8f0;
       border-radius: 999px;
-      margin: 14px 0;
-      position: relative;
+      margin: 10px 0;
       overflow: hidden;
       display: flex;
       flex-direction: column;
@@ -99,20 +284,17 @@
       height: 0%;
       background: linear-gradient(to top, #10b981, #059669);
       border-radius: 999px;
-      transition: height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: height 0.3s ease;
     }
     .sidebar-next-btn {
       width: 100%;
       background: #f1f5f9;
       border: 1px solid var(--border);
-      color: var(--text);
       font-size: 0.68rem;
-      font-weight: 600;
-      padding: 8px 4px;
-      border-radius: 10px;
+      font-weight: 700;
+      padding: 6px 4px;
+      border-radius: 8px;
       cursor: pointer;
-      text-align: center;
-      transition: all 0.15s;
     }
     .sidebar-next-btn:hover {
       background: var(--primary-light);
@@ -120,316 +302,333 @@
       border-color: #a7f3d0;
     }
 
+    /* MITTLERER HAUPTBEREICH */
+    .main-content {
+      flex: 1;
+      min-width: 0;
+    }
+
     /* Header */
     header {
       background: var(--card-bg);
-      padding: 24px;
+      padding: 20px 24px;
       border-radius: 16px;
       border: 1px solid var(--border);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-      margin-bottom: 20px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      margin-bottom: 16px;
     }
     h1 {
-      font-size: 1.5rem;
+      font-size: 1.45rem;
       color: #0f172a;
     }
     p.subtitle {
       color: var(--text-muted);
-      font-size: 0.9rem;
-      margin-top: 4px;
+      font-size: 0.85rem;
+      margin-top: 3px;
     }
 
-    /* Externe Ressourcen */
-    .resources-title {
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--text-muted);
-      margin-top: 16px;
-      margin-bottom: 8px;
-    }
-    .resource-links {
+    /* SCHNELLZUGRIFF MIT EXAKT DEN 3 GEWÜNSCHTEN LINKS */
+    .quick-access-bar {
       display: flex;
+      gap: 10px;
+      margin-top: 14px;
       flex-wrap: wrap;
-      gap: 8px;
     }
-    .resource-btn {
+    .quick-link-btn {
       display: inline-flex;
       align-items: center;
+      gap: 6px;
       text-decoration: none;
       font-size: 0.82rem;
-      font-weight: 600;
-      color: #047857;
-      background: var(--primary-light);
-      border: 1px solid #a7f3d0;
-      padding: 6px 12px;
+      font-weight: 700;
+      padding: 8px 14px;
       border-radius: 8px;
-      transition: all 0.15s ease;
+      transition: all 0.15s;
     }
-    .resource-btn:hover {
-      background: #d1fae5;
+    .btn-amboss-plan {
+      background: #ecfdf5;
+      color: #047857;
+      border: 1px solid #a7f3d0;
+    }
+    .btn-amboss-ai {
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid #bfdbfe;
+    }
+    .btn-chatgpt {
+      background: #f5f3ff;
+      color: #6d28d9;
+      border: 1px solid #ddd6fe;
+    }
+    .quick-link-btn:hover {
+      filter: brightness(0.95);
+      transform: translateY(-1px);
     }
 
-    /* Filter & Steuerung */
+    /* Suche & Fächerleiste */
     .controls-bar {
       margin-bottom: 16px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
     }
-    .search-and-actions {
+    .search-row {
       display: flex;
       gap: 10px;
-      justify-content: space-between;
-      flex-wrap: wrap;
     }
     .search-input {
       flex: 1;
-      min-width: 200px;
       padding: 9px 14px;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       border: 1px solid var(--border);
       border-radius: 10px;
       outline: none;
       background: #ffffff;
     }
-    .search-input:focus {
-      border-color: var(--primary);
-    }
     .toggle-all-btn {
       background: #ffffff;
       border: 1px solid var(--border);
-      padding: 9px 14px;
+      padding: 8px 12px;
       border-radius: 10px;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 600;
       cursor: pointer;
       color: var(--text-muted);
     }
-    .toggle-all-btn:hover {
-      background: #f1f5f9;
-      color: var(--text);
-    }
 
+    /* FÄCHER-FILTER MIT JEWEILS EIGENER FARBE */
     .filter-pills {
       display: flex;
-      gap: 6px;
+      gap: 5px;
       flex-wrap: wrap;
     }
     .filter-pill {
       background: #ffffff;
       border: 1px solid var(--border);
-      padding: 5px 12px;
+      padding: 4px 10px;
       border-radius: 999px;
-      font-size: 0.78rem;
-      font-weight: 500;
+      font-size: 0.74rem;
+      font-weight: 600;
       cursor: pointer;
       color: var(--text-muted);
-      transition: all 0.15s;
+      transition: all 0.12s;
     }
     .filter-pill.active {
-      background: var(--text);
-      color: #ffffff;
-      border-color: var(--text);
+      color: #ffffff !important;
+      background: #0f172a !important;
+      border-color: #0f172a !important;
     }
 
-    /* DIE TAGES-BLÖCKE */
+    /* TAGES-KARTEN */
     .days-container {
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 12px;
     }
     .day-card {
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 14px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      border-radius: 12px;
       overflow: hidden;
-      transition: border-color 0.15s;
+      border-left: 5px solid #94a3b8; /* Standard-Rand */
+      transition: all 0.15s;
     }
     .day-card.completed {
-      background: #fafcfb;
       border-color: #a7f3d0;
+      background: #fafcfb;
     }
 
-    /* Header des Tages-Blocks */
+    /* EIGENE FARBE FÜR JEDES FACH */
+    .color-innere { border-left-color: #dc2626 !important; }
+    .color-paediatrie { border-left-color: #d97706 !important; }
+    .color-chirurgie { border-left-color: #ea580c !important; }
+    .color-orthopaedie { border-left-color: #65a30d !important; }
+    .color-gynaekologie { border-left-color: #db2777 !important; }
+    .color-neurologie { border-left-color: #4f46e5 !important; }
+    .color-psychiatrie { border-left-color: #7c3aed !important; }
+    .color-dermatologie { border-left-color: #c026d3 !important; }
+    .color-anaesthesie { border-left-color: #0284c7 !important; }
+    .color-urologie { border-left-color: #0d9488 !important; }
+    .color-hno { border-left-color: #ca8a04 !important; }
+    .color-auge { border-left-color: #2563eb !important; }
+    .color-querschnitt { border-left-color: #475569 !important; }
+    .color-generalprobe { border-left-color: #059669 !important; }
+
+    /* BADGES MIT EIGENER FARBE */
+    .badge-innere { background: #fee2e2; color: #991b1b; }
+    .badge-paediatrie { background: #fef3c7; color: #92400e; }
+    .badge-chirurgie { background: #ffedd5; color: #9a3412; }
+    .badge-orthopaedie { background: #ecfccb; color: #3f6212; }
+    .badge-gynaekologie { background: #fce7f3; color: #9d174d; }
+    .badge-neurologie { background: #e0e7ff; color: #3730a3; }
+    .badge-psychiatrie { background: #ede9fe; color: #5b21b6; }
+    .badge-dermatologie { background: #fae8ff; color: #86198f; }
+    .badge-anaesthesie { background: #e0f2fe; color: #075985; }
+    .badge-urologie { background: #ccfbf1; color: #115e59; }
+    .badge-hno { background: #fef9c3; color: #854d0e; }
+    .badge-auge { background: #dbeafe; color: #1e40af; }
+    .badge-querschnitt { background: #f1f5f9; color: #334155; }
+    .badge-generalprobe { background: #d1fae5; color: #065f46; }
+
     .day-header {
-      padding: 16px;
+      padding: 12px 16px;
       cursor: pointer;
       user-select: none;
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      border-bottom: 1px solid transparent;
-      background: #ffffff;
+      gap: 8px;
     }
     .day-card.open .day-header {
-      border-bottom-color: var(--border);
-      background: #fcfdfe;
+      border-bottom: 1px solid var(--border);
+      background: #fbfcfe;
     }
     .day-header-top {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
     .day-checkbox {
-      width: 20px;
-      height: 20px;
+      width: 18px;
+      height: 18px;
       cursor: pointer;
       accent-color: var(--primary);
     }
     .day-title-wrap {
       flex: 1;
-      min-width: 0;
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      flex-wrap: wrap;
     }
     .day-number-badge {
-      display: inline-block;
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: var(--primary);
-      margin-right: 6px;
+      font-size: 0.76rem;
+      font-weight: 800;
+      color: #0f172a;
     }
     .day-title {
-      font-size: 1.05rem;
+      font-size: 0.95rem;
       font-weight: 700;
       color: #0f172a;
     }
     .day-chevron {
-      font-size: 0.9rem;
+      font-size: 0.8rem;
       color: var(--text-muted);
-      transition: transform 0.2s ease;
+      transition: transform 0.2s;
     }
     .day-card.open .day-chevron {
       transform: rotate(180deg);
     }
 
-    /* Zeile mit Fach, Lernaufwand und Fortschritt des Tages */
     .day-meta-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
-      gap: 12px;
-      font-size: 0.8rem;
+      gap: 10px;
     }
     .meta-left {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       flex-wrap: wrap;
     }
     .subject-badge {
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       font-weight: 700;
-      padding: 3px 8px;
-      border-radius: 6px;
+      padding: 2px 7px;
+      border-radius: 5px;
     }
-    /* ECHTE M2 FÄCHER-FARBEN */
-    .sub-innere { background: #fee2e2; color: #991b1b; }
-    .sub-chirurgie { background: #ffedd5; color: #9a3412; }
-    .sub-paediatrie { background: #fef3c7; color: #92400e; }
-    .sub-gynaekologie { background: #fce7f3; color: #9d174d; }
-    .sub-neurologie { background: #e0e7ff; color: #3730a3; }
-    .sub-psychiatrie { background: #ede9fe; color: #5b21b6; }
-    .sub-dermatologie { background: #fae8ff; color: #86198f; }
-    .sub-anaesthesie { background: #e0f2fe; color: #075985; }
-    .sub-orthopaedie { background: #ecfccb; color: #3f6212; }
-    .sub-urologie { background: #ccfbf1; color: #115e59; }
-    .sub-hno_auge { background: #fef08a; color: #854d0e; }
-    .sub-querschnitt { background: #f1f5f9; color: #334155; }
-    .sub-generalprobe { background: #dcfce7; color: #166534; }
 
-    /* VISUELLER HORIZONTALER LERNAUFWAND-BALKEN */
-    .effort-container {
+    /* LERNAUFWAND-BALKEN IM LERNPLAN.NET STIL */
+    .effort-net-box {
       display: flex;
       align-items: center;
       gap: 6px;
+      font-size: 0.73rem;
       color: var(--text-muted);
-      font-size: 0.75rem;
     }
-    .effort-bar-track {
-      width: 60px;
+    .effort-net-track {
+      width: 75px;
+      height: 6px;
+      background: #e2e8f0;
+      border-radius: 4px;
+      overflow: hidden;
+      display: flex;
+    }
+    .effort-net-bar {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.2s;
+    }
+    .effort-low { background: #10b981; }      /* < 90% */
+    .effort-normal { background: #0284c7; }   /* 90-110% */
+    .effort-high { background: #f59e0b; }     /* 111-139% */
+    .effort-extreme { background: #dc2626; }  /* >= 140% */
+
+    /* Tages-Fortschritt */
+    .day-prog-box {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      min-width: 120px;
+    }
+    .day-prog-track {
+      flex: 1;
       height: 6px;
       background: #e2e8f0;
       border-radius: 999px;
       overflow: hidden;
-      display: flex;
     }
-    .effort-bar-fill {
-      height: 100%;
-      border-radius: 999px;
-    }
-    .effort-leicht { width: 33%; background: #10b981; }
-    .effort-mittel { width: 66%; background: #f59e0b; }
-    .effort-hoch { width: 100%; background: #ef4444; }
-
-    /* TAGES-FORTSCHRITTSBALKEN */
-    .day-progress-container {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      min-width: 140px;
-    }
-    .day-progress-track {
-      flex: 1;
-      height: 7px;
-      background: #e2e8f0;
-      border-radius: 999px;
-      overflow: hidden;
-    }
-    .day-progress-fill {
+    .day-prog-fill {
       height: 100%;
       background: var(--primary);
       width: 0%;
-      transition: width 0.25s ease;
+      transition: width 0.2s;
     }
-    .day-progress-text {
-      font-size: 0.76rem;
+    .day-prog-text {
+      font-size: 0.72rem;
       font-weight: 600;
       color: var(--text-muted);
-      white-space: nowrap;
     }
 
-    /* INHALT DES TAGES (UNTERTHEMEN) */
+    /* UNTERTHEMEN */
     .day-body {
       display: none;
-      padding: 16px;
+      padding: 12px 16px;
       background: #ffffff;
     }
     .day-card.open .day-body {
       display: block;
     }
-
     .subtopics-list {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 8px;
     }
     .subtopic-item {
       border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 12px;
+      border-radius: 8px;
+      padding: 8px 12px;
       background: #fbfcfd;
     }
     .subtopic-item.completed {
       background: #f8fafc;
-      opacity: 0.8;
+      opacity: 0.78;
     }
-    .subtopic-header {
+    .subtopic-top {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
     .subtopic-checkbox {
-      width: 17px;
-      height: 17px;
+      width: 16px;
+      height: 16px;
       cursor: pointer;
       accent-color: var(--primary);
     }
     .subtopic-title {
       flex: 1;
-      font-size: 0.92rem;
+      font-size: 0.86rem;
       font-weight: 600;
       color: #1e293b;
     }
@@ -437,444 +636,953 @@
       text-decoration: line-through;
       color: var(--text-muted);
     }
-    .amboss-link-btn {
-      font-size: 0.75rem;
-      font-weight: 600;
+    .amboss-btn {
+      font-size: 0.72rem;
+      font-weight: 700;
       color: #047857;
-      background: var(--primary-light);
+      background: #ecfdf5;
       border: 1px solid #a7f3d0;
-      padding: 4px 8px;
-      border-radius: 6px;
+      padding: 3px 7px;
+      border-radius: 5px;
       text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
       white-space: nowrap;
     }
-    .amboss-link-btn:hover {
+    .amboss-btn:hover {
       background: #d1fae5;
-    }
-
-    /* Notizen für das Unterthema */
-    .subtopic-notes {
-      margin-top: 8px;
-      padding-top: 8px;
-      border-top: 1px dashed #e2e8f0;
     }
     .subtopic-textarea {
       width: 100%;
-      min-height: 44px;
-      padding: 6px 10px;
-      font-size: 0.8rem;
+      min-height: 38px;
+      margin-top: 6px;
+      padding: 4px 8px;
+      font-size: 0.78rem;
       border: 1px solid var(--border);
       border-radius: 6px;
       background: #ffffff;
       font-family: inherit;
       resize: vertical;
     }
-    .subtopic-textarea:focus {
-      border-color: var(--primary);
-      outline: none;
-    }
 
-    @media (max-width: 768px) {
-      .vertical-progress-sidebar {
-        display: none;
-      }
-      .layout-wrapper {
-        display: block;
-      }
+    @media (max-width: 1080px) {
+      .calendar-sidebar { display: none; }
+      .right-sidebar { display: none; }
     }
   </style>
 </head>
 <body>
 
-  <div class="layout-wrapper">
-    <!-- HAUPTBEREICH -->
+  <div class="app-layout">
+    <!-- 1. LINKS: MITWANDERNDER KALENDER (NOV 2026 - APR 2027) -->
+    <aside class="calendar-sidebar">
+      <div class="calendar-header">
+        <div class="calendar-title">📅 Examens-Kalender</div>
+        <div id="calendarStudyDaysCount" class="calendar-stats">Geplant: 0 Tage / 100 Tage</div>
+        <div class="calendar-legend">
+          <div class="legend-item"><span class="legend-dot" style="background:#10b981;"></span> Ganztags</div>
+          <div class="legend-item"><span class="legend-dot" style="background:#f59e0b;"></span> Halbtags</div>
+          <div class="legend-item"><span class="legend-dot" style="background:#dc2626;"></span> Prüfung</div>
+        </div>
+      </div>
+      <div class="calendar-scrollable" id="calendarMonthsContainer"></div>
+    </aside>
+
+    <!-- 2. MITTE: HAUPTBEREICH -->
     <main class="main-content">
       <header>
         <h1>🩺 M2 100-Tage-Lernplan</h1>
-        <p class="subtitle">Zweites medizinisches Staatsexamen – Strukturierte Tages- & Themenübersicht</p>
+        <p class="subtitle">Zweites Staatsexamen Medizin – Frühjahr 2027 / Herbst 2026</p>
         
-        <div class="resources-title">Schnellzugriff auf Lernplattformen</div>
-        <div class="resource-links">
-          <a class="resource-btn" href="https://next.amboss.com/de/courses/AQ0RAf" target="_blank" rel="noopener">AMBOSS 100-Tage-Kurs ↗</a>
-          <a class="resource-btn" href="https://viamedici.thieme.de" target="_blank" rel="noopener">Via medici ↗</a>
-          <a class="resource-btn" href="https://www.doccheck.com" target="_blank" rel="noopener">DocCheck ↗</a>
-          <a class="resource-btn" href="https://www.awmf.org/leitlinien" target="_blank" rel="noopener">AWMF Leitlinien ↗</a>
+        <!-- EXAKT DIE DREI GEWÜNSCHTEN LINKS -->
+        <div class="quick-access-bar">
+          <a class="quick-link-btn btn-amboss-plan" href="https://next.amboss.com/de/courses/AQ0RAf" target="_blank" rel="noopener">
+            📋 100-Tage Lernplan ↗
+          </a>
+          <a class="quick-link-btn btn-amboss-ai" href="https://next.amboss.com/de/ai" target="_blank" rel="noopener">
+            🧠 AMBOSS-KI ↗
+          </a>
+          <a class="quick-link-btn btn-chatgpt" href="https://chatgpt.com" target="_blank" rel="noopener">
+            💬 ChatGPT ↗
+          </a>
         </div>
       </header>
 
       <!-- Steuerung & Filter -->
       <div class="controls-bar">
-        <div class="search-and-actions">
+        <div class="search-row">
           <input 
             type="text" 
             id="searchInput" 
             class="search-input" 
-            placeholder="🔍 Tage, Krankheiten oder Notizen durchsuchen..." 
+            placeholder="🔍 Tage, Diagnosen oder eigene Notizen durchsuchen..." 
             oninput="renderDays()" 
           />
-          <button class="toggle-all-btn" onclick="toggleAllDays()">Alle auf- / zuklappen</button>
+          <button class="toggle-all-btn" onclick="toggleAllDays()">Alle auf/zu</button>
         </div>
 
-        <!-- ECHTE M2 FÄCHERFILTER -->
+        <!-- FÄCHERFILTER (ALLE MIT INDIVIDUELLER FARBE) -->
         <div class="filter-pills">
-          <button class="filter-pill active" onclick="setSubjectFilter('alle')">Alle Fächer</button>
-          <button class="filter-pill" onclick="setSubjectFilter('innere')">Innere Medizin</button>
-          <button class="filter-pill" onclick="setSubjectFilter('paediatrie')">Pädiatrie</button>
-          <button class="filter-pill" onclick="setSubjectFilter('chirurgie')">Chirurgie</button>
-          <button class="filter-pill" onclick="setSubjectFilter('orthopaedie')">Orthopädie</button>
-          <button class="filter-pill" onclick="setSubjectFilter('gynaekologie')">Gynäkologie</button>
-          <button class="filter-pill" onclick="setSubjectFilter('neurologie')">Neurologie</button>
-          <button class="filter-pill" onclick="setSubjectFilter('psychiatrie')">Psychiatrie</button>
-          <button class="filter-pill" onclick="setSubjectFilter('dermatologie')">Dermatologie</button>
-          <button class="filter-pill" onclick="setSubjectFilter('anaesthesie')">Anästhesie & Notfall</button>
-          <button class="filter-pill" onclick="setSubjectFilter('urologie')">Urologie</button>
-          <button class="filter-pill" onclick="setSubjectFilter('hno_auge')">HNO & Auge</button>
-          <button class="filter-pill" onclick="setSubjectFilter('querschnitt')">Querschnittsfächer</button>
-          <button class="filter-pill" onclick="setSubjectFilter('generalprobe')">Generalproben</button>
+          <button class="filter-pill active" onclick="setFilter('alle')">Alle (100 Tage)</button>
+          <button class="filter-pill badge-innere" onclick="setFilter('innere')">Innere Medizin (T. 1–32)</button>
+          <button class="filter-pill badge-paediatrie" onclick="setFilter('paediatrie')">Pädiatrie (T. 33–39)</button>
+          <button class="filter-pill badge-dermatologie" onclick="setFilter('dermatologie')">Dermatologie (T. 40–44)</button>
+          <button class="filter-pill badge-anaesthesie" onclick="setFilter('anaesthesie')">Anästhesie & Notfall (T. 45–49)</button>
+          <button class="filter-pill badge-chirurgie" onclick="setFilter('chirurgie')">Chirurgie (T. 50–56)</button>
+          <button class="filter-pill badge-orthopaedie" onclick="setFilter('orthopaedie')">Orthopädie & Unfall (T. 57–63)</button>
+          <button class="filter-pill badge-gynaekologie" onclick="setFilter('gynaekologie')">Gynäkologie (T. 64–70)</button>
+          <button class="filter-pill badge-urologie" onclick="setFilter('urologie')">Urologie (T. 71–73)</button>
+          <button class="filter-pill badge-neurologie" onclick="setFilter('neurologie')">Neurologie (T. 74–80)</button>
+          <button class="filter-pill badge-psychiatrie" onclick="setFilter('psychiatrie')">Psychiatrie (T. 81–85)</button>
+          <button class="filter-pill badge-auge" onclick="setFilter('auge')">Auge (T. 86–88)</button>
+          <button class="filter-pill badge-hno" onclick="setFilter('hno')">HNO (T. 89–91)</button>
+          <button class="filter-pill badge-querschnitt" onclick="setFilter('querschnitt')">Querschnitt & Pharma (T. 92–95)</button>
+          <button class="filter-pill badge-generalprobe" onclick="setFilter('generalprobe')">Generalproben (T. 96–100)</button>
         </div>
       </div>
 
-      <!-- Container für alle Lerntage -->
       <div id="daysContainer" class="days-container"></div>
     </main>
 
-    <!-- RECHTER HOCHFORMAT-BALKEN (WANDERT BEIM SCROLLEN MIT) -->
-    <aside class="vertical-progress-sidebar">
-      <div>
-        <div class="sidebar-title">M2 Gesamt</div>
-        <div id="sidebarPercent" class="sidebar-percent">0%</div>
-        <div id="sidebarDaysText" class="sidebar-days-text">0 / 0 Tage</div>
+    <!-- 3. RECHTS: MITWANDERNDER TIMER & FORTSCHRITT -->
+    <aside class="right-sidebar">
+      <!-- LERNTIMER (45 min Lernen / 15 min Pause) -->
+      <div class="timer-card">
+        <div class="timer-title" id="timerLabel">Fokus (45m)</div>
+        <div class="timer-display" id="timerDisplay">45:00</div>
+        <div class="timer-modes">
+          <button class="timer-mode-btn active" id="btnModeLearn" onclick="setTimerMode(45, 'Fokus (45m)')">45m</button>
+          <button class="timer-mode-btn" id="btnModeBreak" onclick="setTimerMode(15, 'Pause (15m)')">15m</button>
+        </div>
+        <div class="timer-actions">
+          <button class="btn-timer-ctrl primary" id="btnTimerStart" onclick="toggleTimer()">Start</button>
+          <button class="btn-timer-ctrl" onclick="resetTimer()">Reset</button>
+        </div>
       </div>
 
-      <!-- Vertikales Thermometer -->
-      <div class="vertical-meter-track" title="Gesamter M2-Fortschritt">
-        <div id="sidebarMeterFill" class="vertical-meter-fill"></div>
-      </div>
+      <!-- GESAMT-FORTSCHRITT IM HOCHFORMAT -->
+      <div class="progress-sidebar-card">
+        <div style="text-align:center;">
+          <div style="font-size:0.65rem; font-weight:700; text-transform:uppercase; color:var(--text-muted);">M2 Gesamt</div>
+          <div id="sidebarPercent" class="sidebar-percent">0%</div>
+          <div id="sidebarDaysText" style="font-size:0.68rem; color:var(--text-muted); line-height:1.2;">0/100 Tage</div>
+        </div>
 
-      <button class="sidebar-next-btn" onclick="scrollToNextOpenDay()" title="Springe zum ersten noch nicht erledigten Tag">
-        ⏭ Nächster Tag
-      </button>
+        <div class="vertical-meter-track" title="Gesamtfortschritt M2">
+          <div id="sidebarMeterFill" class="vertical-meter-fill"></div>
+        </div>
+
+        <button class="sidebar-next-btn" onclick="scrollToNextOpenDay()">⏭ Nächster Tag</button>
+      </div>
     </aside>
   </div>
 
   <script>
-    // DIE ECHTEN M2-FÄCHER DES AMBOSS-LERNPLANS
+    // 1. FACH-KONFIGURATION MIT EIGENER FARBE
     const SUBJECT_CONFIG = {
-      innere: { name: "Innere Medizin", class: "sub-innere" },
-      paediatrie: { name: "Pädiatrie", class: "sub-paediatrie" },
-      chirurgie: { name: "Chirurgie", class: "sub-chirurgie" },
-      orthopaedie: { name: "Orthopädie & Unfallch.", class: "sub-orthopaedie" },
-      gynaekologie: { name: "Gynäkologie & Geburtshilfe", class: "sub-gynaekologie" },
-      neurologie: { name: "Neurologie", class: "sub-neurologie" },
-      psychiatrie: { name: "Psychiatrie & Psychosomatik", class: "sub-psychiatrie" },
-      dermatologie: { name: "Dermatologie", class: "sub-dermatologie" },
-      anaesthesie: { name: "Anästhesie & Intensiv", class: "sub-anaesthesie" },
-      urologie: { name: "Urologie", class: "sub-urologie" },
-      hno_auge: { name: "HNO & Augenheilkunde", class: "sub-hno_auge" },
-      querschnitt: { name: "Querschnitt & Pharma", class: "sub-querschnitt" },
-      generalprobe: { name: "Examenssimulation", class: "sub-generalprobe" }
+      innere: { name: "Innere Medizin", badge: "badge-innere", colorClass: "color-innere" },
+      paediatrie: { name: "Pädiatrie", badge: "badge-paediatrie", colorClass: "color-paediatrie" },
+      dermatologie: { name: "Dermatologie", badge: "badge-dermatologie", colorClass: "color-dermatologie" },
+      anaesthesie: { name: "Anästhesie & Notfall", badge: "badge-anaesthesie", colorClass: "color-anaesthesie" },
+      chirurgie: { name: "Chirurgie", badge: "badge-chirurgie", colorClass: "color-chirurgie" },
+      orthopaedie: { name: "Orthopädie & Unfall", badge: "badge-orthopaedie", colorClass: "color-orthopaedie" },
+      gynaekologie: { name: "Gynäkologie", badge: "badge-gynaekologie", colorClass: "color-gynaekologie" },
+      urologie: { name: "Urologie", badge: "badge-urologie", colorClass: "color-urologie" },
+      neurologie: { name: "Neurologie", badge: "badge-neurologie", colorClass: "color-neurologie" },
+      psychiatrie: { name: "Psychiatrie", badge: "badge-psychiatrie", colorClass: "color-psychiatrie" },
+      auge: { name: "Augenheilkunde", badge: "badge-auge", colorClass: "color-auge" },
+      hno: { name: "HNO", badge: "badge-hno", colorClass: "color-hno" },
+      querschnitt: { name: "Querschnitt & Pharma", badge: "badge-querschnitt", colorClass: "color-querschnitt" },
+      generalprobe: { name: "Generalprobe", badge: "badge-generalprobe", colorClass: "color-generalprobe" }
     };
 
-    // VORBELEGTE TAGE DES AMBOSS M2-LERNPLANS
-    const INITIAL_DAYS = [
-      {
-        dayNumber: 1,
-        title: "Kardiologie & Angiologie I: Diagnostik & Rhythmusstörungen",
-        subject: "innere",
-        effort: "hoch", // leicht, mittel, hoch
-        effortLabel: "Hoch (5 Kapitel)",
-        isOpen: true,
-        subtopics: [
-          { id: "1-1", title: "EKG-Grundlagen, Hypertrophiezeichen & Schenkelblöcke", completed: false, notes: "" },
-          { id: "1-2", title: "Supraventrikuläre Rhythmusstörungen (Vorhofflimmern / Vorhofflattern)", completed: false, notes: "" },
-          { id: "1-3", title: "Bradykarde Rhythmusstörungen (Sick-Sinus-Syndrom, AV-Blöcke)", completed: false, notes: "" },
-          { id: "1-4", title: "Ventrikuläre Extrasystolen & Kammertachykardie / Kammerflimmern", completed: false, notes: "" },
-          { id: "1-5", title: "Synkope & Herzschrittmacher-Therapie", completed: false, notes: "" }
-        ]
-      },
-      {
-        dayNumber: 2,
-        title: "Kardiologie II: KHK, Akutes Koronarsyndrom & Myokardinfarkt",
-        subject: "innere",
-        effort: "hoch",
-        effortLabel: "Hoch (4 Kapitel)",
-        isOpen: false,
-        subtopics: [
-          { id: "2-1", title: "Atherosklerose & Fettstoffwechselstörungen (Dyslipidämien)", completed: false, notes: "" },
-          { id: "2-2", title: "Stabile Koronare Herzkrankheit (KHK)", completed: false, notes: "" },
-          { id: "2-3", title: "Akutes Koronarsyndrom (NSTEMI / STEMI / Instabile AP)", completed: false, notes: "" },
-          { id: "2-4", title: "Kardiale Notfallmedikation & Herzkatheter-Intervention (PCI)", completed: false, notes: "" }
-        ]
-      },
-      {
-        dayNumber: 3,
-        title: "Kardiologie III: Herzinsuffizienz, Kardiomyopathien & Myokarditis",
-        subject: "innere",
-        effort: "mittel",
-        effortLabel: "Mittel (3 Kapitel)",
-        isOpen: false,
-        subtopics: [
-          { id: "3-1", title: "Chronische Herzinsuffizienz (4 Säulen der HFrEF, NYHA)", completed: false, notes: "" },
-          { id: "3-2", title: "Akute Herzinsuffizienz & Lungenödem", completed: false, notes: "" },
-          { id: "3-3", title: "Kardiomyopathien (DCM, HCM, Takotsubo) & Myokarditis", completed: false, notes: "" }
-        ]
-      },
-      {
-        dayNumber: 4,
-        title: "Kardiologie IV: Klappenvitien & Endokarditis",
-        subject: "innere",
-        effort: "mittel",
-        effortLabel: "Mittel (4 Kapitel)",
-        isOpen: false,
-        subtopics: [
-          { id: "4-1", title: "Aortenklappenstenose & Aortenklappeninsuffizienz", completed: false, notes: "" },
-          { id: "4-2", title: "Mitralklappeninsuffizienz & Mitralklappenstenose", completed: false, notes: "" },
-          { id: "4-3", title: "Infektiöse Endokarditis (Duke-Kriterien, Erreger & Prophylaxe)", completed: false, notes: "" },
-          { id: "4-4", title: "Perikarditis & Perikarderguss / Herzbeuteltamponade", completed: false, notes: "" }
-        ]
-      },
-      {
-        dayNumber: 5,
-        title: "Angiologie & Hypertonie: Gefäßerkrankungen & Aortendissektion",
-        subject: "innere",
-        effort: "mittel",
-        effortLabel: "Mittel (4 Kapitel)",
-        isOpen: false,
-        subtopics: [
-          { id: "5-1", title: "Arterielle Hypertonie (Stufenschema, hypertensive Entgleisung)", completed: false, notes: "" },
-          { id: "5-2", title: "Periphere arterielle Verschlusskrankheit (pAVK)", completed: false, notes: "" },
-          { id: "5-3", title: "Aortenaneurysma & Akutes Aortensyndrom / Dissektion", completed: false, notes: "" },
-          { id: "5-4", title: "Tiefe Beinvenenthrombose (TVT) & Phlebothrombose", completed: false, notes: "" }
-        ]
-      },
-      {
-        dayNumber: 6,
-        title: "Pneumologie I: Obstruktive Lungenerkrankungen",
-        subject: "innere",
-        effort: "mittel",
-        effortLabel: "Mittel (3 Kapitel)",
-        isOpen: false,
-        subtopics: [
-          { id: "6-1", title: "Lungenfunktionsprüfung (Spirometrie, Bodyplethysmographie)", completed: false, notes: "" },
-          { id: "6-2", title: "Asthma bronchiale (Stufentherapie nach GINA)", completed: false, notes: "" },
-          { id: "6-3", title: "COPD & akute Exazerbation (GOLD-Kriterien)", completed: false, notes: "" }
-        ]
-      },
-      {
-        dayNumber: 7,
-        title: "Pneumologie II: Pneumonien & Pulmonale Gefäße",
-        subject: "innere",
-        effort: "hoch",
-        effortLabel: "Hoch (4 Kapitel)",
-        isOpen: false,
-        subtopics: [
-          { id: "7-1", title: "Ambulant erworbene Pneumonie (CRB-65-Score, Antibiotika)", completed: false, notes: "" },
-          { id: "7-2", title: "Nosokomiale Pneumonie & Aspiration", completed: false, notes: "" },
-          { id: "7-3", title: "Lungenarterienembolie (LAE: Wells-Score, Antikoagulation, Lyse)", completed: false, notes: "" },
-          { id: "7-4", title: "Schlafapnoe-Syndrom (OSAS)", completed: false, notes: "" }
-        ]
-      },
-      {
-        dayNumber: 33,
-        title: "Pädiatrie I: Vorsorge, Neugeborenenmedizin & Infektionen",
-        subject: "paediatrie",
-        effort: "mittel",
-        effortLabel: "Mittel (4 Kapitel)",
-        isOpen: false,
-        subtopics: [
-          { id: "33-1", title: "U-Untersuchungen (U1-U9) & Meilensteine der Entwicklung", completed: false, notes: "" },
-          { id: "33-2", title: "APGAR-Score, Neugeborenen-Screening & Icterus neonatorum", completed: false, notes: "" },
-          { id: "33-3", title: "Hüftdysplasie & Sonographie nach Graf", completed: false, notes: "" },
-          { id: "33-4", title: "Fieberkrampf & plötzlicher Säuglingstod (SIDS)", completed: false, notes: "" }
-        ]
-      },
-      {
-        dayNumber: 51,
-        title: "Chirurgie: Akutes Abdomen & Hernien",
-        subject: "chirurgie",
-        effort: "hoch",
-        effortLabel: "Hoch (4 Kapitel)",
-        isOpen: false,
-        subtopics: [
-          { id: "51-1", title: "Akutes Abdomen (Differentialdiagnostik & Leitsymptome)", completed: false, notes: "" },
-          { id: "51-2", title: "Appendizitis (Druckpunkte: McBurney, Lanz, Blumberg, Rovsing)", completed: false, notes: "" },
-          { id: "51-3", title: "Ileus (Mechanisch vs. paralytisch, Röntgen-Abdomen)", completed: false, notes: "" },
-          { id: "51-4", title: "Leistenhernie, Schenkelhernie & Inkarzeration", completed: false, notes: "" }
-        ]
-      },
-      {
-        dayNumber: 58,
-        title: "Orthopädie & Unfallchirurgie: Frakturen & Gelenke",
-        subject: "orthopaedie",
-        effort: "mittel",
-        effortLabel: "Mittel (4 Kapitel)",
-        isOpen: false,
-        subtopics: [
-          { id: "58-1", title: "Frakturlehre & Frakturheilung (AO-Klassifikation)", completed: false, notes: "" },
-          { id: "58-2", title: "Schenkelhalsfraktur & pertrochantäre Femurfraktur", completed: false, notes: "" },
-          { id: "58-3", title: "Distale Radiusfraktur (Colles vs. Smith)", completed: false, notes: "" },
-          { id: "58-4", title: "Kompartmentsyndrom (Notfallindikation Dermatofasziotomie)", completed: false, notes: "" }
-        ]
-      },
-      {
-        dayNumber: 65,
-        title: "Gynäkologie & Geburtshilfe: Schwangerschaft & Onkologie",
-        subject: "gynaekologie",
-        effort: "hoch",
-        effortLabel: "Hoch (4 Kapitel)",
-        isOpen: false,
-        subtopics: [
-          { id: "65-1", title: "Schwangerschaftsvorsorge, CTG & Gestationsdiabetes", completed: false, notes: "" },
-          { id: "65-2", title: "Präeklampsie, HELLP-Syndrom & Eklampsie", completed: false, notes: "" },
-          { id: "65-3", title: "Mammakarzinom (Diagnostik, Rezeptorstatus, operative Therapie)", completed: false, notes: "" },
-          { id: "65-4", title: "Zervixkarzinom & HPV-Prävention", completed: false, notes: "" }
-        ]
-      },
-      {
-        dayNumber: 74,
-        title: "Neurologie: Zerebrale Ischämie & Intrakranielle Blutungen",
-        subject: "neurologie",
-        effort: "hoch",
-        effortLabel: "Hoch (4 Kapitel)",
-        isOpen: false,
-        subtopics: [
-          { id: "74-1", title: "Ischämischer Schlaganfall (Territorien, Lyse & Thrombektomie)", completed: false, notes: "" },
-          { id: "74-2", title: "Intrazerebrale Blutung (ICB)", completed: false, notes: "" },
-          { id: "74-3", title: "Subarachnoidalblutung (SAB: Aneurysma, Homan-Hunt, CT)", completed: false, notes: "" },
-          { id: "74-4", title: "Subdural- & Epiduralhämatom (Luzides Intervall)", completed: false, notes: "" }
-        ]
-      },
-      {
-        dayNumber: 98,
-        title: "Generalprobe: M2 Original-Prüfungstag 1",
-        subject: "generalprobe",
-        effort: "hoch",
-        effortLabel: "Prüfungssimulation (107 Fragen)",
-        isOpen: false,
-        subtopics: [
-          { id: "98-1", title: "Offizieller IMPP-Prüfungstag 1 unter Realbedingungen kreuzen", completed: false, notes: "" },
-          { id: "98-2", title: "Ausführliche Nachbesprechung der Fallfragen & Fehleranalyse", completed: false, notes: "" }
-        ]
-      }
+    // 2. VOLLSTÄNDIGE 100 TAGE DES AMBOSS M2-LERNPLANS
+    const M2_DAYS_DEF = [
+      // INNERE MEDIZIN (Tage 1 - 32)
+      { d: 1, s: "innere", t: "Kardiologie I: EKG-Grundlagen & Herzrhythmusstörungen", w: 125, c: [
+        { t: "Untersuchungsmethoden & 12-Kanal-EKG", l: "https://next.amboss.com/de/article/Vo0Sbf" },
+        { t: "Supraventrikuläre Rhythmusstörungen & Vorhofflimmern", l: "https://next.amboss.com/de/article/hT0mff" },
+        { t: "Bradykardien, Sick-Sinus-Syndrom & AV-Blöcke", l: "https://next.amboss.com/de/article/Vo0Sbf" },
+        { t: "Ventrikuläre Tachykardien & Kammerflimmern", l: "https://next.amboss.com/de/article/hT0mff" },
+        { t: "Synkope & Schrittmacher-Indikationen", l: "https://next.amboss.com/de/article/Vo0Sbf" }
+      ]},
+      { d: 2, s: "innere", t: "Kardiologie II: KHK & Akutes Koronarsyndrom (ACS)", w: 135, c: [
+        { t: "Arteriosklerose & Fettstoffwechselstörungen", l: "https://next.amboss.com/de/article/xT07Pf" },
+        { t: "Stabile Angina pectoris & Diagnostik der KHK", l: "https://next.amboss.com/de/article/xT07Pf" },
+        { t: "Akutes Koronarsyndrom: NSTEMI & STEMI", l: "https://next.amboss.com/de/article/e502sf" },
+        { t: "Akuttherapie, Herzkatheter (PCI) & Reinfarktprophylaxe", l: "https://next.amboss.com/de/article/e502sf" }
+      ]},
+      { d: 3, s: "innere", t: "Kardiologie III: Herzinsuffizienz & Kardiomyopathien", w: 120, c: [
+        { t: "Chronische Herzinsuffizienz (HFrEF/HFpEF & 4-Säulen)", l: "https://next.amboss.com/de/article/Vo0Sbf" },
+        { t: "Akute Herzinsuffizienz, Lungenödem & kardiogener Schock", l: "https://next.amboss.com/de/article/Vo0Sbf" },
+        { t: "Kardiomyopathien (DCM, HCM, Takotsubo-Syndrom)", l: "https://next.amboss.com/de/article/hT0mff" }
+      ]},
+      { d: 4, s: "innere", t: "Kardiologie IV: Klappenvitien & Endokarditis", w: 110, c: [
+        { t: "Aortenklappenstenose & Aorteninsuffizienz", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Mitralinsuffizienz & Mitralstenose", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Infektiöse Endokarditis (Duke-Kriterien & Prophylaxe)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Perikarditis & Perikarderguss", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 5, s: "innere", t: "Angiologie: Hypertonie, Aorta & pAVK", w: 105, c: [
+        { t: "Arterielle Hypertonie & hypertensive Krise", l: "https://next.amboss.com/de/article/xT07Pf" },
+        { t: "Aortenaneurysma & Aortendissektion", l: "https://next.amboss.com/de/article/xT07Pf" },
+        { t: "Periphere arterielle Verschlusskrankheit (pAVK)", l: "https://next.amboss.com/de/article/xT07Pf" },
+        { t: "Tiefe Beinvenenthrombose (TVT)", l: "https://next.amboss.com/de/article/e502sf" }
+      ]},
+      { d: 6, s: "innere", t: "Pneumologie I: Obstruktive Lungenerkrankungen", w: 100, c: [
+        { t: "Lungenfunktionsprüfung (Spirometrie & Bodyplethysmographie)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Asthma bronchiale (Stufenplan nach GINA)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "COPD & akute Exazerbation (GOLD-Stadien)", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 7, s: "innere", t: "Pneumologie II: Pneumonien & Lungenembolie", w: 130, c: [
+        { t: "Ambulant erworbene Pneumonie (CRB-65 & Erreger)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Nosokomiale Pneumonie & Legionellose", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Lungenarterienembolie (Wells-Score & Antikoagulation)", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 8, s: "innere", t: "Pneumologie III: Bronchialkarzinom & Sarkoidose", w: 95, c: [
+        { t: "Bronchialkarzinom (NSCLC vs. SCLC, Staging & TNM)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Sarkoidose (Löfgren-Syndrom, Stadien I-IV)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Pleuraerguss, Pleuritis & Pneumothorax", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 9, s: "innere", t: "Gastroenterologie I: Ösophagus & Magen", w: 100, c: [
+        { t: "Gastroösophageale Refluxkrankheit & Barrett-Ösophagus", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Ösophaguskarzinom & Achalasie", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Gastritis, Ulkuskrankheit & Helicobacter pylori", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Magenkarzinom", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 10, s: "innere", t: "Gastroenterologie II: Chronisch entzündliche Darmerkrankungen", w: 110, c: [
+        { t: "Morbus Crohn vs. Colitis ulcerosa (Extraintestinale Manifestationen)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Kolorektales Karzinom (Vorsorge, TNM & Lynch-Syndrom)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Zöliakie & Malassimilationssyndrome", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 11, s: "innere", t: "Hepatologie I: Hepatitis & Leberzirrhose", w: 135, c: [
+        { t: "Virushepatitis A, B, C, D, E (Serologie & Impfung)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Leberzirrhose (Child-Pugh, Portale Hypertension & Ösophagusvarizen)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Aszites, Spontan bakterielle Peritonitis & Hepatische Enzephalopathie", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 12, s: "innere", t: "Hepatologie II & Pankreas: Cholelithiasis & Pankreatitis", w: 115, c: [
+        { t: "Cholelithiasis, Cholezystitis & Cholangitis (Charcot-Trias)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Akute Pankreatitis (Ätiologie, Atlanta-Kriterien)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Chronische Pankreatitis & Pankreaskarzinom", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 13, s: "innere", t: "Nephrologie I: Glomeruläre Erkrankungen & Nephrotisches Syndrom", w: 120, c: [
+        { t: "Urinbefund & Glomerulonephritis (Nephritisch vs. Nephrotisch)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "IgA-Nephropathie & Poststreptokokken-GN", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Minimal-Change-GN, FSGS & Membranöse GN", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 14, s: "innere", t: "Nephrologie II: Akutes Nierenversagen & Chronische Nierenkrankheit", w: 115, c: [
+        { t: "Akutes Nierenversagen (KDIGO, prärenal vs. renal vs. postrenal)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Chronische Niereninsuffizienz (CKD-Stadien & renale Anämie)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Nierenersatztherapie & Dialyseverfahren", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 15, s: "innere", t: "Wasser- & Elektrolythaushalt, Säure-Basen-Status", w: 140, c: [
+        { t: "Hypernatriämie & Hyponatriämie (SIADH vs. Diuretika)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Hyperkaliämie & Hypokaliämie (EKG-Veränderungen)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Metabolische & respiratorische Azidose / Alkalose (Anionenlücke)", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 16, s: "innere", t: "Endokrinologie I: Diabetes mellitus & Fettstoffwechsel", w: 130, c: [
+        { t: "Diabetes mellitus Typ 1 vs. Typ 2 (HbA1c, OGTT)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Orale Antidiabetika (Metformin, SGLT2i, GLP-1-RA, DPP-4i)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Insulintherapie & Diabetische Notfälle (Ketoazidose vs. HHS)", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 17, s: "innere", t: "Endokrinologie II: Schilddrüse & Nebenschilddrüse", w: 105, c: [
+        { t: "Hyperthyreose (Morbus Basedow vs. Autonomie) & Thyreotoxische Krise", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Hypothyreose & Hashimoto-Thyreoiditis", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Schilddrüsenkarzinom & Hyperparathyreoidismus (Kalziumhaushalt)", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 18, s: "innere", t: "Endokrinologie III: Nebenniere & Hypophyse", w: 110, c: [
+        { t: "Cushing-Syndrom (Dexamethason-Hemmtest)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Nebennierenrindeninsuffizienz (Morbus Addison & Addison-Krise)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Phäochromozytom & Conn-Syndrom (Hyperaldosteronismus)", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 19, s: "innere", t: "Hämatologie I: Anämien & Eisenstoffwechsel", w: 110, c: [
+        { t: "Eisenmangelanämie vs. Anämie chronischer Erkrankungen (ACD)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Megaloblastäre Anämien (Vitamin-B12- & Folsäuremangel)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Hämolytische Anämien (Coombs-Test, Kugelzellanämie)", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 20, s: "innere", t: "Hämatologie II: Leukämien & Myeloproliferative Neoplasien", w: 130, c: [
+        { t: "Akute Leukämien (AML & ALL, Auer-Stäbchen, Knochenmark)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Chronische myeloische Leukämie (CML: BCR-ABL, Imatinib)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Chronische lymphatische Leukämie (CLL: Gumprecht-Kernschatten)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Polycythaemia vera & Myelofibrose", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 21, s: "innere", t: "Hämatologie III: Lymphome & Multiples Myelom", w: 115, c: [
+        { t: "Morbus Hodgkin (Reed-Sternberg-Riesenzellen, B-Symptome)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Non-Hodgkin-Lymphome (Diffus großzellig, Follikulär)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Multiples Myelom (CRAB-Kriterien, Paraproteine, Osteolysen)", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 22, s: "innere", t: "Hämostaseologie: Blutungsneigung & Thrombophilie", w: 100, c: [
+        { t: "Hämostase-Diagnostik (Quick/INR, aPTT, Thrombozytenzahl)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Thrombozytopenien (ITP, TTP, HIT II)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Koagulopathien (Hämophilie A/B, von-Willebrand-Jürgens-Syndrom)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Disseminierte intravasale Gerinnung (DIC)", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 23, s: "innere", t: "Rheumatologie I: Rheumatoide Arthritis & Spondylarthritiden", w: 115, c: [
+        { t: "Rheumatoide Arthritis (Anti-CCP, Rheumafaktor, MTX)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Axiale Spondyloarthritis / Morbus Bechterew (HLA-B27)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Psoriasis-Arthritis & Reaktive Arthritis", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 24, s: "innere", t: "Rheumatologie II: Kollagenosen & Vaskulitiden", w: 125, c: [
+        { t: "Systemischer Lupus erythematodes (ANA, Anti-dsDNA, Glomerulonephritis)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Systemische Sklerose (Sklerodermie: CREST, Raynaud)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Großgefäßvaskulitiden (Riesenzellarteriitis, Polymyalgia rheumatica)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "ANCA-assoziierte Vaskulitiden (Granulomatose mit Polyangiitis)", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 25, s: "innere", t: "Infektiologie I: Sepsis & Bakterielle Systeminfektionen", w: 130, c: [
+        { t: "Sepsis & Septischer Schock (SOFA-Score, Sepsis-Bundles)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Kalkulierte Antibiotikatherapie & Resistenzmechanismen", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Tuberkulose (Diagnostik, 4-fach-Therapie nach RIPE)", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 26, s: "innere", t: "Infektiologie II: Virale Infektionen & HIV", w: 120, c: [
+        { t: "HIV & AIDS (Übertragung, Stadien, opportunistische Infektionen, ART)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Herpesviren (HSV, VZV, EBV, CMV)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Influenza & COVID-19", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 27, s: "innere", t: "Infektiologie III: Zoonosen & Tropenmedizin", w: 90, c: [
+        { t: "Lyme-Borreliose (Erythema migrans, Neuroborreliose)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Malaria (Tropica, Tertiana, Quartana, Dicker Tropfen)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Gastrointestinale Infektionen & Reisediarrhoe", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 28, s: "innere", t: "Innere Wiederholung I: Kardiologie & Angiologie Kreuz-Session", w: 100, c: [
+        { t: "Fächer-Kreuzen Kardiologie & Angiologie mit Fallanalysen", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 29, s: "innere", t: "Innere Wiederholung II: Pneumologie & Gastroenterologie", w: 100, c: [
+        { t: "Fächer-Kreuzen Lunge, Magen, Darm, Leber & Pankreas", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 30, s: "innere", t: "Innere Wiederholung III: Nephrologie & Endokrinologie", w: 100, c: [
+        { t: "Fächer-Kreuzen Niere, Elektrolyte, Diabetes & Hormone", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 31, s: "innere", t: "Innere Wiederholung IV: Hämatologie & Rheumatologie", w: 100, c: [
+        { t: "Fächer-Kreuzen Blutbilder, Gerinnung, Autoimmunerkrankungen", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 32, s: "innere", t: "Innere Abschluss-Session & IMPP-Top-Hits", w: 110, c: [
+        { t: "Abschluss-Kreuzen Innere Medizin & IMPP-Klassiker", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+
+      // PÄDIATRIE (Tage 33 - 39)
+      { d: 33, s: "paediatrie", t: "Pädiatrie I: Neonatologie & Vorsorgeuntersuchungen", w: 110, c: [
+        { t: "U-Untersuchungen (U1-U9) & Meilensteine", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "APGAR, Neugeborenen-Screening & Icterus neonatorum", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Hüftdysplasie & Sonographie nach Graf", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 34, s: "paediatrie", t: "Pädiatrie II: Angeborene Herzfehler & Notfälle", w: 135, c: [
+        { t: "Azyanotische Herzfehler (VSD, ASD, PDA, Aortenisthmusstenose)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Zyanotische Herzfehler (Fallot-Tetralogie, TGA)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "SIDS, Erstickungsanfall & Fremdkörperaspiration", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 35, s: "paediatrie", t: "Pädiatrie III: Pädiatrische Infektiologie & Exantheme", w: 120, c: [
+        { t: "Masern, Mumps, Röteln, Ringelröteln, Dreitagefieber, Scharlach", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Keuchhusten (Pertussis) & Diphtherie", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "STIKO-Impfkalender & Kontraindikationen", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 36, s: "paediatrie", t: "Pädiatrie IV: Atemwege & Neuropädiatrie", w: 110, c: [
+        { t: "Krupp-Syndrom (Pseudokrupp vs. Epiglottitis)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "RSV-Bronchiolitis & Mukoviszidose (Cystische Fibrose)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Fieberkrampf (einfach vs. kompliziert) & frühkindliche Epilepsien", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 37, s: "paediatrie", t: "Pädiatrie V: Pädiatrische Onkologie & Nephrologie", w: 105, c: [
+        { t: "Akute lymphoblastische Leukämie (ALL im Kindesalter)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Neuroblastom & Nephroblastom (Wilms-Tumor)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Hämolytisch-urämisches Syndrom (HUS)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Vesikoureteraler Reflux (VUR) & Harnwegsinfekte", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 38, s: "paediatrie", t: "Pädiatrie VI: Stoffwechsel & Genetik", w: 90, c: [
+        { t: "Trisomie 21, Turner- & Klinefelter-Syndrom", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Phenylketonurie (PKU) & Galaktosämie", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Zöliakie & Pylorusstenose", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 39, s: "paediatrie", t: "Pädiatrie Wiederholungs- & Kreuztag", w: 95, c: [
+        { t: "Kreuzsitzung Pädiatrie & Fallstudien", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+
+      // DERMATOLOGIE (Tage 40 - 44)
+      { d: 40, s: "dermatologie", t: "Dermatologie I: Grundlagen, Effloreszenzen & Infektionen", w: 95, c: [
+        { t: "Primäre & sekundäre Effloreszenzen", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Bakterielle Hautinfektionen (Impetigo, Erysipel, Phlegmone)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Virale Hauterkrankungen (Herpes Zoster, Mollusca contagiosa)", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 41, s: "dermatologie", t: "Dermatologie II: Schuppende & entzündliche Dermatosen", w: 105, c: [
+        { t: "Psoriasis vulgaris (Plaque-Psoriasis, Phänomene nach Auspitz)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Atopische Dermatitis (Neurodermitis, Stigmata)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Lichen ruber planus (Wickham-Streifung) & Pityriasis rosea", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 42, s: "dermatologie", t: "Dermatologie III: Maligne Hauttumoren", w: 120, c: [
+        { t: "Malignes Melanom (ABCDE-Regel, Breslow-Tiefe, Wächter-LK)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Basalzellkarzinom (Basaliom) & Plattenepithelkarzinom der Haut", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Aktinische Keratose & kutane Lymphome", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 43, s: "dermatologie", t: "Dermatologie IV: Blasenbildende Dermatosen & Allergologie", w: 100, c: [
+        { t: "Pemphigus vulgaris vs. Bullöses Pemphigoid (Nikolski-Phänomen)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Arzneimittelexantheme (SJS & Toxische epidermale Nekrolyse / TEN)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Urtikaria & Angioödem", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 44, s: "dermatologie", t: "Dermatologie Kreuz- & Wiederholungstag", w: 85, c: [
+        { t: "Kreuz-Session Hauterkrankungen & Bildquiz", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+
+      // ANÄSTHESIE & NOTFALLMEDIZIN (Tage 45 - 49)
+      { d: 45, s: "anaesthesie", t: "Anästhesie I: Narkoseverfahren & Atemwegsmanagement", w: 110, c: [
+        { t: "Allgemeinanästhesie (Hypnotika, Opioide, Muskelrelaxanzien)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Atemwegsmanagement & schwieriger Atemweg (Mallampati, Cormack)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Maligne Hyperthermie (Dantrolen)", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 46, s: "anaesthesie", t: "Anästhesie II: Regionalanästhesie & Schmerztherapie", w: 95, c: [
+        { t: "Spinalanästhesie vs. Periduralanästhesie (PDA)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Lokalanästhetika & Lokalanästhetika-Intoxikation (LAST)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "WHO-Stufenschema der Schmerztherapie & Co-Analgetika", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 47, s: "anaesthesie", t: "Notfallmedizin I: Reanimation & Schockformen", w: 130, c: [
+        { t: "Reanimation nach ERC-Leitlinien (BLS / ALS, Defibrillation)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Schockformen (Kardiogen, hypovolämisch, septisch, anaphylaktisch)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Anaphylaxie-Therapie (Adrenalin i.m.)", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 48, s: "anaesthesie", t: "Notfallmedizin II: Trauma & Verbrennung", w: 105, c: [
+        { t: "Polytraumaversorgung (cABCDE-Schema)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Schädel-Hirn-Trauma (GCS, Cushing-Trias)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Verbrennungen & Flüssigkeitssubstitution (Parkland-Formel)", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 49, s: "anaesthesie", t: "Intensivmedizin & Beatmung Kreuztag", w: 90, c: [
+        { t: "Kreuz-Session Beatmungsformen (ARDS, Weaning) & Intensivnotfälle", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+
+      // CHIRURGIE (Tage 50 - 56)
+      { d: 50, s: "chirurgie", t: "Allgemeinchirurgie & Wundbehandlung", w: 85, c: [
+        { t: "Wundheilung, Nahttechniken & Wundinfektionen", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Tetanus-Prophylaxe & postoperative Komplikationen", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 51, s: "chirurgie", t: "Viszeralchirurgie I: Akutes Abdomen & Hernien", w: 125, c: [
+        { t: "Akutes Abdomen (Leitsymptome, Peritonitis)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Appendizitis (Druckpunkte & operative Sanierung)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Ileus (Mechanisch vs. paralytisch)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Leistenhernien (direkt vs. indirekt, Shouldice, Lichtenstein)", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 52, s: "chirurgie", t: "Viszeralchirurgie II: Kolon, Rektum & Proktologie", w: 110, c: [
+        { t: "Divertikulose & Divertikulitis (Hinchey/CDD)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Kolorektale Karzinomchirurgie (Hemikolektomie, TME)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Proktologie (Hämorrhoiden, Perianalabszess, Fissur)", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 53, s: "chirurgie", t: "Viszeralchirurgie III: Magen, Gallenwege & Pankreas", w: 105, c: [
+        { t: "Magenkarzinom-Operationen (Gastrektomie, Rekonstruktionen)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Laparoskopische Cholezystektomie (Sicherheit & Dreieck von Calot)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Pankreaskopfresektion (Whipple / Kausch-Whipple)", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 54, s: "chirurgie", t: "Gefäßchirurgie: Aorta & Karotis", w: 95, c: [
+        { t: "Bauchaortenaneurysma (BAA: Ruptur & EVAR)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Karotisstenose (Thrombendarteriektomie / TEA)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Akuter peripherer Arterienverschluss (6 P nach Pratt)", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 55, s: "chirurgie", t: "Thoraxchirurgie & Traumatologie", w: 90, c: [
+        { t: "Pneumothorax (Spannungspneumothorax, Monaldi & Bülau)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Lungenresektionen & Tracheotomie", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 56, s: "chirurgie", t: "Chirurgie Kreuz- & Wiederholungstag", w: 95, c: [
+        { t: "Kreuz-Session Viszeral- & Gefäßchirurgie", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+
+      // ORTHOPÄDIE & UNFALLCHIRURGIE (Tage 57 - 63)
+      { d: 57, s: "orthopaedie", t: "Frakturlehre & Obere Extremität", w: 110, c: [
+        { t: "Frakturzeichen & AO-Klassifikation", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Klavikulafraktur & Schultergelenkluxation (Bankart, Hill-Sachs)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Distale Radiusfraktur (Colles vs. Smith) & Scaphoidfraktur", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 58, s: "orthopaedie", t: "Untere Extremität & Beckenfrakturen", w: 125, c: [
+        { t: "Schenkelhalsfraktur (Garden & Pauwels) & pertrochantäre Frakturen", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Kreuzbandruptur & Meniskusläsionen (Lachman, Pivot-Shift)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Sprunggelenksfrakturen (Weber A, B, C)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Kompartmentsyndrom (Dermatofasziotomie)", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 59, s: "orthopaedie", t: "Wirbelsäule: Bandscheibenvorfälle & Deformitäten", w: 105, c: [
+        { t: "Bandscheibenprolaps (L4/L5, L5/S1, Wurzelsyndrome & Kauda-Syndrom)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Skoliose & Morbus Scheuermann", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Spinalkanalstenose & Spondylolisthesis", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 60, s: "orthopaedie", t: "Degenerative Gelenkerkrankungen (Arthrose) & Endoprothetik", w: 100, c: [
+        { t: "Koxarthrose & Gonarthrose (Kellgren-Lawrence)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Hüft- & Knie-Totalendoprothese (TEP & Komplikationen)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Impingement-Syndrom & Rotatorenmanschettenruptur", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 61, s: "orthopaedie", t: "Knochentumoren & Osteologie", w: 95, c: [
+        { t: "Osteosarkom, Ewing-Sarkom & Chondrosarkom", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Osteoporose (T-Score, Bisphosphonate) & Osteomalazie", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Osteomyelitis & Septische Arthritis", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 62, s: "orthopaedie", t: "Pädiatrische Orthopädie", w: 90, c: [
+        { t: "Morbus Perthes vs. Epiphyseolysis capitis femoris (ECF)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Hüftschnupfen (Coxitis fugax)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Klumpfuß & Morbus Osgood-Schlatter", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 63, s: "orthopaedie", t: "Orthopädie & Unfallchirurgie Kreuztag", w: 90, c: [
+        { t: "Kreuz-Session Knochen, Gelenke & Fallfragen", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+
+      // GYNÄKOLOGIE & GEBURTSHILFE (Tage 64 - 70)
+      { d: 64, s: "gynaekologie", t: "Gynäkologie I: Zyklus, Infektionen & Benigne Erkrankungen", w: 95, c: [
+        { t: "Weiblicher Zyklus, Amenorrhoe & Kontrazeption", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Endometriose & Uterusmyome", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Pelvic Inflammatory Disease (PID) & Vulvovaginitis", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 65, s: "gynaekologie", t: "Gynäkologie II: Gynäkologische Onkologie I", w: 125, c: [
+        { t: "Mammakarzinom (Molekulare Subtypen, HER2, Tamoxifen/Aromatasehemmer)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Benigne Mammaveränderungen & Mastitis", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Zervixkarzinom (HPV, Pap-Abstrich, Konisation)", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 66, s: "gynaekologie", t: "Gynäkologie III: Gynäkologische Onkologie II", w: 105, c: [
+        { t: "Endometriumkarzinom & Hyperplasie", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Ovarialkarzinom (CA-125, operatives Debulking)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Deszensus genitalis & Harninkontinenz", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 67, s: "gynaekologie", t: "Geburtshilfe I: Schwangerschaft & Pränataldiagnostik", w: 110, c: [
+        { t: "Mutterschaftsrichtlinien & Pränataldiagnostik", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Extrauteringravidität (EUG: Tubargravidität)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Gestationsdiabetes & Rhesus-Inkompatibilität", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 68, s: "gynaekologie", t: "Geburtshilfe II: Hypertensive Schwangerschaftserkrankungen & Notfälle", w: 130, c: [
+        { t: "Präeklampsie, HELLP-Syndrom & Eklampsie (Magnesiumsulfat)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Vorzeitige Plazentalösung vs. Placenta praevia", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Vorzeitiger Blasensprung & Frühgeburtlichkeit (Lungenreife)", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 69, s: "gynaekologie", t: "Geburtshilfe III: Geburt & Wochenbett", w: 100, c: [
+        { t: "Geburtsphasen & Kardiotokographie (CTG-Beurteilung)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Schnittentbindung (Sectio caesarea) & Geburtsverletzungen", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Postpartale Blutung (Atonie) & Wochenbettfieber", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 70, s: "gynaekologie", t: "Gynäkologie & Geburtshilfe Kreuztag", w: 90, c: [
+        { t: "Kreuz-Session Gyn & Geburtshilfe", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+
+      // UROLOGIE (Tage 71 - 73)
+      { d: 71, s: "urologie", t: "Urologie I: Prostata & Urolithiasis", w: 105, c: [
+        { t: "Benigne Prostatahyperplasie (BPH: Alpha-Blocker, TUR-P)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Prostatakarzinom (PSA, Gleason-Score, Therapie)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Urolithiasis (Nierenkolik, Steindiagnostik & Therapie)", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 72, s: "urologie", t: "Urologie II: Urogenitaltumoren & Notfälle", w: 110, c: [
+        { t: "Nierenzellkarzinom (Stadien & Paraneoplasien)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Harnblasenkarzinom (Schmerzloses Makrohämaturie)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Hodentumoren (Seminom vs. Nicht-Seminom, Tumormarker)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Hodentorsion (Prehn-Zeichen negativ) & Priapismus", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 73, s: "urologie", t: "Urologie Kreuz- & Wiederholungstag", w: 80, c: [
+        { t: "Kreuz-Session Urologie & Harnwegsinfekte", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+
+      // NEUROLOGIE (Tage 74 - 80)
+      { d: 74, s: "neurologie", t: "Neurologie I: Zerebrovaskuläre Erkrankungen (Schlaganfall)", w: 140, c: [
+        { t: "Ischämischer Schlaganfall (Gefäßterritorien: Media, Anterior, Posterior)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Akuttherapie: Systemische Lyse (Zeitfenster) & Thrombektomie", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Intrazerebrale Blutung (ICB) & Blutdruckmanagement", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Subarachnoidalblutung (SAB: Hunt & Hess, Aneurysmaclipping/coiling)", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 75, s: "neurologie", t: "Neurologie II: Epilepsien & Kopfschmerzsyndrome", w: 115, c: [
+        { t: "Epilepsie (Generalisiert vs. fokal, Antikonvulsiva)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Status epilepticus (Stufenplan mit Benzodiazepinen & Levetiracetam)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Migräne, Spannungskopfschmerz & Cluster-Kopfschmerz", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 76, s: "neurologie", t: "Neurologie III: Neurodegenerative & Bewegungsstörungen", w: 110, c: [
+        { t: "Parkinson-Syndrom (TRAP: Tremor, Rigor, Akinese, Posturale Instabilität)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Atypische Parkinson-Syndrome & Chorea Huntington", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Amyotrophe Lateralsklerose (ALS) & Demenzerkrankungen", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 77, s: "neurologie", t: "Neurologie IV: Multiple Sklerose & Infektionen", w: 125, c: [
+        { t: "Multiple Sklerose (McDonald-Kriterien, Schubtherapie & Verlaufsmodifikation)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Bakterielle vs. virale Meningitis (Liquorpunktion & Dexamethason)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Herpes-simplex-Enzephalitis (Aciclovir i.v.)", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 78, s: "neurologie", t: "Neurologie V: Periphere Nerven & Motoneurone", w: 105, c: [
+        { t: "Polyneuropathien & Guillain-Barré-Syndrom (GBS)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Kompressionstriaden (Karpaltunnelsyndrom, Sulcus-ulnaris-Syndrom)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Hirnnervenparesen (Fazialisparese zentral vs. peripher)", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 79, s: "neurologie", t: "Neurologie VI: Myopathien & Hirntumoren", w: 95, c: [
+        { t: "Myasthenia gravis (Anti-AChR-AK, Tensilon-Test, Thymom)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Glioblastom, Meningeom & Hirnmetastasen", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Erhöhter Hirndruck & Einklemmung", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 80, s: "neurologie", t: "Neurologie Kreuz- & Wiederholungstag", w: 95, c: [
+        { t: "Kreuz-Session Neurologie mit neurologischen Fällen", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+
+      // PSYCHIATRIE & PSYCHOSOMATIK (Tage 81 - 85)
+      { d: 81, s: "psychiatrie", t: "Psychiatrie I: Affektive Störungen & Suizidalität", w: 110, c: [
+        { t: "Depression (Haupt- & Zusatzsymptome nach ICD-10/11)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Bipolare affektive Störung & Manie", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Suizidalität & Krisenintervention (Präsuizidales Syndrom)", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 82, s: "psychiatrie", t: "Psychiatrie II: Schizophrenie & Wahnhafte Störungen", w: 115, c: [
+        { t: "Schizophrenie (Positiv- vs. Negativsymptomatik, Schneider-Symptome)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Antipsychotika (Typika vs. Atypika, EPMS & Spätdyskinesien)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Malignes neuroleptisches Syndrom (MNS)", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 83, s: "psychiatrie", t: "Psychiatrie III: Angst-, Zwangs- & Traumafolgestörungen", w: 100, c: [
+        { t: "Panikstörung, Agoraphobie & Generalisierte Angststörung", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Zwangsstörung & Posttraumatische Belastungsstörung (PTBS)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Somatisierungsstörung & Hypochondrie", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 84, s: "psychiatrie", t: "Psychiatrie IV: Abhängigkeitserkrankungen & Organische Störungen", w: 110, c: [
+        { t: "Alkoholabhängigkeit (Entzugssyndrom & Delirium tremens)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Wernicke-Enzephalopathie & Korsakow-Syndrom (Thiamin)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Delir vs. Demenz & Essstörungen (Anorexie, Bulimie)", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 85, s: "psychiatrie", t: "Psychiatrie & Psychotherapie Kreuztag", w: 85, c: [
+        { t: "Kreuz-Session Psychiatrie & Psychopharmakologie", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+
+      // AUGENHEILKUNDE (Tage 86 - 88)
+      { d: 86, s: "auge", t: "Augenheilkunde I: Linse, Glaukom & Notfälle", w: 110, c: [
+        { t: "Katarakt (Grauer Star) & Glaukom (Grüner Star)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Akuter Glaukomanfall (Therapie & Schmerzbild)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Verätzungen & Perforierende Augenverletzungen", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 87, s: "auge", t: "Augenheilkunde II: Netzhaut & Gefäße", w: 105, c: [
+        { t: "Amotio retinae (Netzhautablösung: Lichtblitze & Schatten)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Altersabhängige Makuladegeneration (AMD: feucht vs. trocken)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Zentralarterienverschluss (Kirschroter Fleck) & Zentralvenenverschluss", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Diabetische & hypertensive Retinopathie", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 88, s: "auge", t: "Augenheilkunde III: Strabismus & Kreuz-Session", w: 85, c: [
+        { t: "Strabismus, Amblyopie & Sehbahnläsionen", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Kreuz-Session Augenheilkunde", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+
+      // HALS-NASEN-OHREN (Tage 89 - 91)
+      { d: 89, s: "hno", t: "HNO I: Ohr, Hörstörungen & Schwindel", w: 110, c: [
+        { t: "Otitis media (akut vs. chronisch, Mastoiditis)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Hörprüfungen (Weber & Rinne: Schallleitung vs. Schallempfindung)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Morbus Menière, BPPV (Lagerungsschwindel) & Hörsturz", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 90, s: "hno", t: "HNO II: Nase, Nasennebenhöhlen & Larynx", w: 95, c: [
+        { t: "Rhinosinusitis & Komplikationen (Orbitaphlegmone)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Epistaxis (Kiesselbach-Plexus, Bellocq-Tamponade)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Larynxkarzinom, Stimmlippenlähmungen (N. recurrens)", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 91, s: "hno", t: "HNO III: Pharynx, Speicheldrüsen & Kreuztag", w: 85, c: [
+        { t: "Tonsillitis & Peritonsillarabszess", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Speicheldrüsenerkrankungen (Sialolithiasis, Pleomorphes Adenom)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Kreuz-Session HNO-Heilkunde", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+
+      // QUERSCHNITTSFÄCHER & PHARMAKOLOGIE (Tage 92 - 95)
+      { d: 92, s: "querschnitt", t: "Rechtsmedizin: Todeszeichen & Forensik", w: 90, c: [
+        { t: "Sichere & unsichere Todeszeichen (Totenflecke, Totenstarre)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Leichenschau, Todesart (natürlich vs. nicht natürlich)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Schuss- & Stichverletzungen, Ersticken", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 93, s: "querschnitt", t: "Arbeits- & Umweltmedizin: Berufskrankheiten", w: 100, c: [
+        { t: "Berufskrankheiten (Asbestose, Mesotheliom, Silikose)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Toxikologie (Kohlenmonoxid, Blei, Quecksilber, Lösungsmittel)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Lärmschwerhörigkeit & Biomonitoring", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 94, s: "querschnitt", t: "Pharmakologie & Toxikologie: Die wichtigsten Arzneien", w: 125, c: [
+        { t: "Cytochrom P450 (Induktoren & Inhibitoren)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Antikoagulanzien (DOAKs, Marcumar, Heparine, Antidote)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Intoxikationen & Antidote (Paracetamol/ACC, Opioide/Naloxon, Benzodiazepine/Flumazenil)", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 95, s: "querschnitt", t: "Epidemiologie, Biometrie & Sozialmedizin", w: 85, c: [
+        { t: "Studientypen (RCT, Kohortenstudie, Fall-Kontroll-Studie)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Sensitivität, Spezifität, PPV, NPV & ROC-Kurve", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Prävention & Rehabilitation", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+
+      // EXAMENSSIMULATION & GENERALPROBEN (Tage 96 - 100)
+      { d: 96, s: "generalprobe", t: "Generalprobe 1: Prüfungstag 1", w: 160, c: [
+        { t: "Original-IMPP-Examen M2 Tag 1 (107 Fragen am Stück)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Detaillierte Fehleranalyse & Wissenslücken notieren", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 97, s: "generalprobe", t: "Generalprobe 1: Prüfungstag 2", w: 160, c: [
+        { t: "Original-IMPP-Examen M2 Tag 2 (107 Fragen)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Fehleranalyse Tag 2 & Vertiefung", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 98, s: "generalprobe", t: "Generalprobe 1: Prüfungstag 3", w: 160, c: [
+        { t: "Original-IMPP-Examen M2 Tag 3 (106 Fragen)", l: "https://next.amboss.com/de/article/AQ0RAf" },
+        { t: "Auswertung Gesamtnoten & Strategie", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 99, s: "generalprobe", t: "Generalprobe 2 / IMPP-Top-100-Wiederholung", w: 130, c: [
+        { t: "Wiederholung der persönlichen Schwachstellen & IMPP-Blickdiagnosen", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]},
+      { d: 100, s: "generalprobe", t: "Tag 100: Mental Prep, Notfallmedikamente & Erholung", w: 50, c: [
+        { t: "Leitlinien-Zusammenfassung & Ruhe vor dem Examenstag", l: "https://next.amboss.com/de/article/AQ0RAf" }
+      ]}
     ];
 
-    // Daten aus localStorage laden oder Initial-Tage nutzen
-    let days = JSON.parse(localStorage.getItem('m2_100_days')) || INITIAL_DAYS;
-    let activeSubject = 'alle';
-    let allExpanded = false;
+    // Status für Tage aus localStorage laden
+    let savedTasks = JSON.parse(localStorage.getItem('m2_full_100_v1')) || {};
+    let activeFilter = 'alle';
+    let allOpen = false;
 
+    // KALENDER-STATUS
+    let calendarState = JSON.parse(localStorage.getItem('m2_cal_state_v1')) || {};
+
+    // ---------------- TIMER FUNKTIONEN ----------------
+    let timerDuration = 45 * 60;
+    let timerTimeLeft = timerDuration;
+    let timerInterval = null;
+    let timerRunning = false;
+
+    function formatTime(sec) {
+      const m = Math.floor(sec / 60);
+      const s = sec % 60;
+      return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+    }
+
+    function updateTimerUI() {
+      document.getElementById('timerDisplay').textContent = formatTime(timerTimeLeft);
+      document.getElementById('btnTimerStart').textContent = timerRunning ? "Pause" : "Start";
+    }
+
+    window.setTimerMode = function(minutes, label) {
+      clearInterval(timerInterval);
+      timerRunning = false;
+      timerDuration = minutes * 60;
+      timerTimeLeft = timerDuration;
+      document.getElementById('timerLabel').textContent = label;
+      document.getElementById('btnModeLearn').classList.toggle('active', minutes === 45);
+      document.getElementById('btnModeBreak').classList.toggle('active', minutes === 15);
+      updateTimerUI();
+    };
+
+    window.toggleTimer = function() {
+      if (timerRunning) {
+        clearInterval(timerInterval);
+        timerRunning = false;
+      } else {
+        timerRunning = true;
+        timerInterval = setInterval(() => {
+          if (timerTimeLeft > 0) {
+            timerTimeLeft--;
+            updateTimerUI();
+          } else {
+            clearInterval(timerInterval);
+            timerRunning = false;
+            playChime();
+            alert("⏰ Die Zeit ist um!");
+            updateTimerUI();
+          }
+        }, 1000);
+      }
+      updateTimerUI();
+    };
+
+    window.resetTimer = function() {
+      clearInterval(timerInterval);
+      timerRunning = false;
+      timerTimeLeft = timerDuration;
+      updateTimerUI();
+    };
+
+    function playChime() {
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(587.33, audioCtx.currentTime); // D5
+        osc.frequency.setValueAtTime(880, audioCtx.currentTime + 0.15); // A5
+        gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.2);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 1.2);
+      } catch (e) {}
+    }
+
+    // ---------------- KALENDER (NOV 2026 - APR 2027) ----------------
+    const MONTHS_CONFIG = [
+      { name: "November 2026", year: 2026, month: 10, days: 30 },
+      { name: "Dezember 2026", year: 2026, month: 11, days: 31 },
+      { name: "Januar 2027", year: 2027, month: 0, days: 31 },
+      { name: "Februar 2027", year: 2027, month: 1, days: 28 },
+      { name: "März 2027", year: 2027, month: 2, days: 31 },
+      { name: "April 2027", year: 2027, month: 3, days: 30 }
+    ];
+
+    function renderCalendar() {
+      const container = document.getElementById('calendarMonthsContainer');
+      container.innerHTML = '';
+      let plannedDays = 0;
+
+      MONTHS_CONFIG.forEach(cfg => {
+        const section = document.createElement('div');
+        section.className = 'month-section';
+
+        const monthName = document.createElement('div');
+        monthName.className = 'month-name';
+        monthName.textContent = cfg.name;
+        section.appendChild(monthName);
+
+        const weekdays = document.createElement('div');
+        weekdays.className = 'calendar-weekdays';
+        ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'].forEach(d => {
+          const span = document.createElement('span');
+          span.textContent = d;
+          weekdays.appendChild(span);
+        });
+        section.appendChild(weekdays);
+
+        const grid = document.createElement('div');
+        grid.className = 'calendar-grid';
+
+        // Erster Wochentag des Monats (0 = Mo, ..., 6 = So)
+        const firstDay = new Date(cfg.year, cfg.month, 1).getDay();
+        const startOffset = (firstDay + 6) % 7;
+
+        for (let i = 0; i < startOffset; i++) {
+          const empty = document.createElement('div');
+          empty.className = 'cal-day cal-empty';
+          grid.appendChild(empty);
+        }
+
+        for (let d = 1; d <= cfg.days; d++) {
+          const dayEl = document.createElement('div');
+          const dateKey = `${cfg.year}-${String(cfg.month + 1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+          
+          // PRÜFUNGSTERMINE: 13. - 15. April 2027 ROT MARKIEREN
+          const isExam = (cfg.year === 2027 && cfg.month === 3 && (d === 13 || d === 14 || d === 15));
+
+          if (isExam) {
+            dayEl.className = 'cal-day cal-exam';
+            dayEl.textContent = d;
+            dayEl.title = `M2 Staatsexamen Prüfungstag (${d}. April 2027)`;
+          } else {
+            const state = calendarState[dateKey] || 'default';
+            if (state === 'full') {
+              dayEl.className = 'cal-day cal-full';
+              plannedDays += 1.0;
+            } else if (state === 'half') {
+              dayEl.className = 'cal-day cal-half';
+              plannedDays += 0.5;
+            } else if (state === 'pause') {
+              dayEl.className = 'cal-day cal-pause';
+            } else {
+              dayEl.className = 'cal-day cal-default';
+            }
+
+            dayEl.textContent = d;
+            dayEl.title = `Klicken zum Wechseln: Ganztags / Halbtags / Pause (${dateKey})`;
+
+            dayEl.onclick = () => {
+              const current = calendarState[dateKey] || 'default';
+              if (current === 'default') calendarState[dateKey] = 'full';
+              else if (current === 'full') calendarState[dateKey] = 'half';
+              else if (current === 'half') calendarState[dateKey] = 'pause';
+              else calendarState[dateKey] = 'default';
+
+              localStorage.setItem('m2_cal_state_v1', JSON.stringify(calendarState));
+              renderCalendar();
+            };
+          }
+
+          grid.appendChild(dayEl);
+        }
+
+        section.appendChild(grid);
+        container.appendChild(section);
+      });
+
+      document.getElementById('calendarStudyDaysCount').textContent = `Geplant: ${plannedDays} / 100 Tage`;
+    }
+
+    // ---------------- TAGE & FORTSCHRITT ----------------
     function saveState() {
-      localStorage.setItem('m2_100_days', JSON.stringify(days));
+      localStorage.setItem('m2_full_100_v1', JSON.stringify(savedTasks));
       updateGlobalProgress();
     }
 
-    // Gesamtfortschritt für den vertikalen rechten Balken berechnen
     function updateGlobalProgress() {
-      let totalSubtopics = 0;
-      let completedSubtopics = 0;
+      let totalSubs = 0;
+      let completedSubs = 0;
       let completedDays = 0;
 
-      days.forEach(day => {
-        const subCount = day.subtopics.length;
-        const subDone = day.subtopics.filter(s => s.completed).length;
-        totalSubtopics += subCount;
-        completedSubtopics += subDone;
-
-        if (subCount > 0 && subDone === subCount) {
+      M2_DAYS_DEF.forEach(day => {
+        const subs = day.c;
+        totalSubs += subs.length;
+        const daySaved = savedTasks[day.d] || {};
+        let doneInDay = 0;
+        subs.forEach((s, idx) => {
+          if (daySaved[`sub_${idx}`]) doneInDay++;
+        });
+        completedSubs += doneInDay;
+        if (subs.length > 0 && doneInDay === subs.length) {
           completedDays++;
         }
       });
 
-      const percent = totalSubtopics === 0 ? 0 : Math.round((completedSubtopics / totalSubtopics) * 100);
-
-      // Aktualisierung der senkrechten Seitenleiste
+      const percent = totalSubs === 0 ? 0 : Math.round((completedSubs / totalSubs) * 100);
       document.getElementById('sidebarPercent').textContent = `${percent}%`;
-      document.getElementById('sidebarDaysText').textContent = `${completedDays} / ${days.length} Tage (${completedSubtopics}/${totalSubtopics} Themen)`;
+      document.getElementById('sidebarDaysText').textContent = `${completedDays}/100 Tage (${completedSubs}/${totalSubs})`;
       document.getElementById('sidebarMeterFill').style.height = `${percent}%`;
     }
 
-    function setSubjectFilter(subject) {
-      activeSubject = subject;
+    window.toggleSub = function(dayNumber, idx, isChecked) {
+      if (!savedTasks[dayNumber]) savedTasks[dayNumber] = {};
+      savedTasks[dayNumber][`sub_${idx}`] = isChecked;
+      saveState();
+      renderDays();
+    };
+
+    window.toggleEntireDay = function(dayNumber, isChecked) {
+      if (!savedTasks[dayNumber]) savedTasks[dayNumber] = {};
+      const day = M2_DAYS_DEF.find(d => d.d === dayNumber);
+      if (day) {
+        day.c.forEach((_, idx) => {
+          savedTasks[dayNumber][`sub_${idx}`] = isChecked;
+        });
+      }
+      saveState();
+      renderDays();
+    };
+
+    window.saveNote = function(dayNumber, idx, text) {
+      if (!savedTasks[dayNumber]) savedTasks[dayNumber] = {};
+      savedTasks[dayNumber][`note_${idx}`] = text;
+      saveState();
+    };
+
+    window.toggleCard = function(dayNumber) {
+      if (!savedTasks[dayNumber]) savedTasks[dayNumber] = {};
+      savedTasks[dayNumber].open = !savedTasks[dayNumber].open;
+      saveState();
+      renderDays();
+    };
+
+    window.toggleAllDays = function() {
+      allOpen = !allOpen;
+      M2_DAYS_DEF.forEach(d => {
+        if (!savedTasks[d.d]) savedTasks[d.d] = {};
+        savedTasks[d.d].open = allOpen;
+      });
+      saveState();
+      renderDays();
+    };
+
+    window.setFilter = function(filter) {
+      activeFilter = filter;
       document.querySelectorAll('.filter-pill').forEach(btn => {
-        const text = btn.textContent.toLowerCase();
-        if (subject === 'alle') {
-          btn.classList.toggle('active', text.includes('alle'));
-        } else {
-          const cfg = SUBJECT_CONFIG[subject];
-          btn.classList.toggle('active', cfg && text.includes(cfg.name.toLowerCase().slice(0, 5)));
-        }
+        btn.classList.toggle('active', btn.onclick.toString().includes(`'${filter}'`));
       });
       renderDays();
-    }
-
-    function toggleDayOpen(dayNumber) {
-      const day = days.find(d => d.dayNumber === dayNumber);
-      if (day) {
-        day.isOpen = !day.isOpen;
-        saveState();
-        renderDays();
-      }
-    }
-
-    function toggleAllDays() {
-      allExpanded = !allExpanded;
-      days.forEach(d => d.isOpen = allExpanded);
-      saveState();
-      renderDays();
-    }
-
-    // Einen ganzen Tag als erledigt/offen umschalten
-    window.toggleEntireDay = function(dayNumber, isChecked) {
-      const day = days.find(d => d.dayNumber === dayNumber);
-      if (!day) return;
-      day.subtopics.forEach(sub => sub.completed = isChecked);
-      saveState();
-      renderDays();
     };
 
-    // Einzelnes Unterthema abhaken
-    window.toggleSubtopic = function(dayNumber, subtopicId) {
-      const day = days.find(d => d.dayNumber === dayNumber);
-      if (!day) return;
-      const sub = day.subtopics.find(s => s.id === subtopicId);
-      if (sub) {
-        sub.completed = !sub.completed;
-        saveState();
-        renderDays();
-      }
-    };
-
-    // Notizen für ein Unterthema speichern
-    window.updateSubtopicNotes = function(dayNumber, subtopicId, text) {
-      const day = days.find(d => d.dayNumber === dayNumber);
-      if (!day) return;
-      const sub = day.subtopics.find(s => s.id === subtopicId);
-      if (sub) {
-        sub.notes = text;
-        saveState();
-      }
-    };
-
-    // Springt zum ersten offenen Lerntag und scrollt sanft dorthin
     window.scrollToNextOpenDay = function() {
-      const nextOpenDay = days.find(day => day.subtopics.some(s => !s.completed));
-      if (!nextOpenDay) {
-        alert("Glückwunsch! Du hast alle aktuellen Lerntage erfolgreich abgeschlossen!");
+      const nextDay = M2_DAYS_DEF.find(day => {
+        const daySaved = savedTasks[day.d] || {};
+        return day.c.some((_, idx) => !daySaved[`sub_${idx}`]);
+      });
+
+      if (!nextDay) {
+        alert("🎉 Herzlichen Glückwunsch! Du hast alle 100 Tage des M2-Lernplans abgeschlossen!");
         return;
       }
-      // Sicherstellen, dass das Fach nicht weggefiltert ist
-      if (activeSubject !== 'alle' && nextOpenDay.subject !== activeSubject) {
-        setSubjectFilter('alle');
+
+      if (activeFilter !== 'alle' && nextDay.s !== activeFilter) {
+        setFilter('alle');
       }
-      nextOpenDay.isOpen = true;
+
+      if (!savedTasks[nextDay.d]) savedTasks[nextDay.d] = {};
+      savedTasks[nextDay.d].open = true;
       saveState();
       renderDays();
 
       setTimeout(() => {
-        const el = document.getElementById(`day-${nextOpenDay.dayNumber}`);
+        const el = document.getElementById(`day-${nextDay.d}`);
         if (el) {
           el.scrollIntoView({ behavior: 'smooth', block: 'center' });
           el.style.boxShadow = "0 0 0 3px #10b981";
@@ -894,112 +1602,112 @@
       const search = (document.getElementById('searchInput')?.value || '').toLowerCase();
       container.innerHTML = '';
 
-      const filtered = days.filter(day => {
-        if (activeSubject !== 'alle' && day.subject !== activeSubject) return false;
+      const filtered = M2_DAYS_DEF.filter(day => {
+        if (activeFilter !== 'alle' && day.s !== activeFilter) return false;
         if (!search) return true;
 
-        const inTitle = day.title.toLowerCase().includes(search);
-        const inSub = day.subtopics.some(s => s.title.toLowerCase().includes(search) || (s.notes && s.notes.toLowerCase().includes(search)));
-        return inTitle || inSub;
+        const daySaved = savedTasks[day.d] || {};
+        const inTitle = day.t.toLowerCase().includes(search);
+        const inSubs = day.c.some((s, idx) => {
+          const inSubTitle = s.t.toLowerCase().includes(search);
+          const noteText = (daySaved[`note_${idx}`] || '').toLowerCase();
+          return inSubTitle || noteText.includes(search);
+        });
+        return inTitle || inSubs;
       });
 
-      if (filtered.length === 0) {
-        container.innerHTML = '<div style="text-align:center; padding: 40px; color: #64748b; background:#fff; border-radius:12px; border:1px dashed #e2e8f0;">Keine passenden Lerntage gefunden.</div>';
-        updateGlobalProgress();
-        return;
-      }
-
       filtered.forEach(day => {
-        const subject = SUBJECT_CONFIG[day.subject] || SUBJECT_CONFIG.querschnitt;
-        const totalSubs = day.subtopics.length;
-        const doneSubs = day.subtopics.filter(s => s.completed).length;
-        const isDayDone = totalSubs > 0 && doneSubs === totalSubs;
-        const percent = totalSubs === 0 ? 0 : Math.round((doneSubs / totalSubs) * 100);
+        const subject = SUBJECT_CONFIG[day.s] || SUBJECT_CONFIG.querschnitt;
+        const daySaved = savedTasks[day.d] || {};
+        const isOpen = daySaved.open || false;
+        
+        let doneCount = 0;
+        day.c.forEach((_, idx) => {
+          if (daySaved[`sub_${idx}`]) doneCount++;
+        });
+        const totalCount = day.c.length;
+        const isCompleted = totalCount > 0 && doneCount === totalCount;
+        const dayPercent = totalCount === 0 ? 0 : Math.round((doneCount / totalCount) * 100);
+
+        // LERNAUFWAND IM LERNPLAN.NET STIL
+        let effortClass = 'effort-normal';
+        let effortPercent = day.w || 100;
+        if (effortPercent < 90) effortClass = 'effort-low';
+        else if (effortPercent <= 110) effortClass = 'effort-normal';
+        else if (effortPercent < 140) effortClass = 'effort-high';
+        else effortClass = 'effort-extreme';
 
         const card = document.createElement('div');
-        card.id = `day-${day.dayNumber}`;
-        card.className = `day-card ${day.isOpen ? 'open' : ''} ${isDayDone ? 'completed' : ''}`;
+        card.id = `day-${day.d}`;
+        card.className = `day-card ${isOpen ? 'open' : ''} ${isCompleted ? 'completed' : ''} ${subject.colorClass}`;
 
-        // HTML für Unterthemen
-        const subtopicsHtml = day.subtopics.map(sub => {
-          const ambossQuery = encodeURIComponent(sub.title.replace(/[^a-zA-Z0-9 äöüÄÖÜß]/g, ' '));
+        const subHtml = day.c.map((sub, idx) => {
+          const isSubDone = !!daySaved[`sub_${idx}`];
+          const note = daySaved[`note_${idx}`] || '';
           return `
-            <div class="subtopic-item ${sub.completed ? 'completed' : ''}">
-              <div class="subtopic-header">
+            <div class="subtopic-item ${isSubDone ? 'completed' : ''}">
+              <div class="subtopic-top">
                 <input 
                   type="checkbox" 
                   class="subtopic-checkbox" 
-                  ${sub.completed ? 'checked' : ''} 
-                  onchange="toggleSubtopic(${day.dayNumber}, '${sub.id}')"
+                  ${isSubDone ? 'checked' : ''} 
+                  onchange="toggleSub(${day.d}, ${idx}, this.checked)"
                 />
-                <span class="subtopic-title">${escapeHtml(sub.title)}</span>
-                <a 
-                  class="amboss-link-btn" 
-                  href="https://next.amboss.com/de/search?q=${ambossQuery}" 
-                  target="_blank" 
-                  rel="noopener"
-                  title="In AMBOSS aufschlagen"
-                >
-                  📖 AMBOSS
-                </a>
+                <span class="subtopic-title">${escapeHtml(sub.t)}</span>
+                <a class="amboss-btn" href="${sub.l}" target="_blank" rel="noopener">📖 AMBOSS</a>
               </div>
-              <div class="subtopic-notes">
-                <textarea 
-                  class="subtopic-textarea" 
-                  placeholder="Eigene Notizen, Merksätze oder Fallstricke zu diesem Kapitel..."
-                  onchange="updateSubtopicNotes(${day.dayNumber}, '${sub.id}', this.value)"
-                >${escapeHtml(sub.notes || '')}</textarea>
-              </div>
+              <textarea 
+                class="subtopic-textarea" 
+                placeholder="Eigene Notizen, Merksätze oder Fallstricke..." 
+                onchange="saveNote(${day.d}, ${idx}, this.value)"
+              >${escapeHtml(note)}</textarea>
             </div>
           `;
         }).join('');
 
         card.innerHTML = `
-          <!-- TAGES-HEADER -->
-          <div class="day-header" onclick="toggleDayOpen(${day.dayNumber})">
+          <div class="day-header" onclick="toggleCard(${day.d})">
             <div class="day-header-top">
               <input 
                 type="checkbox" 
                 class="day-checkbox" 
-                ${isDayDone ? 'checked' : ''} 
-                onclick="event.stopPropagation(); toggleEntireDay(${day.dayNumber}, this.checked)"
-                title="Ganzen Tag abhaken / öffnen"
+                ${isCompleted ? 'checked' : ''} 
+                onclick="event.stopPropagation(); toggleEntireDay(${day.d}, this.checked)"
+                title="Ganzen Tag abhaken"
               />
               <div class="day-title-wrap">
-                <span class="day-number-badge">Tag ${day.dayNumber}</span>
-                <span class="day-title">${escapeHtml(day.title)}</span>
+                <span class="day-number-badge">Tag ${day.d}</span>
+                <span class="day-title">${escapeHtml(day.t)}</span>
               </div>
               <span class="day-chevron">▼</span>
             </div>
 
             <div class="day-meta-row">
               <div class="meta-left">
-                <span class="subject-badge ${subject.class}">${subject.name}</span>
+                <span class="subject-badge ${subject.badge}">${subject.name}</span>
                 
-                <!-- VISUELLER HORIZONTALER LERNAUFWAND-BALKEN -->
-                <div class="effort-container" title="Geschätzter Lernaufwand">
+                <!-- BALKEN FÜR LERNAUFWAND (LERNPLAN.NET STIL) -->
+                <div class="effort-net-box" title="Umfang im Vergleich zum Durchschnittstag (100%)">
                   <span>Aufwand:</span>
-                  <div class="effort-bar-track">
-                    <div class="effort-bar-fill effort-${day.effort || 'mittel'}"></div>
+                  <div class="effort-net-track">
+                    <div class="effort-net-bar ${effortClass}" style="width: ${Math.min(effortPercent, 180) / 1.8}%;"></div>
                   </div>
-                  <span>${escapeHtml(day.effortLabel || 'Mittel')}</span>
+                  <span style="font-weight:700;">${effortPercent}%</span>
                 </div>
               </div>
 
-              <!-- TAGES-FORTSCHRITTSBALKEN -->
-              <div class="day-progress-container" title="Fortschritt dieses Tages">
-                <div class="day-progress-track">
-                  <div class="day-progress-fill" style="width: ${percent}%;"></div>
+              <div class="day-prog-box">
+                <div class="day-prog-track">
+                  <div class="day-prog-fill" style="width: ${dayPercent}%;"></div>
                 </div>
-                <span class="day-progress-text">${doneSubs}/${totalSubs} (${percent}%)</span>
+                <span class="day-prog-text">${doneCount}/${totalCount} (${dayPercent}%)</span>
               </div>
             </div>
           </div>
 
-          <!-- UNTERTHEMEN DIESES TAGES (AUSKLAPPBAR) -->
           <div class="day-body">
             <div class="subtopics-list">
-              ${subtopicsHtml}
+              ${subHtml}
             </div>
           </div>
         `;
@@ -1010,8 +1718,10 @@
       updateGlobalProgress();
     }
 
-    // Initialer Aufruf
+    // Initialisierung
+    renderCalendar();
     renderDays();
+    updateTimerUI();
   </script>
 </body>
 </html>
