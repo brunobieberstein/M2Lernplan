@@ -150,43 +150,51 @@
     .legend-item {
       display: flex;
       align-items: center;
-      gap: 3px;
+      gap: 4px;
     }
     .legend-dot {
-      width: 9px;
-      height: 9px;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
-      border: 1px solid rgba(0,0,0,0.15);
+      display: inline-block;
     }
     .calendar-scrollable {
-      flex: 1;
       overflow-y: auto;
+      flex: 1;
       padding-right: 4px;
+    }
+    .calendar-scrollable::-webkit-scrollbar {
+      width: 4px;
+    }
+    .calendar-scrollable::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
     }
     .month-section {
       margin-bottom: 14px;
     }
     .month-name {
-      font-size: 0.74rem;
+      font-size: 0.76rem;
       font-weight: 700;
-      color: var(--text-muted);
+      color: #475569;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      margin-bottom: 4px;
+      margin-bottom: 5px;
     }
     .calendar-weekdays {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
+      gap: 2px;
       text-align: center;
       font-size: 0.62rem;
+      color: var(--text-muted);
       font-weight: 600;
-      color: #94a3b8;
-      margin-bottom: 2px;
+      margin-bottom: 3px;
     }
     .calendar-grid {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
-      gap: 2px;
+      gap: 3px;
     }
     .cal-day {
       aspect-ratio: 1;
@@ -194,55 +202,52 @@
       align-items: center;
       justify-content: center;
       font-size: 0.68rem;
-      font-weight: 600;
       border-radius: 4px;
       cursor: pointer;
       user-select: none;
       transition: all 0.1s;
+      font-weight: 500;
     }
     .cal-empty {
-      visibility: hidden;
+      background: transparent;
+      cursor: default;
     }
     .cal-default {
-      background: #f8fafc;
-      color: #475569;
-      border: 1px solid transparent;
+      background: #f1f5f9;
+      color: #334155;
     }
     .cal-default:hover {
-      border-color: #cbd5e1;
+      background: #e2e8f0;
     }
     .cal-full {
-      background: #10b981;
-      color: #ffffff;
-      border: 1px solid #059669;
+      background: #10b981 !important;
+      color: #ffffff !important;
+      font-weight: 700;
     }
     .cal-half {
-      background: #f59e0b;
-      color: #ffffff;
-      border: 1px solid #d97706;
+      background: #f59e0b !important;
+      color: #ffffff !important;
+      font-weight: 700;
     }
-    /* WEISSE FARBE FÜR GEBLOCKTE TAGE */
     .cal-pause {
       background: #ffffff !important;
-      color: #334155 !important;
+      color: #64748b !important;
       border: 1.5px solid #94a3b8 !important;
-      font-weight: 700 !important;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+      font-weight: 600;
     }
     .cal-exam {
-      background: var(--danger) !important;
+      background: #dc2626 !important;
       color: #ffffff !important;
-      font-weight: 800 !important;
+      font-weight: 800;
+      cursor: not-allowed;
       animation: pulse 2s infinite;
-      box-shadow: 0 0 6px rgba(220, 38, 38, 0.4);
-      border: 1px solid #991b1b;
     }
     @keyframes pulse {
       0%, 100% { opacity: 1; }
-      50% { opacity: 0.85; }
+      50% { opacity: 0.75; }
     }
 
-    /* RECHTE SPALTE: LERNTIMER & GESAMT-FORTSCHRITT */
+    /* RECHTE SPALTE: TIMER & VERTIKALER FORTSCHRITTSBALKEN */
     .right-sidebar {
       width: 140px;
       position: sticky;
@@ -258,12 +263,12 @@
       background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: 16px;
-      padding: 12px;
+      padding: 12px 10px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.04);
       display: flex;
       flex-direction: column;
       align-items: center;
-      text-align: center;
+      gap: 6px;
     }
     .timer-title {
       font-size: 0.7rem;
@@ -277,24 +282,22 @@
       font-weight: 800;
       color: #0f172a;
       font-variant-numeric: tabular-nums;
-      margin: 4px 0;
     }
     .timer-modes {
       display: flex;
       gap: 4px;
       width: 100%;
-      margin-bottom: 6px;
     }
     .timer-mode-btn {
       flex: 1;
-      font-size: 0.62rem;
-      padding: 3px 2px;
-      border-radius: 4px;
+      padding: 4px 2px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      border-radius: 6px;
       border: 1px solid var(--border);
-      background: #f8fafc;
+      background: #ffffff;
+      color: #334155;
       cursor: pointer;
-      font-weight: 600;
-      color: var(--text-muted);
     }
     .timer-mode-btn.active {
       background: var(--primary);
@@ -433,18 +436,22 @@
       border-color: #0f172a !important;
     }
 
-    /* TOP 100 KAPITEL BLOCK (ÜBER TAG 1) */
+    /* TOP 100 KAPITEL BLOCK (ÜBER TAG 1) - KEINE CHECKBOXEN */
     .top100-card {
-      background: linear-gradient(to right, #fffbeb, #ffffff);
+      background: #ffffff;
       border: 1.5px solid #fde68a;
       border-left: 6px solid #d97706;
       border-radius: 14px;
       margin-bottom: 16px;
       box-shadow: 0 2px 6px rgba(217, 119, 6, 0.08);
       overflow: hidden;
+      transition: box-shadow 0.2s;
+    }
+    .top100-card:hover {
+      box-shadow: 0 4px 12px rgba(217, 119, 6, 0.12);
     }
     .top100-header {
-      padding: 14px 16px;
+      padding: 14px 18px;
       cursor: pointer;
       user-select: none;
       display: flex;
@@ -452,11 +459,12 @@
       align-items: center;
       flex-wrap: wrap;
       gap: 10px;
+      background: linear-gradient(to right, #fffbeb, #ffffff);
     }
     .top100-title-wrap {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
     }
     .top100-title {
       font-size: 1.05rem;
@@ -468,136 +476,191 @@
       color: #b45309;
       font-size: 0.72rem;
       font-weight: 700;
-      padding: 2px 8px;
+      padding: 3px 9px;
       border-radius: 999px;
       border: 1px solid #fde68a;
     }
-    .top100-progress-wrap {
+    .top100-actions-wrap {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
     }
-    .top100-track {
-      width: 100px;
-      height: 7px;
-      background: #fef3c7;
-      border: 1px solid #fde68a;
-      border-radius: 999px;
-      overflow: hidden;
+    .top100-external-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #f59e0b;
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 8px;
+      transition: all 0.15s;
     }
-    .top100-fill {
-      height: 100%;
+    .top100-external-link:hover {
       background: #d97706;
-      width: 0%;
-      transition: width 0.25s;
+      transform: translateY(-1px);
+    }
+    .top100-chevron {
+      font-size: 0.85rem;
+      color: #92400e;
+      transition: transform 0.2s;
+      font-weight: bold;
+    }
+    .top100-card.open .top100-chevron {
+      transform: rotate(180deg);
     }
     .top100-body {
       display: none;
-      padding: 14px 16px;
+      padding: 16px 18px;
       border-top: 1px solid #fde68a;
       background: #ffffff;
     }
     .top100-card.open .top100-body {
       display: block;
     }
-    .top100-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 8px;
+    .top100-intro {
+      background: #fffdf5;
+      border: 1px solid #fef3c7;
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin-bottom: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
     }
-    .top100-item {
+    .top100-intro-text {
+      font-size: 0.82rem;
+      color: #78350f;
+      line-height: 1.45;
+      max-width: 680px;
+    }
+    .top100-btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #b45309;
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 8px 14px;
+      border-radius: 8px;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+    .top100-btn-primary:hover {
+      background: #92400e;
+    }
+    .top100-subject-group {
+      margin-bottom: 14px;
+    }
+    .top100-subject-group:last-child {
+      margin-bottom: 0;
+    }
+    .top100-subject-title {
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #475569;
+      margin-bottom: 6px;
       display: flex;
       align-items: center;
-      gap: 8px;
-      font-size: 0.8rem;
-      padding: 6px 10px;
+      gap: 6px;
+    }
+    .top100-tags-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .top100-tag {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      color: #334155;
+      font-size: 0.78rem;
+      padding: 4px 10px;
       border-radius: 6px;
-      background: #fafaf9;
-      border: 1px solid #e7e5e4;
-      cursor: pointer;
-    }
-    .top100-item.done {
-      background: #ecfdf5;
-      border-color: #a7f3d0;
-      text-decoration: line-through;
-      color: #64748b;
-    }
-    .top100-checkbox {
-      width: 16px;
-      height: 16px;
-      cursor: pointer;
-      accent-color: #d97706;
+      font-weight: 500;
+      user-select: text;
     }
 
-    /* TAGES-KARTEN MIT ECHTEN NAMEN */
+    /* TAGE-KARTEN (1 BIS 100) */
     .days-container {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
     }
     .day-card {
       background: var(--card-bg);
       border: 1px solid var(--border);
+      border-left: 5px solid #94a3b8;
       border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
       overflow: hidden;
-      border-left: 6px solid #94a3b8;
-      transition: all 0.15s;
+      transition: all 0.15s ease;
+    }
+    .day-card:hover {
+      box-shadow: 0 3px 8px rgba(0,0,0,0.06);
     }
     .day-card.completed {
-      border-color: #a7f3d0;
-      background: #fafcfb;
+      opacity: 0.75;
+      background: #fcfdfd;
+      border-left-color: #10b981 !important;
     }
 
-    /* FARBEN PRO FACH */
-    .color-innere { border-left-color: #dc2626 !important; }
-    .color-infekt { border-left-color: #b91c1c !important; }
-    .color-paediatrie { border-left-color: #d97706 !important; }
-    .color-humangenetik { border-left-color: #854d0e !important; }
-    .color-dermatologie { border-left-color: #c026d3 !important; }
-    .color-anaesthesie { border-left-color: #0284c7 !important; }
-    .color-notfall { border-left-color: #0369a1 !important; }
-    .color-chirurgie { border-left-color: #ea580c !important; }
-    .color-orthopaedie { border-left-color: #65a30d !important; }
-    .color-gynaekologie { border-left-color: #db2777 !important; }
-    .color-urologie { border-left-color: #0d9488 !important; }
-    .color-hno { border-left-color: #ca8a04 !important; }
-    .color-auge { border-left-color: #2563eb !important; }
-    .color-neurologie { border-left-color: #4f46e5 !important; }
-    .color-psychiatrie { border-left-color: #7c3aed !important; }
-    .color-pharma { border-left-color: #059669 !important; }
-    .color-radiologie { border-left-color: #0891b2 !important; }
-    .color-arbeits { border-left-color: #475569 !important; }
-    .color-rechts { border-left-color: #334155 !important; }
-    .color-patho { border-left-color: #6b7280 !important; }
-    .color-epidem { border-left-color: #52525b !important; }
-    .color-sozial { border-left-color: #4b5563 !important; }
-    .color-wiederholung { border-left-color: #3b82f6 !important; }
-    .color-generalprobe { border-left-color: #15803d !important; }
+    /* FARBCODIERUNG JE NACH FACH */
+    .color-innere { border-left-color: #2563eb; }
+    .color-infekt { border-left-color: #0d9488; }
+    .color-paediatrie { border-left-color: #db2777; }
+    .color-humangenetik { border-left-color: #7c3aed; }
+    .color-dermatologie { border-left-color: #ea580c; }
+    .color-anaesthesie { border-left-color: #e11d48; }
+    .color-notfall { border-left-color: #dc2626; }
+    .color-chirurgie { border-left-color: #059669; }
+    .color-orthopaedie { border-left-color: #b45309; }
+    .color-gynaekologie { border-left-color: #c026d3; }
+    .color-urologie { border-left-color: #0284c7; }
+    .color-hno { border-left-color: #4f46e5; }
+    .color-auge { border-left-color: #0891b2; }
+    .color-neurologie { border-left-color: #4338ca; }
+    .color-psychiatrie { border-left-color: #9333ea; }
+    .color-pharma { border-left-color: #ca8a04; }
+    .color-radiologie { border-left-color: #475569; }
+    .color-arbeits { border-left-color: #65a30d; }
+    .color-rechts { border-left-color: #57534e; }
+    .color-patho { border-left-color: #be123c; }
+    .color-epidem { border-left-color: #0e7490; }
+    .color-sozial { border-left-color: #15803d; }
+    .color-wiederholung { border-left-color: #059669; }
+    .color-generalprobe { border-left-color: #16a34a; }
 
-    /* BADGES */
-    .badge-innere { background: #fee2e2; color: #991b1b; }
-    .badge-infekt { background: #fecaca; color: #7f1d1d; }
-    .badge-paediatrie { background: #fef3c7; color: #92400e; }
-    .badge-humangenetik { background: #fef08a; color: #713f12; }
-    .badge-dermatologie { background: #fae8ff; color: #86198f; }
-    .badge-anaesthesie { background: #e0f2fe; color: #075985; }
-    .badge-notfall { background: #bae6fd; color: #0369a1; }
-    .badge-chirurgie { background: #ffedd5; color: #9a3412; }
-    .badge-orthopaedie { background: #ecfccb; color: #3f6212; }
-    .badge-gynaekologie { background: #fce7f3; color: #9d174d; }
-    .badge-urologie { background: #ccfbf1; color: #115e59; }
-    .badge-hno { background: #fef9c3; color: #854d0e; }
-    .badge-auge { background: #dbeafe; color: #1e40af; }
-    .badge-neurologie { background: #e0e7ff; color: #3730a3; }
-    .badge-psychiatrie { background: #ede9fe; color: #5b21b6; }
-    .badge-pharma { background: #d1fae5; color: #065f46; }
-    .badge-radiologie { background: #cffafe; color: #155e75; }
-    .badge-arbeits { background: #f1f5f9; color: #334155; }
-    .badge-rechts { background: #e2e8f0; color: #1e293b; }
-    .badge-patho { background: #f3f4f6; color: #374151; }
-    .badge-epidem { background: #f4f4f5; color: #27272a; }
-    .badge-sozial { background: #e5e7eb; color: #1f2937; }
-    .badge-wiederholung { background: #dbeafe; color: #1d4ed8; }
+    .badge-innere { background: #dbeafe; color: #1e40af; }
+    .badge-infekt { background: #ccfbf1; color: #115e59; }
+    .badge-paediatrie { background: #fce7f3; color: #9d174d; }
+    .badge-humangenetik { background: #ede9fe; color: #5b21b6; }
+    .badge-dermatologie { background: #ffedd5; color: #9a3412; }
+    .badge-anaesthesie { background: #ffe4e6; color: #9f1239; }
+    .badge-notfall { background: #fee2e2; color: #991b1b; }
+    .badge-chirurgie { background: #d1fae5; color: #065f46; }
+    .badge-orthopaedie { background: #fef3c7; color: #92400e; }
+    .badge-gynaekologie { background: #fae8ff; color: #86198f; }
+    .badge-urologie { background: #e0f2fe; color: #075985; }
+    .badge-hno { background: #e0e7ff; color: #3730a3; }
+    .badge-auge { background: #cffafe; color: #155e75; }
+    .badge-neurologie { background: #e0e7ff; color: #312e81; }
+    .badge-psychiatrie { background: #f3e8ff; color: #6b21a8; }
+    .badge-pharma { background: #fef9c3; color: #854d0e; }
+    .badge-radiologie { background: #f1f5f9; color: #334155; }
+    .badge-arbeits { background: #ecfccb; color: #3f6212; }
+    .badge-rechts { background: #f5f5f4; color: #44403c; }
+    .badge-patho { background: #ffe4e6; color: #881337; }
+    .badge-epidem { background: #cffafe; color: #164e63; }
+    .badge-sozial { background: #dcfce7; color: #166534; }
+    .badge-wiederholung { background: #d1fae5; color: #065f46; }
     .badge-generalprobe { background: #bbf7d0; color: #14532d; }
 
     .day-header {
@@ -874,21 +937,45 @@
         </div>
       </div>
 
-      <!-- TOP 100 KAPITEL BLOCK (ÜBER TAG 1) -->
+      <!-- TOP 100 KAPITEL BLOCK (ÜBER TAG 1) - KEINE CHECKBOXEN, OFFIZIELLER LINK -->
       <div class="top100-card" id="top100Card">
         <div class="top100-header" onclick="toggleTop100()">
           <div class="top100-title-wrap">
             <span class="top100-title">⭐ Top 100 Kapitel</span>
-            <span class="top100-badge">AMBOSS Checkliste</span>
+            <span class="top100-badge">Offizielle AMBOSS-Auswahl (qiYCsK)</span>
           </div>
-          <div class="top100-progress-wrap">
-            <div class="top100-track"><div class="top100-fill" id="top100Fill"></div></div>
-            <span id="top100Count" style="font-size:0.75rem; font-weight:700; color:#92400e;">0/100 erledigt</span>
-            <span id="top100Chevron" style="font-size:0.8rem; color:#92400e; margin-left:4px;">▼</span>
+          <div class="top100-actions-wrap">
+            <a 
+              class="top100-external-link" 
+              href="https://next.amboss.com/de/courses/AQ0RAf/qiYCsK" 
+              target="_blank" 
+              rel="noopener"
+              onclick="event.stopPropagation();"
+              title="Direkt zu den offiziellen AMBOSS Top-100-Kapiteln öffnen"
+            >
+              📖 In AMBOSS öffnen (Top 100) ↗
+            </a>
+            <span id="top100Chevron" class="top100-chevron">▼</span>
           </div>
         </div>
         <div class="top100-body" id="top100Body">
-          <div class="top100-grid" id="top100Grid"></div>
+          <div class="top100-intro">
+            <div class="top100-intro-text">
+              <strong>🎯 Statistische IMPP-Kernkapitel (High-Yield):</strong>
+              Diese Übersicht zeigt die wichtigsten Prüfungsthemen aus dem offiziellen AMBOSS-Kurs. Sie dienen als Nachschlagewerk und zur gezielten Schwerpunktsetzung (bewusst ohne Checkboxen, da der Fortschritt über die 100 Tage dokumentiert wird).
+            </div>
+            <a 
+              class="top100-btn-primary" 
+              href="https://next.amboss.com/de/courses/AQ0RAf/qiYCsK" 
+              target="_blank" 
+              rel="noopener"
+            >
+              🚀 Kurs in AMBOSS aufrufen ↗
+            </a>
+          </div>
+
+          <!-- Strukturierte Fächergruppen der Top-100 -->
+          <div id="top100Categories"></div>
         </div>
       </div>
 
@@ -928,8 +1015,9 @@
   </div>
 
   <script>
-    const M2_DAYS_DATA = JSON.parse(document.getElementById('m2DaysDataScript').textContent);
-    const TOP_100_DATA = JSON.parse(document.getElementById('top100DataScript').textContent);
+    const M2_DAYS_DATA = [{"d":1,"officialName":"Tag 1 | Innere Medizin","fach":"Innere Medizin","cat":"innere","w":135,"chapters":["Handbuch - Vorbereitung auf das Zweite Staatsexamen","Kreuztipps zum Zweiten Staatsexamen","Untersuchungsmethoden in der Kardiologie","EKG","Herzrhythmusstörungen","Supraventrikuläre Extrasystolen","Vorhofflimmern","Sick-Sinus-Syndrom","AV-Block","AV-Knoten-Reentrytachykardie","Atrioventrikuläre Reentrytachykardie"]},{"d":2,"officialName":"Tag 2 | Innere Medizin","fach":"Innere Medizin","cat":"innere","w":100,"chapters":["Ventrikuläre Extrasystolen","Ventrikuläre Tachykardie","Kammer flattern und - flimmern","Herzschrittmacher","Synkope","Subclavian-Steal-Syndrom"]},{"d":3,"officialName":"Tag 3 | Innere Medizin","fach":"Innere Medizin","cat":"innere","w":115,"chapters":["Dyslipidämien","Atherosklerose und kardiovaskuläre Prävention","Koronare Herzkrankheit","Thoraxschmerz","Akutes Koronarsyndrom","Myokardinfarkt","Herzkatheteruntersuchung"]},{"d":4,"officialName":"Tag 4 | Innere Medizin","fach":"Innere Medizin","cat":"innere","w":115,"chapters":["Herzinsuffizienz","Kardiomyopathien","Dilatative Kardiomyopathie","Hypertrophe Kardiomyopathie","Herzklappenerkrankungen","Aortenklappenstenose","Aortenklappeninsuffizienz","Mitralklappenstenose","Mitralklappeninsuffizienz"]},{"d":5,"officialName":"Tag 5 | Innere Medizin","fach":"Innere Medizin","cat":"innere","w":100,"chapters":["Infektiöse Endokarditis","Rheumatisches Fieber","Myokarditis","Perikarditis","Coxsackievirus-Infektionen","Perikarderguss und Perikardtamponade"]},{"d":6,"officialName":"Tag 6 | Innere Medizin","fach":"Innere Medizin","cat":"innere","w":100,"chapters":["Arterielle Hypertonie","Pulmonale Hypertonie","Varikosis und chronisch-venöse Insuf fi zienz","Phlebothrombose","Lungenembolie"]},{"d":7,"officialName":"Tag 7 | Innere Medizin","fach":"Innere Medizin","cat":"innere","w":135,"chapters":["Periphere arterielle Verschlusskrankheit","Erythrozytenmorphologie und Hämoglobinvarianten","Anämie","Eisenmangel","Hämolytische Anämie","Kugelzellanämie","Glucose-6-phosphat-Dehydrogenase-Mangel","Sichelzellkrankheit","Thalassämie","Myelodysplastische Syndrome"]},{"d":8,"officialName":"Tag 8 | Innere Medizin","fach":"Innere Medizin","cat":"innere","w":135,"chapters":["Akute Leukämien","Myeloproliferative Neoplasien","Chronische myeloische Leukämie","Polycythaemia vera","Hodgkin-Lymphom","Non-Hodgkin-Lymphome","Multiples Myelom","Chronische lymphatische Leukämie","MALT-Lymphom","Kutane Lymphome"]},{"d":9,"officialName":"Tag 9 | Innere Medizin","fach":"Innere Medizin","cat":"innere","w":115,"chapters":["Blutgerinnung und hämorrhagische Diathesen","Von-Willebrand-Syndrom","Hämophilie","Antiphospholipid-Syndrom","Thrombozytopenien","Thrombotische Mikroangiopathie","Splenomegalie","Asplenie und Hyposplenismus"]},{"d":10,"officialName":"Tag 10 | Innere Medizin","fach":"Innere Medizin","cat":"innere","w":135,"chapters":["Klinische Untersuchung der Lunge","Lungenfunktionsuntersuchung","Akute Bronchitis","Pneumonie","Ambulant erworbene Pneumonie","Nosokomiale Pneumonie","Akute unkomplizierte Atemwegsinfektionen","Legionellose","Pneumocystis-jirovecii-Pneumonie","Tuberkulose","Sarkoidose"]},{"d":11,"officialName":"Tag 11 | Innere Medizin","fach":"Innere Medizin","cat":"innere","w":115,"chapters":["Lungenkarzinom","Pleuraerguss","Atelektase","Asthma bronchiale","Chronisch-obstruktive Lungenerkrankung","Interstitielle Lungenparenchymerkrankungen","Exogen-allergische Alveolitis","Schlafbezogene Atmungsstörungen","Husten"]},{"d":12,"officialName":"Tag 12 | Innere Medizin","fach":"Innere Medizin","cat":"innere","w":115,"chapters":["Achalasie","Gastrointestinale Blutung","Mallory-Weiss-Syndrom","Gastroösophageale Re fl uxkrankheit","Gastroduodenale Ulkuskrankheit","Chronische Gastritis","Malassimilation","Zöliakie","Lactoseintoleranz"]},{"d":13,"officialName":"Tag 13 | Innere Medizin","fach":"Innere Medizin","cat":"innere","w":100,"chapters":["Morbus Crohn","Colitis ulcerosa","Divertikulose, Divertikelkrankheit und Divertikulitis","Reizdarmsyndrom","Gutartige Leberraumforderungen","Leberabszess"]},{"d":14,"officialName":"Tag 14 | Innere Medizin","fach":"Innere Medizin","cat":"innere","w":135,"chapters":["Hepatitis A","Hepatitis B und HBV-Infektion","Hepatitis C und HCV-Infektion","Alkoholtoxischer Leberschaden","Autoimmunhepatitis","Primär biliäre Cholangitis","Primär sklerosierende Cholangitis","Morbus Wilson","Hämochromatose","Leberzirrhose","Portale Hypertension"]},{"d":15,"officialName":"Tag 15 | Innere Medizin","fach":"Innere Medizin","cat":"innere","w":100,"chapters":["Ikterus und Cholestase","Akute Pankreatitis","Chronische Pankreatitis","Pankreaskarzinom","Aszites"]},{"d":16,"officialName":"Tag 16 | Innere Medizin","fach":"Innere Medizin","cat":"innere","w":115,"chapters":["Hypophysenvorderlappeninsuffizienz","Prolaktinom","Akromegalie","Nebennierenrindeninsuffizienz","Primärer Hyperaldosteronismus","Cushing-Syndrom","Phäochromozytom","Multiple endokrine Neoplasie"]},{"d":17,"officialName":"Tag 17 | Innere Medizin","fach":"Innere Medizin","cat":"innere","w":115,"chapters":["Struma","Anti-Schilddrüsen-Antikörper","Hyperthyreose","Hypothyreose","Hashimoto-Thyreoiditis","Thyreoiditis de Quervain","Hyperparathyreoidismus"]},{"d":18,"officialName":"Tag 18 | Innere Medizin","fach":"Innere Medizin","cat":"innere","w":85,"chapters":["Metabolisches Syndrom","Diabetes mellitus","Hyperglykämisches Koma","Hypoglykämie"]},{"d":19,"officialName":"Tag 19 | Innere Medizin","fach":"Innere Medizin","cat":"innere","w":115,"chapters":["Diagnostik von Erkrankungen der Niere und der ableitenden Harnwege","Dehydratation","Ödeme","Elektrolytstörungen Natrium","Elektrolytstörungen Kalium","Elektrolytstörungen Calcium","Akute Nierenfunktionseinschränkung","Chronische Nierenkrankheit","Transplantation"]},{"d":20,"officialName":"Tag 20 | Innere Medizin","fach":"Innere Medizin","cat":"innere","w":135,"chapters":["Vasopressin-assoziierte Erkrankungen (Diabetes insipidus)","Syndrom der inadäquaten ADH-Sekretion","Grundlagen nephrologischer Krankheitsbilder","Infektassoziierte Glomerulonephritiden","Rapid-progressive Glomerulonephritis","Nephrotisches Syndrom","IgA-Nephropathie","Renale tubuläre Partialfunktionsstörungen","Proteinurie","Nierenersatzverfahren"]},{"d":21,"officialName":"Tag 21 | Innere Medizin","fach":"Innere Medizin","cat":"innere","w":115,"chapters":["Immunsystem","Fieber und Entzündungsreaktionen","Allergische Erkrankungen","Kontaktekzem","Anaphylaxie","Raynaud-Syndrom","Fibromyalgiesyndrom"]},{"d":22,"officialName":"Tag 22 | Innere Medizin","fach":"Innere Medizin","cat":"innere","w":100,"chapters":["Rheumatoide Arthritis","Axiale Spondylarthritis","Reaktive Arthritis","Psoriasis-Arthritis","Hyperurikämie und Gicht"]},{"d":23,"officialName":"Tag 23 | Innere Medizin","fach":"Innere Medizin","cat":"innere","w":135,"chapters":["Kollagenosen","Lupus erythematodes","Polymyositis und Dermatomyositis","Systemische Sklerose","Vaskulitiden","Riesenzellarteriitis","Polymyalgia rheumatica","Granulomatose mit Polyangiitis","Kawasaki-Syndrom","Thrombangiitis obliterans","Rheumatologische Antikörperdiagnostik"]},{"d":24,"officialName":"Tag 24 | Infektiologie und Hygiene","fach":"Infektiologie und Hygiene","cat":"infekt","w":135,"chapters":["Mikrobiologische Untersuchungen","Blutkulturen","Sepsis","Durchfall","Lebensmittelvergiftung","Norovirus-Infektion","Rotavirus-Infektion","Bakterielle Durchfallerkrankungen","Darmpathogene E.-coli-Infektion","Clostridioides-dif fi cile-Infektion","Amöbiasis","Giardiasis"]},{"d":25,"officialName":"Tag 25 | Infektiologie und Hygiene","fach":"Infektiologie und Hygiene","cat":"infekt","w":135,"chapters":["Erkrankungen durch Staphylokokken","Erkrankungen durch Streptokokken","Toxische Schocksyndrome","Chlamydien-Infektionen","Lyme-Borreliose","Brucellose","Typhus, Paratyphus","Milzbrand","Leptospirose","Diphtherie","Listeriose","Katzenkratzkrankheit"]},{"d":26,"officialName":"Tag 26 | Infektiologie und Hygiene","fach":"Infektiologie und Hygiene","cat":"infekt","w":135,"chapters":["COVID-19","In fl uenza","Herpesvirus-Infektionen","Zytomegalievirus-Infektionen","Infektiöse Mononukleose","HIV-Infektion","Virales hämorrhagisches Fieber","Gelb fieber","Dengue fieber","Zika-Virus-Infektion","Mpox","Tollwut"]},{"d":27,"officialName":"Tag 27 | Infektiologie und Hygiene","fach":"Infektiologie und Hygiene","cat":"infekt","w":135,"chapters":["Aspergillose","Malaria","Toxoplasmose","Leishmaniose","Chagas-Krankheit","Schlafkrankheit","Wurmerkrankungen","Echinokokkose","Schistosomiasis","Lepra","Seltene Zoonosen"]},{"d":28,"officialName":"Tag 28 | Infektiologie und Hygiene","fach":"Infektiologie und Hygiene","cat":"infekt","w":115,"chapters":["Antisepsis","Nosokomiale Infektionen","Lymphknotenschwellung","Impfungen allgemein","Impfempfehlungen der STIKO","Infektionsschutzgesetz","Wasserhygiene"]},{"d":29,"officialName":"Tag 29 | Pädiatrie","fach":"Pädiatrie","cat":"paediatrie","w":135,"chapters":["Das neugeborene Kind","Geburtstraumen","Perinatale Asphyxie und hypoxisch-ischämische Enzephalopathie","Zerebralparese","Neugeboreneninfektion","Omphalitis","Atemnotsyndrom des Neugeborenen","Embryofetopathien durch Noxen","Embryofetopathien durch Infektionserreger","Plötzlicher Säuglingstod","Kinderschutzmedizin"]},{"d":30,"officialName":"Tag 30 | Pädiatrie","fach":"Pädiatrie","cat":"paediatrie","w":135,"chapters":["Icterus neonatorum","Morbus haemolyticus neonatorum","Morbus haemorrhagicus neonatorum","Hyperbilirubinämie-Syndrome","Nahrungsmittelallergie","Entwicklung des Kindes","Kindervorsorgeuntersuchungen","Enuresis und funktionelle Harninkontinenz im Kindes- und Jugendalter","Kleinwuchs","Großwuchs","Pubertät"]},{"d":31,"officialName":"Tag 31 | Pädiatrie","fach":"Pädiatrie","cat":"paediatrie","w":135,"chapters":["Neuroblastom","Nephroblastom","Retinoblastom","Lippen-Kiefer-Gaumen-Spalte","Zystische Fibrose","Adrenogenitales Syndrom","Seltene hereditäre Syndrome","Hereditäre Stoffwechselerkrankungen","Hereditäre Störungen des Aminosäurestoffwechsels","Hereditäre Störungen des Kohlenhydratstoffwechsels","Hereditäre Störungen des Fettsäurestoffwechsels","Hereditäre Störungen im Abbau komplexer Moleküle"]},{"d":32,"officialName":"Tag 32 | Pädiatrie","fach":"Pädiatrie","cat":"paediatrie","w":135,"chapters":["Atopische Dermatitis","Windeldermatitis","Masern","Scharlach","Röteln","Ringelröteln","Exanthema subitum","Windpocken","IgA-Vaskulitis","Mumps","Pertussis","Poliomyelitis","Fieberkrampf"]},{"d":33,"officialName":"Tag 33 | Pädiatrie","fach":"Pädiatrie","cat":"paediatrie","w":135,"chapters":["Akute Bronchiolitis im Säuglingsalter","Pseudokrupp","Epiglottitis","Fremdkörperaspiration","Azyanotische angeborene Herzfehler","Ventrikelseptumdefekt","Atriumseptumdefekt","Zyanotische angeborene Herzfehler","Fallot-Tetralogie","Choanalatresie","Ösophagusatresie","Hypertrophe Pylorusstenose","Duodenalatresie","Morbus Hirschsprung","Viszerale Fehlbildungen","Nekrotisierende Enterokolitis","Darminvagination"]},{"d":34,"officialName":"Tag 34 | Pädiatrie","fach":"Pädiatrie","cat":"paediatrie","w":115,"chapters":["Hüftreifungsstörung (Developmental Dysplasia of the Hip)","Morbus Perthes","Epiphyseolysis capitis femoris","Juvenile idiopathische Arthritis","Morbus Scheuermann","Kraniosynostosen","Hydrozephalus","Fehlbildungen des kraniozervikalen Übergangs","Neuralrohrdefekte"]},{"d":35,"officialName":"Tag 35 | Humangenetik","fach":"Humangenetik","cat":"humangenetik","w":85,"chapters":["Humangenetik (Klinik)","Chromosomenaberrationen","Trisomie 21","Ehlers-Danlos-Syndrom und Marfan-Syndrom"]},{"d":36,"officialName":"Tag 36 | Dermatologie","fach":"Dermatologie","cat":"dermatologie","w":135,"chapters":["Grundlagen der Dermatologie","Herpes zoster","Molluscum contagiosum","Impetigo contagiosa","Staphylococcal scalded Skin Syndrome","Intertriginöse Dermatosen","Allgemeine Mykologie","Dermatophytosen","Onychomykose","Kandidosen","Pityriasis versicolor","Skabies","Lauserkrankungen","Fotodermatosen","Porphyrien","Angioödem","Urtikaria"]},{"d":37,"officialName":"Tag 37 | Dermatologie","fach":"Dermatologie","cat":"dermatologie","w":135,"chapters":["Erythema nodosum","Erythema exsudativum multiforme","Epidermale Nekrolyse","Blasenbildende Autoimmundermatosen","Psoriasis vulgaris","Lichen ruber planus","Ichthyosen","Pityriasis rosea","Seborrhoisches Ekzem","Acne vulgaris","Rosazea","Granulomatöse Hauterkrankungen"]},{"d":38,"officialName":"Tag 38 | Dermatologie","fach":"Dermatologie","cat":"dermatologie","w":135,"chapters":["Benigne Hauttumoren","Aktinische Keratose","Malignes Melanom","Plattenepithelkarzinom der Haut","Basalzellkarzinom","Parapsoriasis en plaques","Vitiligo","Alopezien","Sexuell übertragbare Infektionen","Gonorrhö","Syphilis","Ulcus molle","Sammelsurium der Dermatologie","Periorale Dermatitis"]},{"d":39,"officialName":"Tag 39 | Anästhesie","fach":"Anästhesie","cat":"anaesthesie","w":135,"chapters":["Lokalanästhetika","Regionalanästhesie","Allgemeinanästhesie","Maschinelle Beatmung","Rapid Sequence Induction","Inhalationsanästhetika","Injektionsanästhetika","Muskelrelaxanzien","Benzodiazepine","Maligne Hyperthermie"]},{"d":40,"officialName":"Tag 40 | Intensiv- und Notfallmedizin","fach":"Intensiv- und Notfallmedizin","cat":"notfall","w":135,"chapters":["Grundlagen der Schmerztherapie","Nicht-Opioid-Analgetika","Opioide","Pulsoxymetrie und Blutgasanalyse","Flüssigkeits- und Volumentherapie","Künstliche Ernährung","Transfusionen","Präklinische Traumaversorgung","Grundlagen der Reanimation","Reanimation - AMBOSS-SOP","Polytrauma"]},{"d":41,"officialName":"Tag 41 | Intensiv- und Notfallmedizin","fach":"Intensiv- und Notfallmedizin","cat":"notfall","w":115,"chapters":["Schock","Acute Respiratory Distress Syndrome","Rhabdomyolyse und Crush-Syndrom","Verbrennung","Hypothermie und Erfrierungen","Thoraxtrauma","Pneumothorax","Intoxikation mit Kohlenstoffmonoxid oder -dioxid"]},{"d":42,"officialName":"Tag 42 | Chirurgie","fach":"Chirurgie","cat":"chirurgie","w":135,"chapters":["Akute Wunden und Wundverschluss","Chronische Wunden und Wundbehandlung","Bakterielle Infektionen von Haut und Weichgewebe","Paronychie und Panaritium","Tetanus","Aktinomykose","Perioperatives Management","Laparoskopische Chirurgie","Koronararterielle Bypasschirurgie","Aneurysma","Aortenaneurysma","Aortendissektion","Akuter arterieller Extremitätenverschluss"]},{"d":43,"officialName":"Tag 43 | Chirurgie","fach":"Chirurgie","cat":"chirurgie","w":135,"chapters":["Schilddrüsenkarzinom","Schilddrüsenchirurgie","Ösophagusdivertikel","Boerhaave-Syndrom","Ösophaguskarzinom","Zwerchfellhernie","Milzruptur","Magenkarzinom","Neuroendokrine Neoplasien","Akutes Abdomen","Peritonitis","Ileus"]},{"d":44,"officialName":"Tag 44 | Chirurgie","fach":"Chirurgie","cat":"chirurgie","w":115,"chapters":["Mesenteriale Ischämie","Appendizitis","Kolonpolypen","Kolorektales Karzinom","Hereditäres, nicht-polypöses Kolonkarzinom","Obstipation","Darmchirurgie"]},{"d":45,"officialName":"Tag 45 | Chirurgie","fach":"Chirurgie","cat":"chirurgie","w":135,"chapters":["Cholelithiasis, Cholezystitis und Cholangitis","Biliäre Karzinome","Hepatozelluläres Karzinom","Pankreas- und Leberchirurgie","Anal- und Rektumprolaps","Hämorrhoiden und Hämorrhoidalleiden","Analvenenthrombose","Anal fi ssur","Analabszess und Anal fi stel","Analkarzinom","Sinus pilonidalis","Hernien","Leistenhernie","Schenkelhernie"]},{"d":46,"officialName":"Tag 46 | Chirurgie","fach":"Chirurgie","cat":"chirurgie","w":135,"chapters":["Allgemeine Frakturlehre","Konservative Verfahren in der Frakturversorgung","Operative Verfahren der Unfallchirurgie/Orthopädie","Frakturen im Kindesalter","Kompartmentsyndrom","Claviculafraktur","Luxation des Akromioklavikulargelenks","Humerusfraktur","Distale Radiusfraktur","Schaftfrakturen des Unterarmes"]},{"d":47,"officialName":"Tag 47 | Chirurgie","fach":"Chirurgie","cat":"chirurgie","w":115,"chapters":["Kahnbeinfraktur","Mittelhandfrakturen","Wirbelsäulenverletzungen","Beckenringfrakturen","Proximale Femurfrakturen","Femurschaft- und distale Femurfrakturen","Frakturen des Unterschenkels","Sprunggelenksfraktur"]},{"d":48,"officialName":"Tag 48 | Orthopädie","fach":"Orthopädie","cat":"orthopaedie","w":135,"chapters":["Orthopädische Untersuchungszeichen","Arthrose","Osteomalazie und Rachitis","Osteodystrophia deformans","Osteoporose","Laborkonstellation Knochenerkrankungen","Seronegative Spondylarthritis","Osteomyelitis","Spondylodiszitis","Bakterielle Arthritis"]},{"d":49,"officialName":"Tag 49 | Orthopädie","fach":"Orthopädie","cat":"orthopaedie","w":100,"chapters":["Benigne Knochen- und Knorpeltumoren","Maligne Knochen- und Knorpeltumoren","Spondylolisthese","Bandscheibenprolaps","Adoleszente idiopathische Skoliose","Rückenschmerzen"]},{"d":50,"officialName":"Tag 50 | Orthopädie","fach":"Orthopädie","cat":"orthopaedie","w":135,"chapters":["Morbus Dupuytren","Tendovaginitis","Tendinopathie","Komplexes regionales Schmerzsyndrom","Thoracic-Outlet-Syndrom","Schulterläsionen","Rotatorenmanschettenruptur","Schultergelenkluxation","Bizepssehnenruptur","Luxationen des Ellenbogengelenks","Radiuskopf-Subluxation","Karpaltunnelsyndrom","Sehnenverletzung der Hand","Sammelsurium der Unfallchirurgie und Orthopädie"]},{"d":51,"officialName":"Tag 51 | Orthopädie","fach":"Orthopädie","cat":"orthopaedie","w":135,"chapters":["Osteochondrosis dissecans","Osteonekrosen","Aseptische Femurkopfnekrose im Erwachsenenalter","Fehlstellungen der unteren Extremität","Koxarthrose","Gonarthrose","Sportverletzungen","Meniskusruptur","Patellaluxation","Bandverletzungen des Knies","Achillessehnenruptur","Fußdeformitäten","Zehendeformitäten"]},{"d":52,"officialName":"Tag 52 | Gynäkologie","fach":"Gynäkologie","cat":"gynaekologie","w":135,"chapters":["Diagnostik in der Gynäkologie","Fehlbildungen der weiblichen Geschlechtsorgane","Androgenresistenz","Östrogenwirkung und assoziierte Erkrankungen","Menstruationszyklus und Zyklusanomalien","Endometriose","Polyzystisches Ovarialsyndrom","Klimakterium","Entzündungen des weiblichen Genitaltrakts","Entzündliche und benigne Veränderungen der Mamma"]},{"d":53,"officialName":"Tag 53 | Gynäkologie","fach":"Gynäkologie","cat":"gynaekologie","w":85,"chapters":["Mammakarzinom","Uterusmyom","Benigne Ovarialtumoren","Maligne Ovarialtumoren"]},{"d":54,"officialName":"Tag 54 | Gynäkologie","fach":"Gynäkologie","cat":"gynaekologie","w":85,"chapters":["Infektion mit humanen Papillomaviren","Zervixkarzinom","Endometriumkarzinom","Vulvakarzinom"]},{"d":55,"officialName":"Tag 55 | Gynäkologie","fach":"Gynäkologie","cat":"gynaekologie","w":135,"chapters":["Schwangerschaftsabbruch","Sterilität, Infertilität und Impotenz","Nicht-hormonelle Kontrazeption","Schwangerschaft","Vorsorgeuntersuchungen in der Schwangerschaft","Pränataldiagnostik","Kardiotokografie (CTG)","Mehrlingsschwangerschaft","Extrauteringravidität","Fruchtwasseranomalien"]},{"d":56,"officialName":"Tag 56 | Gynäkologie","fach":"Gynäkologie","cat":"gynaekologie","w":135,"chapters":["Hypertensive Schwangerschaftserkrankungen","HELLP-Syndrom","Blutungen während der Schwangerschaft","Intra- und postpartale Blutungen","Fetale Wachstumsrestriktion","Vorzeitige Plazentalösung","Placenta praevia","Nabelschnurkomplikationen","Trophoblasttumoren","Geburtsablauf","Geburtsmechanik","Geburtseinleitung","Operative Geburtshilfe","Drohende Frühgeburt","Abort und intrauteriner Fruchttod","Uterusruptur","Wochenbett"]},{"d":57,"officialName":"Tag 57 | Urologie","fach":"Urologie","cat":"urologie","w":135,"chapters":["Apparative Diagnostik in der Urologie","Kongenitale Anomalien der Nieren und ableitenden Harnwege","Polyzystische Nierenerkrankung","Blasenekstrophie, Fehlanlagen der männlichen Harnröhre und Palmure","Balanitis und Balanoposthitis","Phimose","Hodenhochstand","Harninkontinenz","Belastungsinkontinenz","Dranginkontinenz","Harnverhalt","Harnab fl ussstörungen","Vesikoureteraler Re fl ux","Morbus Ormond","Urozystitis","Urethritis","Pyelonephritis","Perinephritischer Abszess","Prostatitis","Epididymitis und Orchitis","Hydrocele testis, Varikozele und Spermatozele","Skrotalabszess"]},{"d":58,"officialName":"Tag 58 | Urologie","fach":"Urologie","cat":"urologie","w":135,"chapters":["Nierenzellkarzinom","Benignes Prostatasyndrom","Prostatakarzinom","Urothelkarzinom","Maligne Hodentumoren","Peniskarzinom","Urolithiasis","Traumatische Verletzungen der Niere und der ableitenden Harnwege","Hodentorsion","Priapismus","Penisruptur","Sexuelle Funktionsstörungen","Spermiogramm"]},{"d":59,"officialName":"Tag 59 | HNO","fach":"HNO","cat":"hno","w":135,"chapters":["Audiometrische Verfahren in der HNO","Othämatom und Otserom","Otitis externa","Akute Otitis media","Mastoiditis und Labyrinthitis","Tubenfunktionsstörungen","Otosklerose","Chronische Otitis media","Glomustumor","Hörsturz","Akustisches Trauma","Tinnitus","Peripherer paroxysmaler Lagerungsschwindel","Morbus Menière","Neuropathia vestibularis","Epistaxis","Tumoren der Nasenhaupthöhle und Nasennebenhöhlen","Sinusitis","Allergische Rhinitis","Gesichts- und Felsenbeinfrakturen"]},{"d":60,"officialName":"Tag 60 | HNO","fach":"HNO","cat":"hno","w":135,"chapters":["Adenoide Vegetationen","Juveniles Angio fi brom","Zungenveränderungen","Akute bakterielle Tonsillopharyngitis","Peritonsillar-, Parapharyngeal- und Retropharyngealabszess","Pharynxkarzinom","Kehlkop fl ähmung","Benigne Tumoren und Präkanzerosen des Larynx","Larynxkarzinom","Halszyste und Hals fi stel","Kopfspeicheldrüsenerkrankungen","Sjögren-Syndrom","Sprach- und Sprechentwicklungsstörungen","Sammelsurium der HNO"]},{"d":61,"officialName":"Tag 61 | Augenheilkunde","fach":"Augenheilkunde","cat":"auge","w":135,"chapters":["Untersuchungsmethoden in der Augenheilkunde","Störungen der Lidstellung","Entzündungen der Augenlider","Erkrankungen des Tränenapparats","Infektiöse Konjunktivitis","Nicht-infektiöse Konjunktivitis","Allergische Konjunktivitiden","Degenerationen, Dystrophien und Tumoren der Konjunktiven","Erkrankungen der Hornhaut","Keratitis","Entzündungen der Sklera","Erkrankungen der Linse","Katarakt","Erkrankungen der Uvea","Aderhautmelanom"]},{"d":62,"officialName":"Tag 62 | Augenheilkunde","fach":"Augenheilkunde","cat":"auge","w":135,"chapters":["Pupillenstörungen","Sehstörungen","Erkrankungen des Glaskörpers","Endophthalmitis","Glaukom","Erkrankungen der Netzhaut","Retinale Gefäßverschlüsse","Netzhautablösung","Altersbedingte Makuladegeneration","Störungen der Sehbahn","Erkrankungen der Augenhöhle","Horner-Syndrom","Störungen der Optik","Störungen der Bulbusmotilität und Strabismus","Traumatische Augenverletzungen"]},{"d":63,"officialName":"Tag 63 | Neurologie","fach":"Neurologie","cat":"urologie","w":115,"chapters":["Neurologische Untersuchung","Tremor","Parkinson-Syndrom und Parkinson-Krankheit","Atypische Parkinson-Syndrome","Normaldruckhydrozephalus","Huntington-Erkrankung","Restless-Legs-Syndrom","Grundlagen der Kleinhirnerkrankungen","Friedreich-Ataxie"]},{"d":64,"officialName":"Tag 64 | Neurologie","fach":"Neurologie","cat":"urologie","w":135,"chapters":["Epileptische Anfälle","Status epilepticus","Epilepsien und Epilepsiesyndrome","Transiente globale Amnesie","Narkolepsie","Vigilanzminderung","Irreversibler Hirnfunktionsausfall","Syndrome mit anhaltender minimaler Interaktionsfähigkeit","Intrakranielle Druckerhöhung","Schädel-Hirn-Trauma"]},{"d":65,"officialName":"Tag 65 | Neurologie","fach":"Neurologie","cat":"urologie","w":115,"chapters":["Intrazerebrale Blutung","Epidurales Hämatom","Subdurales Hämatom","Subarachnoidalblutung","Ischämischer Schlaganfall","Karotis- und Vertebralisdissektion","Zerebrale Sinus- und Venenthrombose","Carotis-Sinus-cavernosus-Fistel"]},{"d":66,"officialName":"Tag 66 | Neurologie","fach":"Neurologie","cat":"urologie","w":135,"chapters":["Kopfschmerzen","Migräne","Kopfschmerz vom Spannungstyp","Cluster-Kopfschmerz","Trigeminusneuralgie","Kopfschmerz bei Medikamentenübergebrauch","Idiopathische intrakranielle Hypertension","Meningitis","Liquorpunktion","FSME-Virus-Infektion","Herpes-simplex-Enzephalitis","Hirnabszess","Creutzfeldt-Jakob-Krankheit"]},{"d":67,"officialName":"Tag 67 | Neurologie","fach":"Neurologie","cat":"urologie","w":135,"chapters":["Multiple Sklerose","Neuromyelitis-optica-Spektrum-Erkrankungen","Amyotrophe Lateralsklerose","Spinale Muskelatrophien","Myasthenia gravis","Myotone Dystrophien und nicht-dystrophe Myotonien","Progressive Muskeldystrophien","Stiff-Person-Syndrom","Dystonie","Hereditäre spastische Paraplegie"]},{"d":68,"officialName":"Tag 68 | Neurologie","fach":"Neurologie","cat":"urologie","w":135,"chapters":["Tumoren des zentralen Nervensystems","Gliome","Meningeom","Vestibularisschwannom und andere Neurinome","Meningeosis neoplastica","Hirnnerven-Syndrome","Periphere Fazialisparese","Syndrome der Schädelbasis","Komplettes Querschnittsyndrom","Inkomplette Querschnittsyndrome","Arteria-spinalis-anterior-Syndrom","Zervikale Myelopathie","Degenerative Spinalkanalstenose"]},{"d":69,"officialName":"Tag 69 | Neurologie","fach":"Neurologie","cat":"urologie","w":115,"chapters":["Neurophysiologische Diagnostik","Periphere Nervenläsionen","Läsion des N. radialis","Läsion des N. ulnaris","Läsion des N. medianus","Neuralgische Amyotrophie","Polyneuropathie","Guillain-Barré-Syndrom","Vitamin-B12-Mangel"]},{"d":70,"officialName":"Tag 70 | Psychiatrie","fach":"Psychiatrie","cat":"psychiatrie","w":135,"chapters":["Psychopathologischer Befund","Psychotherapeutische Verfahren (Klinik)","Delir","Demenzen","Alzheimer-Krankheit","Frontotemporale Demenz","Vaskuläre Demenz","Somatoforme Störungen","Unipolare Depression","Bipolare affektive Störung","Neuromodulationsverfahren"]},{"d":71,"officialName":"Tag 71 | Psychiatrie","fach":"Psychiatrie","cat":"psychiatrie","w":135,"chapters":["Zwangsstörungen","Reaktionen auf schwere Belastungen und Anpassungsstörungen","Dissoziative Störungen","Opioidbezogene Störungen","Cannabinoide","Sedativa (Intoxikation und Abhängigkeit)","Rauchen und Tabakkonsum","Psychostimulanzien","Alkoholbezogene Störungen","Wernicke-Enzephalopathie","Schizophrenie"]},{"d":72,"officialName":"Tag 72 | Psychiatrie","fach":"Psychiatrie","cat":"psychiatrie","w":115,"chapters":["Persönlichkeitsstörungen","Borderline-Persönlichkeitsstörung","Tiefgreifende Entwicklungsstörungen","Tic-Störungen","Essstörungen","Angststörungen","Insomnien","Parasomnien"]},{"d":73,"officialName":"Tag 73 | Psychiatrie","fach":"Psychiatrie","cat":"psychiatrie","w":100,"chapters":["Verhaltens- und emotionale Störungen im Kindes- und Jugendalter","Aufmerksamkeitsde fi zit-/Hyperaktivitätsstörung","Geschlechtsinkongruenz","Paraphile Störungen","Suizidalität","Betreuung und Zwangsmaßnahmen"]},{"d":74,"officialName":"Tag 74 | Pharmakologie","fach":"Pharmakologie","cat":"pharma","w":135,"chapters":["Pharmakologische Grundlagen","Arzneimittelrezept","Parasympathomimetika","Parasympatholytika","Anticholinerges Syndrom","β 2-Sympathomimetika","Sympathomimetika","Antisympathotonika","Betablocker","Calciumantagonisten","RAAS-Inhibitoren"]},{"d":75,"officialName":"Tag 75 | Pharmakologie","fach":"Pharmakologie","cat":"pharma","w":135,"chapters":["Amiodaron","Nitrate und Molsidomin","Phosphodiesterase-Hemmer","Herzglykoside","Thrombozytenaggregationshemmer","Parenterale Antikoagulanzien","Orale Antikoagulanzien","Diuretika","Thiaziddiuretika","Schleifendiuretika","Kaliumsparende Diuretika","Überblick über Vergiftungen"]},{"d":76,"officialName":"Tag 76 | Pharmakologie","fach":"Pharmakologie","cat":"pharma","w":135,"chapters":["Antihistaminika","Glucocorticoide","Protonenpumpenhemmer","Lipidsenker","Antidiabetika","Insuline","Bisphosphonate und andere antiosteoporotische Medikamente","Thyreostatika","Hormonelle Kontrazeption","Pharmakotherapie in der Schwangerschaft"]},{"d":77,"officialName":"Tag 77 | Pharmakologie","fach":"Pharmakologie","cat":"pharma","w":100,"chapters":["Antipsychotika","Antidepressiva","Lithium","Anfallssuppressiva","Parkinson-Medikamente"]},{"d":78,"officialName":"Tag 78 | Pharmakologie","fach":"Pharmakologie","cat":"pharma","w":115,"chapters":["Antibiotika","Virostatika","Interferontherapie","Antimykotika","Immunsuppressiva","Chloroquin und Hydroxychloroquin","Zytostatika","Medikamente der zielgerichteten Tumortherapie","Antiemetika"]},{"d":79,"officialName":"Tag 79 | Radiologie","fach":"Radiologie","cat":"radiologie","w":115,"chapters":["Röntgen","Computertomografie","Magnetresonanztomografie","Strahlentherapie","Radioiodtherapie","Schilddrüsenszintigrafie","Knochenszintigrafie","Ösophagusbreischluck und Störungen der Ösophagusmotilität","Tag 79 M2-Lernplan - Wiederholung des Querschnittbereichs Radiologie"]},{"d":80,"officialName":"Tag 80 | Arbeits- und Umweltmedizin","fach":"Arbeits- und Umweltmedizin","cat":"arbeits","w":135,"chapters":["Arbeitsmedizinische Organe und Gesetze","Verhütung und Früherkennung beru fl ich bedingter Schäden","Anerkennung von Berufskrankheiten","Messkriterien der Arbeitsplatzbelastung","Berufskrankheiten durch physikalische Belastungen","Erkrankungen durch Metalle","Erkrankungen durch organische Lösungsmittel, Insektizide, Halogenkohlenwasserstoffe, Benzol und Homologe","Lungenerkrankungen durch Inhalation anorganischer Stäube","Asbestose und Mesotheliom","Silikose","Lungenerkrankungen durch Inhalation organischer Stäube","Erkrankungen durch Einwirkung reizender Gase","Berufserkrankungen der Haut","Erkrankungen durch chlorierte und polyzyklische aromatische Kohlenwasserstoffe"]},{"d":81,"officialName":"Tag 81 | Rechtsmedizin","fach":"Rechtsmedizin","cat":"rechts","w":85,"chapters":["Ärztliche Rechtskunde","Thanatologie","Verletzungen und Gewalteinwirkung"]},{"d":82,"officialName":"Tag 82 | Rechtsmedizin","fach":"Rechtsmedizin","cat":"rechts","w":100,"chapters":["Strangulation und Ersticken","Ertrinken","Zeichen thermischer Schädigungen","Schussverletzungen","Spurensicherung","Arti fi zielle Störungen"]},{"d":83,"officialName":"Tag 83 | Pathologie","fach":"Pathologie","cat":"patho","w":115,"chapters":["Zelluläre Veränderungen und Anpassungsreaktionen","Untersuchungsmethoden in der Pathologie","Allgemeine Onkologie","Tumormarker","Neurokutane Syndrome","Paraneoplastische Syndrome","Systemische Amyloidose"]},{"d":84,"officialName":"Tag 84 | Epidemiologie","fach":"Epidemiologie","cat":"epidem","w":115,"chapters":["Grundbegriffe medizinischer Forschung","Angewandte Statistik","Epidemiologie und Wahrscheinlichkeiten","Studientypen der medizinischen Forschung","Sammelsurium der Epidemiologie","Diagnose- und Klassi fi kationssysteme","Qualitätsmanagement","Prävention"]},{"d":85,"officialName":"Tag 85 | Sozialmedizin & Alternative Heilverfahren und Rehabilitation","fach":"Sozialmedizin & Alternative Heilverfahren und Rehabilitation","cat":"sozial","w":135,"chapters":["Soziale Sicherung","Gesetzliche Unfallversicherung","Gesetzliche Krankenversicherung","Ökonomische Aspekte von Gesundheit und Krankheit","Behinderung und Einschränkung der Arbeitsfähigkeit","Grundlagen der allgemeinmedizinischen Versorgung","Übersicht Geriatrie","Palliativmedizin","Rehabilitation","Physikalische Therapie","Phytotherapeutika","Komplementärmedizin einschließlich Naturheilkunde","Ernährungsmedizin","Zweites Staatsexamen"]},{"d":86,"officialName":"Tag 86 | Wiederholung","fach":"Wiederholung","cat":"wiederholung","w":85,"chapters":["Erstes Wiederholungsexamen Tag 1","IMPP-Originalfragen kreuzen","Detaillierte Fehleranalyse & Wissenslücken schließen"]},{"d":87,"officialName":"Tag 87 | Wiederholung","fach":"Wiederholung","cat":"wiederholung","w":85,"chapters":["Erstes Wiederholungsexamen Tag 2","IMPP-Originalfragen kreuzen","Detaillierte Fehleranalyse & Wissenslücken schließen"]},{"d":88,"officialName":"Tag 88 | Wiederholung","fach":"Wiederholung","cat":"wiederholung","w":85,"chapters":["Erstes Wiederholungsexamen Tag 3","IMPP-Originalfragen kreuzen","Detaillierte Fehleranalyse & Wissenslücken schließen"]},{"d":89,"officialName":"Tag 89 | Wiederholung","fach":"Wiederholung","cat":"wiederholung","w":85,"chapters":["Zweites Wiederholungsexamen Tag 1","IMPP-Originalfragen kreuzen","Detaillierte Fehleranalyse & Wissenslücken schließen"]},{"d":90,"officialName":"Tag 90 | Wiederholung","fach":"Wiederholung","cat":"wiederholung","w":85,"chapters":["Zweites Wiederholungsexamen Tag 2","IMPP-Originalfragen kreuzen","Detaillierte Fehleranalyse & Wissenslücken schließen"]},{"d":91,"officialName":"Tag 91 | Wiederholung","fach":"Wiederholung","cat":"wiederholung","w":85,"chapters":["Zweites Wiederholungsexamen Tag 3","IMPP-Originalfragen kreuzen","Detaillierte Fehleranalyse & Wissenslücken schließen"]},{"d":92,"officialName":"Tag 92 | Generalprobe","fach":"Generalprobe","cat":"generalprobe","w":160,"chapters":["Erste Generalprobe (Tag 1)","Examenstag unter realen Bedingungen kreuzen (107 Fragen)","Auswertung & Schließen letzter Unsicherheiten"]},{"d":93,"officialName":"Tag 93 | Generalprobe","fach":"Generalprobe","cat":"generalprobe","w":160,"chapters":["Erste Generalprobe (Tag 2)","Examenstag unter realen Bedingungen kreuzen (107 Fragen)","Auswertung & Schließen letzter Unsicherheiten"]},{"d":94,"officialName":"Tag 94 | Generalprobe","fach":"Generalprobe","cat":"generalprobe","w":160,"chapters":["Erste Generalprobe (Tag 3)","Examenstag unter realen Bedingungen kreuzen (107 Fragen)","Auswertung & Schließen letzter Unsicherheiten"]},{"d":95,"officialName":"Tag 95 | Generalprobe","fach":"Generalprobe","cat":"generalprobe","w":160,"chapters":["Zweite Generalprobe (Tag 1)","Examenstag unter realen Bedingungen kreuzen (107 Fragen)","Auswertung & Schließen letzter Unsicherheiten"]},{"d":96,"officialName":"Tag 96 | Generalprobe","fach":"Generalprobe","cat":"generalprobe","w":160,"chapters":["Zweite Generalprobe (Tag 2)","Examenstag unter realen Bedingungen kreuzen (107 Fragen)","Auswertung & Schließen letzter Unsicherheiten"]},{"d":97,"officialName":"Tag 97 | Generalprobe","fach":"Generalprobe","cat":"generalprobe","w":160,"chapters":["Zweite Generalprobe (Tag 3)","Examenstag unter realen Bedingungen kreuzen (107 Fragen)","Auswertung & Schließen letzter Unsicherheiten"]},{"d":98,"officialName":"Tag 98 | Generalprobe","fach":"Generalprobe","cat":"generalprobe","w":160,"chapters":["Dritte Generalprobe (Tag 1)","Examenstag unter realen Bedingungen kreuzen (107 Fragen)","Auswertung & Schließen letzter Unsicherheiten"]},{"d":99,"officialName":"Tag 99 | Generalprobe","fach":"Generalprobe","cat":"generalprobe","w":160,"chapters":["Dritte Generalprobe (Tag 2)","Examenstag unter realen Bedingungen kreuzen (107 Fragen)","Auswertung & Schließen letzter Unsicherheiten"]},{"d":100,"officialName":"Tag 100 | Generalprobe","fach":"Generalprobe","cat":"generalprobe","w":160,"chapters":["Dritte Generalprobe (Tag 3)","Examenstag unter realen Bedingungen kreuzen (107 Fragen)","Auswertung & Schließen letzter Unsicherheiten"]}];
+
+    const TOP_100_BY_SUBJECT = [{"subject":"Kardiologie & Angiologie","icon":"❤️","topics":["Arterielle Hypertonie","Koronare Herzkrankheit (KHK)","Akutes Koronarsyndrom & Myokardinfarkt","Herzinsuffizienz","Vorhofflimmern","Aortenklappenstenose","Aortenklappeninsuffizienz","Mitralklappeninsuffizienz","Infektiöse Endokarditis","Periphere arterielle Verschlusskrankheit (pAVK)","Tiefe Beinvenenthrombose (TVT)","Lungenembolie","Aortenaneurysma & Aortendissektion"]},{"subject":"Pneumologie","icon":"🫁","topics":["Ambulant erworbene Pneumonie (CAP)","Nosokomiale Pneumonie","Asthma bronchiale","Chronisch-obstruktive Lungenerkrankung (COPD)","Lungenkarzinom","Tuberkulose","Sarkoidose","Pneumothorax","Pleuraerguss","Schlafbezogene Atmungsstörungen"]},{"subject":"Gastroenterologie & Hepatologie","icon":"🩺","topics":["Gastroösophageale Refluxkrankheit (GERD)","Gastroduodenale Ulkuskrankheit","Morbus Crohn","Colitis ulcerosa","Divertikulitis","Zöliakie","Hepatitis B & Hepatitis C","Leberzirrhose & Portale Hypertension","Akute Pankreatitis","Chronische Pankreatitis","Pankreaskarzinom","Kolorektales Karzinom","Cholelithiasis & Cholezystitis"]},{"subject":"Nephrologie & Wasser-Elektrolyt-Haushalt","icon":"💧","topics":["Akute Nierenschädigung (AKI)","Chronische Nierenkrankheit (CKD)","Nephrotisches Syndrom","Rapid-progressive Glomerulonephritis (RPGN)","IgA-Nephropathie","Elektrolytstörungen: Hyponatriämie","Elektrolytstörungen: Hyperkaliämie","Elektrolytstörungen: Hyperkalzämie"]},{"subject":"Hämatologie & Onkologie","icon":"🩸","topics":["Eisenmangelanämie & Hämolytische Anämien","Akute myeloische Leukämie (AML)","Akute lymphatische Leukämie (ALL)","Chronische myeloische Leukämie (CML)","Chronische lymphatische Leukämie (CLL)","Hodgkin-Lymphom","Non-Hodgkin-Lymphome","Multiples Myelom","Thrombozytopenien (ITP, HIT II)"]},{"subject":"Endokrinologie & Stoffwechsel","icon":"🔬","topics":["Diabetes mellitus Typ 1 & 2","Hyperglykämisches Koma & Hypoglykämie","Hyperthyreose (M. Basedow)","Hypothyreose (Hashimoto-Thyreoiditis)","Hyperparathyreoidismus","Cushing-Syndrom","Primärer Hyperaldosteronismus (Conn)","Phäochromozytom","Nebennierenrindeninsuffizienz (M. Addison)"]},{"subject":"Rheumatologie & Autoimmun","icon":"🦴","topics":["Rheumatoide Arthritis","Axiale Spondylarthritis (M. Bechterew)","Reaktive Arthritis","Gicht & Hyperurikämie","Systemischer Lupus erythematodes (SLE)","Riesenzellarteriitis & Polymyalgia rheumatica","Granulomatose mit Polyangiitis (GPA)","Systemische Sklerose"]},{"subject":"Infektiologie & Hygiene","icon":"🦠","topics":["Sepsis & Septischer Schock","Clostridioides-difficile-Infektion","Lyme-Borreliose","HIV-Infektion & AIDS","Infektiöse Mononukleose","Bakterielle & Virale Meningitis","COVID-19","Influenza","Malaria","Impfempfehlungen der STIKO"]},{"subject":"Chirurgie & Notfall- / Intensivmedizin","icon":"🚨","topics":["Akutes Abdomen","Appendizitis","Mechanischer & Paralytischer Ileus","Leisten- und Schenkelhernie","Polytrauma & Schockformen","Reanimation nach ERC-Guidelines","Schädel-Hirn-Trauma","Verbrennungen & Inhalationstrauma"]},{"subject":"Orthopädie & Unfallchirurgie","icon":"🩹","topics":["Schenkelhalsfraktur & pertrochantäre Femurfraktur","Distale Radiusfraktur","Kahnbeinfraktur","Schulterluxation & Rotatorenmanschettenruptur","Kreuzband- & Meniskusverletzungen des Knies","Bandscheibenprolaps & Radikulopathien","Kompartmentsyndrom","Koxarthrose & Gonarthrose","Osteoporose"]},{"subject":"Pädiatrie","icon":"🧸","topics":["Atemnotsyndrom des Neugeborenen","Hyperbilirubinämie des Neugeborenen","Pylorusstenose & Invagination","Krupp-Syndrom & Epiglottitis","Pädiatrische Exantheme (Masern, Scharlach, Windpocken)","Zystische Fibrose (Mukoviszidose)","Kindervorsorgeuntersuchungen (U-Untersuchungen)","Fieberkrampf"]},{"subject":"Gynäkologie & Geburtshilfe","icon":"🌸","topics":["Mammakarzinom","Zervixkarzinom","Endometriumkarzinom","Ovarialkarzinom","Endometriose","Präeklampsie, Eklampsie & HELLP-Syndrom","Vorzeitige Plazentalösung & Placenta praevia","Extrauteringravidität","Geburtsmechanik & CTG"]},{"subject":"Urologie","icon":"🧪","topics":["Benignes Prostatasyndrom (BPS)","Prostatakarzinom","Urothelkarzinom der Blase","Nierenzellkarzinom","Urolithiasis (Nieren- und Harnleitersteine)","Hodentumoren & Hodentorsion","Harnwegsinfekte & Pyelonephritis"]},{"subject":"Neurologie & Psychiatrie","icon":"🧠","topics":["Ischämischer Schlaganfall & Lysetherapie","Intrazerebrale Blutung & Subarachnoidalblutung (SAB)","Epileptische Anfälle & Status epilepticus","Parkinson-Syndrom & Parkinson-Krankheit","Multiple Sklerose","Myasthenia gravis","Guillain-Barré-Syndrom (GBS)","Glioblastom & Hirnmetastasen","Unipolare Depression & Bipolare Störung","Schizophrenie","Delir & Demenzen (Alzheimer, Vaskulär)","Alkoholabhängigkeit & Entzugssyndrom","Suizidalität"]},{"subject":"Dermatologie, Sinnesorgane & Querschnittsfächer","icon":"👁️","topics":["Malignes Melanom, Basalzell- & Plattenepithelkarzinom","Psoriasis vulgaris & Atopische Dermatitis","Glaukom & Netzhautablösung","Akute Otitis media & Hörsturz / M. Menière","Sichere & unsichere Todeszeichen","Berufskrankheiten (Asbestose, Silikose)","Antikoagulation & Thrombozytenaggregationshemmer","Antibiotika-Leitlinien & Resistenzen","Häufige Vergiftungen & Antidote"]}];
 
     const SUBJECT_CONFIG = {
       innere: { badge: 'badge-innere', colorClass: 'color-innere' },
@@ -958,12 +1046,11 @@
       generalprobe: { badge: 'badge-generalprobe', colorClass: 'color-generalprobe' }
     };
 
-    let dayStatus = JSON.parse(localStorage.getItem('m2_days_status_v3')) || {};
-    let dayComments = JSON.parse(localStorage.getItem('m2_day_comments_v3')) || {};
-    let openCards = JSON.parse(localStorage.getItem('m2_open_cards_v3')) || { 1: true };
-    let calendarState = JSON.parse(localStorage.getItem('m2_cal_state_v3')) || {};
-    let top100Status = JSON.parse(localStorage.getItem('m2_top100_status_v3')) || {};
-    let top100Open = JSON.parse(localStorage.getItem('m2_top100_open_v3')) || false;
+    let dayStatus = JSON.parse(localStorage.getItem('m2_days_status_v4')) || {};
+    let dayComments = JSON.parse(localStorage.getItem('m2_day_comments_v4')) || {};
+    let openCards = JSON.parse(localStorage.getItem('m2_open_cards_v4')) || { 1: true };
+    let calendarState = JSON.parse(localStorage.getItem('m2_cal_state_v4')) || {};
+    let top100Open = JSON.parse(localStorage.getItem('m2_top100_open_v4')) || false;
 
     let activeFilter = 'alle';
     let allExpanded = false;
@@ -981,8 +1068,10 @@
     }
 
     function updateTimerUI() {
-      document.getElementById('timerDisplay').textContent = formatTime(timerTimeLeft);
-      document.getElementById('btnTimerStart').textContent = timerRunning ? 'Pause' : 'Start';
+      const display = document.getElementById('timerDisplay');
+      const startBtn = document.getElementById('btnTimerStart');
+      if (display) display.textContent = formatTime(timerTimeLeft);
+      if (startBtn) startBtn.textContent = timerRunning ? 'Pause' : 'Start';
     }
 
     window.setTimerMode = function(minutes, label) {
@@ -1054,6 +1143,7 @@
 
     function renderCalendar() {
       const container = document.getElementById('calendarMonthsContainer');
+      if (!container) return;
       container.innerHTML = '';
       let plannedDays = 0;
 
@@ -1121,7 +1211,7 @@
               else if (current === 'half') calendarState[dateKey] = 'pause'; // Geblockt (Weiß)
               else calendarState[dateKey] = 'default';
 
-              localStorage.setItem('m2_cal_state_v3', JSON.stringify(calendarState));
+              localStorage.setItem('m2_cal_state_v4', JSON.stringify(calendarState));
               renderCalendar();
             };
           }
@@ -1133,51 +1223,49 @@
         container.appendChild(section);
       });
 
-      document.getElementById('calendarStudyDaysCount').textContent = 'Geplant: ' + plannedDays + ' / 100 Tage';
+      const countEl = document.getElementById('calendarStudyDaysCount');
+      if (countEl) countEl.textContent = 'Geplant: ' + plannedDays + ' / 100 Tage';
     }
 
-    // ---------------- TOP 100 KAPITEL ----------------
+    // ---------------- TOP 100 KAPITEL (KEINE CHECKBOXEN) ----------------
     function renderTop100() {
       const card = document.getElementById('top100Card');
-      const grid = document.getElementById('top100Grid');
+      const container = document.getElementById('top100Categories');
+      const chevron = document.getElementById('top100Chevron');
+      if (!card || !container) return;
+
       card.classList.toggle('open', top100Open);
-      document.getElementById('top100Chevron').style.transform = top100Open ? 'rotate(180deg)' : 'rotate(0deg)';
+      if (chevron) {
+        chevron.style.transform = top100Open ? 'rotate(180deg)' : 'rotate(0deg)';
+      }
 
-      let done = 0;
-      grid.innerHTML = '';
+      container.innerHTML = '';
+      TOP_100_BY_SUBJECT.forEach(group => {
+        const groupEl = document.createElement('div');
+        groupEl.className = 'top100-subject-group';
 
-      TOP_100_DATA.forEach((title, idx) => {
-        const isDone = !!top100Status[idx];
-        if (isDone) done++;
+        const titleEl = document.createElement('div');
+        titleEl.className = 'top100-subject-title';
+        titleEl.innerHTML = '<span>' + group.icon + '</span> <span>' + escapeHtml(group.subject) + '</span>';
+        groupEl.appendChild(titleEl);
 
-        const item = document.createElement('div');
-        item.className = 'top100-item ' + (isDone ? 'done' : '');
-        item.onclick = (e) => {
-          if (e.target.tagName !== 'INPUT') {
-            toggleTop100Item(idx);
-          }
-        };
+        const tagsWrap = document.createElement('div');
+        tagsWrap.className = 'top100-tags-wrap';
+        group.topics.forEach(topic => {
+          const tag = document.createElement('span');
+          tag.className = 'top100-tag';
+          tag.textContent = '• ' + topic;
+          tagsWrap.appendChild(tag);
+        });
+        groupEl.appendChild(tagsWrap);
 
-        item.innerHTML = 
-          '<input type="checkbox" class="top100-checkbox" ' + (isDone ? 'checked' : '') + ' onchange="toggleTop100Item(' + idx + ')" />' +
-          '<span>' + (idx + 1) + '. ' + escapeHtml(title) + '</span>';
-        grid.appendChild(item);
+        container.appendChild(groupEl);
       });
-
-      const percent = Math.round((done / TOP_100_DATA.length) * 100);
-      document.getElementById('top100Count').textContent = done + '/100 erledigt (' + percent + '%)';
-      document.getElementById('top100Fill').style.width = percent + '%';
     }
 
     window.toggleTop100 = function() {
       top100Open = !top100Open;
-      localStorage.setItem('m2_top100_open_v3', JSON.stringify(top100Open));
-      renderTop100();
-    };
-
-    window.toggleTop100Item = function(idx) {
-      top100Status[idx] = !top100Status[idx];
-      localStorage.setItem('m2_top100_status_v3', JSON.stringify(top100Status));
+      localStorage.setItem('m2_top100_open_v4', JSON.stringify(top100Open));
       renderTop100();
     };
 
@@ -1191,21 +1279,25 @@
       const total = M2_DAYS_DATA.length;
       const percent = Math.round((completedDays / total) * 100);
 
-      document.getElementById('sidebarPercent').textContent = percent + '%';
-      document.getElementById('sidebarDaysText').textContent = completedDays + '/' + total + ' Tage';
-      document.getElementById('sidebarMeterFill').style.height = percent + '%';
+      const percentEl = document.getElementById('sidebarPercent');
+      const textEl = document.getElementById('sidebarDaysText');
+      const fillEl = document.getElementById('sidebarMeterFill');
+
+      if (percentEl) percentEl.textContent = percent + '%';
+      if (textEl) textEl.textContent = completedDays + '/' + total + ' Tage';
+      if (fillEl) fillEl.style.height = percent + '%';
     }
 
     window.toggleDayComplete = function(dayNumber, isChecked) {
       dayStatus[dayNumber] = isChecked;
-      localStorage.setItem('m2_days_status_v3', JSON.stringify(dayStatus));
+      localStorage.setItem('m2_days_status_v4', JSON.stringify(dayStatus));
       updateGlobalProgress();
       renderDays();
     };
 
     window.toggleCardOpen = function(dayNumber) {
       openCards[dayNumber] = !openCards[dayNumber];
-      localStorage.setItem('m2_open_cards_v3', JSON.stringify(openCards));
+      localStorage.setItem('m2_open_cards_v4', JSON.stringify(openCards));
       renderDays();
     };
 
@@ -1214,14 +1306,14 @@
       M2_DAYS_DATA.forEach(d => {
         openCards[d.d] = allExpanded;
       });
-      localStorage.setItem('m2_open_cards_v3', JSON.stringify(openCards));
+      localStorage.setItem('m2_open_cards_v4', JSON.stringify(openCards));
       renderDays();
     };
 
     // FLÜSSIGE NOTIZ-EINGABE: KEIN RE-RENDER DES DOMS!
     window.handleCommentInput = function(dayNumber, text) {
       dayComments[dayNumber] = text;
-      localStorage.setItem('m2_day_comments_v3', JSON.stringify(dayComments));
+      localStorage.setItem('m2_day_comments_v4', JSON.stringify(dayComments));
 
       const hint = document.getElementById('save-hint-' + dayNumber);
       if (hint) {
@@ -1258,7 +1350,7 @@
       }
 
       openCards[nextDay.d] = true;
-      localStorage.setItem('m2_open_cards_v3', JSON.stringify(openCards));
+      localStorage.setItem('m2_open_cards_v4', JSON.stringify(openCards));
       renderDays();
 
       setTimeout(() => {
@@ -1279,6 +1371,7 @@
 
     function renderDays() {
       const container = document.getElementById('daysContainer');
+      if (!container) return;
       const search = (document.getElementById('searchInput')?.value || '').toLowerCase();
       container.innerHTML = '';
 
@@ -1357,6 +1450,7 @@
       updateGlobalProgress();
     }
 
+    // INITIALISIERUNG
     renderCalendar();
     renderTop100();
     renderDays();
