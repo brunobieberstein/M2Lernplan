@@ -750,31 +750,36 @@
       display: flex;
       flex-direction: column;
       gap: 3px;
-      min-width: 175px;
+      min-width: 205px;
       background: #f8fafc;
-      padding: 5px 8px;
+      padding: 5px 10px;
       border-radius: 8px;
       border: 1px solid var(--border);
       box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+      flex-shrink: 0;
     }
     .effort-dual-row {
       display: flex;
       align-items: center;
-      gap: 6px;
-      font-size: 0.69rem;
+      gap: 8px;
+      font-size: 0.72rem;
       color: var(--text-muted);
+      white-space: nowrap;
     }
     .effort-label {
-      width: 50px;
+      min-width: 70px;
       font-weight: 700;
       color: #475569;
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      gap: 3px;
+      gap: 4px;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
     .effort-track {
       flex: 1;
-      height: 5px;
+      min-width: 55px;
+      height: 6px;
       background: #e2e8f0;
       border-radius: 3px;
       overflow: hidden;
@@ -791,12 +796,154 @@
       border-radius: 3px;
     }
     .effort-val {
-      width: 36px;
+      min-width: 42px;
       text-align: right;
       font-weight: 800;
       font-variant-numeric: tabular-nums;
       color: #0f172a;
-      font-size: 0.69rem;
+      font-size: 0.72rem;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* WIEDERHOLUNGSFLAGGE (SCHWACHSTELLEN-MARKER) */
+    .repeat-flag-btn {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      padding: 2px 7px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      line-height: 1.2;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .repeat-flag-btn:hover {
+      background: #f1f5f9;
+      border-color: #94a3b8;
+    }
+    .repeat-flag-btn.active {
+      background: #fee2e2;
+      border-color: #fca5a5;
+      box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.15);
+    }
+    .flag-present-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: #fee2e2;
+      color: #991b1b;
+      border: 1px solid #fecaca;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 6px;
+    }
+    .day-card.is-repeat-flagged {
+      border-right: 3px solid #ef4444;
+      background: #fffdfd;
+    }
+
+    /* KREUZERGEBNIS (SCORE) */
+    .score-badge {
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .score-green {
+      background: #ecfdf5;
+      color: #047857;
+      border: 1px solid #a7f3d0;
+    }
+    .score-yellow {
+      background: #fef3c7;
+      color: #b45309;
+      border: 1px solid #fde68a;
+    }
+    .score-red {
+      background: #fef2f2;
+      color: #b91c1c;
+      border: 1px solid #fecaca;
+    }
+
+    .score-row-wrap {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 12px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .score-left-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .score-input-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #334155;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .score-input-inner {
+      display: inline-flex;
+      align-items: center;
+      background: #ffffff;
+      border: 1.5px solid var(--border);
+      border-radius: 6px;
+      padding: 2px 6px;
+      transition: border-color 0.15s;
+    }
+    .score-input-inner:focus-within {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(5, 150, 105, 0.15);
+    }
+    .score-number-input {
+      width: 48px;
+      border: none;
+      outline: none;
+      font-size: 0.88rem;
+      font-weight: 800;
+      text-align: right;
+      color: #0f172a;
+      background: transparent;
+      padding: 2px 4px;
+    }
+    .score-percent-sign {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-left: 2px;
+    }
+    .score-feedback-text {
+      font-size: 0.74rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    .filter-repeat {
+      border-color: #fca5a5 !important;
+      color: #991b1b !important;
+      background: #fff5f5 !important;
+    }
+    .filter-repeat.active {
+      background: #dc2626 !important;
+      color: #ffffff !important;
+      border-color: #dc2626 !important;
     }
 
     /* INHALT (AUFGEKLAPPT) */
@@ -947,6 +1094,7 @@
         <!-- FÄCHERFILTER -->
         <div class="filter-pills">
           <button class="filter-pill active" onclick="setFilter('alle')">Alle (100 Tage)</button>
+          <button id="filterBtnRepeat" class="filter-pill filter-repeat" onclick="setFilter('wiederholen')">🚩 Wiederholen (<span id="repeatCountBadge">0</span>)</button>
           <button class="filter-pill badge-innere" onclick="setFilter('innere')">Innere Medizin</button>
           <button class="filter-pill badge-infekt" onclick="setFilter('infekt')">Infektiologie</button>
           <button class="filter-pill badge-paediatrie" onclick="setFilter('paediatrie')">Pädiatrie</button>
@@ -971,7 +1119,7 @@
         <div class="top100-header" onclick="toggleTop100()">
           <div class="top100-title-wrap">
             <span class="top100-title">⭐ Top 100 Kapitel</span>
-            <span class="top100-badge">Offizielle AMBOSS-Auswahl (qiYCsK)</span>
+            <span class="top100-badge">Offizielle AMBOSS-Auswahl</span>
           </div>
           <div class="top100-actions-wrap">
             <a 
@@ -1080,6 +1228,8 @@
     let openCards = JSON.parse(localStorage.getItem('m2_open_cards_v4')) || { 1: true };
     let calendarState = JSON.parse(localStorage.getItem('m2_cal_state_v4')) || {};
     let top100Open = JSON.parse(localStorage.getItem('m2_top100_open_v4')) || false;
+    let dayQuizScores = JSON.parse(localStorage.getItem('m2_quiz_scores_v1')) || {};
+    let dayRepeatFlags = JSON.parse(localStorage.getItem('m2_repeat_flags_v1')) || {};
 
     let activeFilter = 'alle';
     let allExpanded = false;
@@ -1359,7 +1509,69 @@
       }
     };
 
-    window.setFilter = function(filter) {
+    
+    function getScoreFeedback(score) {
+      if (score === null || score === undefined || score === '') return { text: '', cls: '', badgeCls: '' };
+      const num = parseInt(score, 10);
+      if (isNaN(num)) return { text: '', cls: '', badgeCls: '' };
+      if (num >= 75) {
+        return { text: 'Sehr gut! ✓ (' + num + '%)', cls: 'score-green', badgeCls: 'score-green' };
+      } else if (num >= 60) {
+        return { text: 'Bestanden ✓ (' + num + '%)', cls: 'score-yellow', badgeCls: 'score-yellow' };
+      } else {
+        return { text: 'Wiederholen empfohlen ⚠️ (' + num + '%)', cls: 'score-red', badgeCls: 'score-red' };
+      }
+    }
+
+    // FLÜSSIGE KREUZERGEBNIS-EINGABE: KEIN RE-RENDER DES DOMS!
+    window.handleQuizScoreInput = function(dayNumber, value) {
+      const trimmed = value.trim();
+      if (trimmed === '') {
+        delete dayQuizScores[dayNumber];
+      } else {
+        let num = parseInt(trimmed, 10);
+        if (num < 0) num = 0;
+        if (num > 100) num = 100;
+        dayQuizScores[dayNumber] = num;
+      }
+      localStorage.setItem('m2_quiz_scores_v1', JSON.stringify(dayQuizScores));
+
+      const fb = getScoreFeedback(dayQuizScores[dayNumber]);
+      const badge = document.getElementById('score-badge-' + dayNumber);
+      if (badge) {
+        if (dayQuizScores[dayNumber] !== undefined) {
+          badge.style.display = 'inline-flex';
+          badge.className = 'score-badge ' + fb.badgeCls;
+          badge.textContent = '🎯 ' + dayQuizScores[dayNumber] + '%';
+        } else {
+          badge.style.display = 'none';
+        }
+      }
+
+      const fbEl = document.getElementById('score-feedback-' + dayNumber);
+      if (fbEl) {
+        fbEl.textContent = fb.text;
+        fbEl.className = 'score-feedback-text ' + fb.cls;
+      }
+    };
+
+    window.toggleRepeatFlag = function(dayNumber) {
+      dayRepeatFlags[dayNumber] = !dayRepeatFlags[dayNumber];
+      if (!dayRepeatFlags[dayNumber]) {
+        delete dayRepeatFlags[dayNumber];
+      }
+      localStorage.setItem('m2_repeat_flags_v1', JSON.stringify(dayRepeatFlags));
+      updateRepeatCountBadge();
+      renderDays();
+    };
+
+    function updateRepeatCountBadge() {
+      const count = Object.keys(dayRepeatFlags).filter(k => !!dayRepeatFlags[k]).length;
+      const badge = document.getElementById('repeatCountBadge');
+      if (badge) badge.textContent = count;
+    }
+
+window.setFilter = function(filter) {
       activeFilter = filter;
       document.querySelectorAll('.filter-pill').forEach(btn => {
         btn.classList.toggle('active', btn.onclick.toString().includes("'" + filter + "'"));
@@ -1405,7 +1617,11 @@
       container.innerHTML = '';
 
       const filtered = M2_DAYS_DATA.filter(day => {
-        if (activeFilter !== 'alle' && day.cat !== activeFilter) return false;
+        if (activeFilter === 'wiederholen') {
+          if (!dayRepeatFlags[day.d]) return false;
+        } else if (activeFilter !== 'alle' && day.cat !== activeFilter) {
+          return false;
+        }
         if (!search) return true;
 
         const comment = (dayComments[day.d] || '').toLowerCase();
@@ -1425,9 +1641,14 @@
         const pagePct = Math.min(100, Math.round((day.pages / 60) * 100));
         const questionPct = Math.min(100, Math.round((day.questions / 120) * 100));
 
+        const isFlagged = !!dayRepeatFlags[day.d];
+        const score = dayQuizScores[day.d];
+        const hasScore = (score !== undefined && score !== null && score !== '');
+        const scoreFeedback = getScoreFeedback(score);
+
         const card = document.createElement('div');
         card.id = 'day-' + day.d;
-        card.className = 'day-card ' + (isOpen ? 'open' : '') + ' ' + (isDone ? 'completed' : '') + ' ' + subject.colorClass;
+        card.className = 'day-card ' + (isOpen ? 'open' : '') + ' ' + (isDone ? 'completed' : '') + ' ' + (isFlagged ? 'is-repeat-flagged ' : '') + subject.colorClass;
 
         const chaptersHtml = day.chapters.map(ch => '<span class="summary-tag">• ' + escapeHtml(ch) + '</span>').join('');
 
@@ -1435,8 +1656,11 @@
           '<div class="day-header" onclick="toggleCardOpen(' + day.d + ')">' +
             '<div class="day-header-top">' +
               '<input type="checkbox" class="day-checkbox" ' + (isDone ? 'checked' : '') + ' onclick="event.stopPropagation(); toggleDayComplete(' + day.d + ', this.checked)" title="Tag als erledigt abhaken" />' +
+              '<button type="button" id="flag-btn-' + day.d + '" class="repeat-flag-btn ' + (isFlagged ? 'active' : '') + '" onclick="event.stopPropagation(); toggleRepeatFlag(' + day.d + ')" title="' + (isFlagged ? 'Aus Wiederholungsliste entfernen' : 'Für Wiederholungsphase vormerken (🚩)') + '">🚩</button>' +
               '<div class="day-title-wrap">' +
                 '<span class="day-official-name">' + escapeHtml(day.officialName) + '</span>' +
+                '<span id="flag-badge-' + day.d + '" class="flag-present-badge" style="display: ' + (isFlagged ? 'inline-flex' : 'none') + ';">🚩 Wiederholen</span>' +
+                '<span id="score-badge-' + day.d + '" class="score-badge ' + scoreFeedback.badgeCls + '" style="display: ' + (hasScore ? 'inline-flex' : 'none') + ';">🎯 ' + score + '%</span>' +
                 '<span id="note-badge-' + day.d + '" class="note-present-badge" style="display: ' + (hasComment ? 'inline-flex' : 'none') + ';" title="Notiz vorhanden">📝 Notiz vorhanden</span>' +
               '</div>' +
               '<span class="day-chevron">▼</span>' +
@@ -1453,7 +1677,7 @@
                   '<span class="effort-val">' + day.pages + ' S.</span>' +
                 '</div>' +
                 '<div class="effort-dual-row">' +
-                  '<span class="effort-label">❓ Fragen:</span>' +
+                  '<span class="effort-label">💡 Fragen:</span>' +
                   '<div class="effort-track"><div class="effort-bar-questions" style="width: ' + questionPct + '%;"></div></div>' +
                   '<span class="effort-val">' + day.questions + ' F.</span>' +
                 '</div>' +
@@ -1464,6 +1688,16 @@
             '<div class="summary-box">' +
               '<div class="summary-title">📖 Relevante Kapitel & Lernthemen laut offiziellem Lernplan:</div>' +
               '<div class="summary-items">' + chaptersHtml + '</div>' +
+            '</div>' +
+            '<div class="score-row-wrap">' +
+              '<div class="score-left-wrap">' +
+                '<span class="score-input-label">🎯 Kreuzergebnis (AMBOSS):</span>' +
+                '<div class="score-input-inner">' +
+                  '<input type="number" id="score-input-' + day.d + '" class="score-number-input" placeholder="--" min="0" max="100" value="' + (hasScore ? score : '') + '" oninput="handleQuizScoreInput(' + day.d + ', this.value)" title="Kreuzergebnis in Prozent" />' +
+                  '<span class="score-percent-sign">%</span>' +
+                '</div>' +
+              '</div>' +
+              '<span id="score-feedback-' + day.d + '" class="score-feedback-text ' + scoreFeedback.cls + '">' + scoreFeedback.text + '</span>' +
             '</div>' +
             '<div class="comment-area-wrap">' +
               '<div class="comment-header">' +
@@ -1485,6 +1719,7 @@
     renderTop100();
     renderDays();
     updateTimerUI();
+    updateRepeatCountBadge();
   </script>
 </body>
 </html>
