@@ -15,7 +15,6 @@
       --primary-light: #ecfdf5;
       --border: #e2e8f0;
       --danger: #dc2626;
-      --note-badge: #f59e0b;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -32,7 +31,7 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(255, 255, 255, 0.94);
+      background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--border);
@@ -222,7 +221,7 @@
       color: #ffffff;
       border: 1px solid #d97706;
     }
-    /* WEISSE FARBE FÜR PAUSENTAGE */
+    /* WEISSE FARBE FÜR GEBLOCKTE TAGE */
     .cal-pause {
       background: #ffffff !important;
       color: #334155 !important;
@@ -381,7 +380,6 @@
       min-width: 0;
     }
 
-    /* Suche & Fächerleiste */
     .controls-bar {
       margin-bottom: 16px;
       display: flex;
@@ -435,6 +433,102 @@
       border-color: #0f172a !important;
     }
 
+    /* TOP 100 KAPITEL BLOCK (ÜBER TAG 1) */
+    .top100-card {
+      background: linear-gradient(to right, #fffbeb, #ffffff);
+      border: 1.5px solid #fde68a;
+      border-left: 6px solid #d97706;
+      border-radius: 14px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 6px rgba(217, 119, 6, 0.08);
+      overflow: hidden;
+    }
+    .top100-header {
+      padding: 14px 16px;
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .top100-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .top100-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #92400e;
+    }
+    .top100-badge {
+      background: #fef3c7;
+      color: #b45309;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid #fde68a;
+    }
+    .top100-progress-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .top100-track {
+      width: 100px;
+      height: 7px;
+      background: #fef3c7;
+      border: 1px solid #fde68a;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .top100-fill {
+      height: 100%;
+      background: #d97706;
+      width: 0%;
+      transition: width 0.25s;
+    }
+    .top100-body {
+      display: none;
+      padding: 14px 16px;
+      border-top: 1px solid #fde68a;
+      background: #ffffff;
+    }
+    .top100-card.open .top100-body {
+      display: block;
+    }
+    .top100-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 8px;
+    }
+    .top100-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8rem;
+      padding: 6px 10px;
+      border-radius: 6px;
+      background: #fafaf9;
+      border: 1px solid #e7e5e4;
+      cursor: pointer;
+    }
+    .top100-item.done {
+      background: #ecfdf5;
+      border-color: #a7f3d0;
+      text-decoration: line-through;
+      color: #64748b;
+    }
+    .top100-checkbox {
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+      accent-color: #d97706;
+    }
+
     /* TAGES-KARTEN MIT ECHTEN NAMEN */
     .days-container {
       display: flex;
@@ -454,42 +548,56 @@
       background: #fafcfb;
     }
 
-    /* EIGENE FARBE PRO FACH */
+    /* FARBEN PRO FACH */
     .color-innere { border-left-color: #dc2626 !important; }
     .color-infekt { border-left-color: #b91c1c !important; }
     .color-paediatrie { border-left-color: #d97706 !important; }
+    .color-humangenetik { border-left-color: #854d0e !important; }
     .color-dermatologie { border-left-color: #c026d3 !important; }
     .color-anaesthesie { border-left-color: #0284c7 !important; }
+    .color-notfall { border-left-color: #0369a1 !important; }
     .color-chirurgie { border-left-color: #ea580c !important; }
     .color-orthopaedie { border-left-color: #65a30d !important; }
     .color-gynaekologie { border-left-color: #db2777 !important; }
     .color-urologie { border-left-color: #0d9488 !important; }
+    .color-hno { border-left-color: #ca8a04 !important; }
+    .color-auge { border-left-color: #2563eb !important; }
     .color-neurologie { border-left-color: #4f46e5 !important; }
     .color-psychiatrie { border-left-color: #7c3aed !important; }
-    .color-radiologie { border-left-color: #0891b2 !important; }
-    .color-auge { border-left-color: #2563eb !important; }
-    .color-hno { border-left-color: #ca8a04 !important; }
-    .color-querschnitt { border-left-color: #475569 !important; }
     .color-pharma { border-left-color: #059669 !important; }
+    .color-radiologie { border-left-color: #0891b2 !important; }
+    .color-arbeits { border-left-color: #475569 !important; }
+    .color-rechts { border-left-color: #334155 !important; }
+    .color-patho { border-left-color: #6b7280 !important; }
+    .color-epidem { border-left-color: #52525b !important; }
+    .color-sozial { border-left-color: #4b5563 !important; }
+    .color-wiederholung { border-left-color: #3b82f6 !important; }
     .color-generalprobe { border-left-color: #15803d !important; }
 
     /* BADGES */
     .badge-innere { background: #fee2e2; color: #991b1b; }
     .badge-infekt { background: #fecaca; color: #7f1d1d; }
     .badge-paediatrie { background: #fef3c7; color: #92400e; }
+    .badge-humangenetik { background: #fef08a; color: #713f12; }
     .badge-dermatologie { background: #fae8ff; color: #86198f; }
     .badge-anaesthesie { background: #e0f2fe; color: #075985; }
+    .badge-notfall { background: #bae6fd; color: #0369a1; }
     .badge-chirurgie { background: #ffedd5; color: #9a3412; }
     .badge-orthopaedie { background: #ecfccb; color: #3f6212; }
     .badge-gynaekologie { background: #fce7f3; color: #9d174d; }
     .badge-urologie { background: #ccfbf1; color: #115e59; }
+    .badge-hno { background: #fef9c3; color: #854d0e; }
+    .badge-auge { background: #dbeafe; color: #1e40af; }
     .badge-neurologie { background: #e0e7ff; color: #3730a3; }
     .badge-psychiatrie { background: #ede9fe; color: #5b21b6; }
-    .badge-radiologie { background: #cffafe; color: #155e75; }
-    .badge-auge { background: #dbeafe; color: #1e40af; }
-    .badge-hno { background: #fef9c3; color: #854d0e; }
-    .badge-querschnitt { background: #f1f5f9; color: #334155; }
     .badge-pharma { background: #d1fae5; color: #065f46; }
+    .badge-radiologie { background: #cffafe; color: #155e75; }
+    .badge-arbeits { background: #f1f5f9; color: #334155; }
+    .badge-rechts { background: #e2e8f0; color: #1e293b; }
+    .badge-patho { background: #f3f4f6; color: #374151; }
+    .badge-epidem { background: #f4f4f5; color: #27272a; }
+    .badge-sozial { background: #e5e7eb; color: #1f2937; }
+    .badge-wiederholung { background: #dbeafe; color: #1d4ed8; }
     .badge-generalprobe { background: #bbf7d0; color: #14532d; }
 
     .day-header {
@@ -532,7 +640,6 @@
       color: var(--text-muted);
     }
 
-    /* GUT SICHTBARE MARKIERUNG: NOTIZ VORHANDEN */
     .note-present-badge {
       display: inline-flex;
       align-items: center;
@@ -574,10 +681,6 @@
       padding: 2px 8px;
       border-radius: 5px;
     }
-    .day-topic-sub {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-    }
 
     /* BALKEN LERNAUFWAND PRO TAG (LERNPLAN.NET STIL) */
     .effort-net-box {
@@ -604,7 +707,7 @@
     .effort-high { background: #f59e0b; }
     .effort-extreme { background: #dc2626; }
 
-    /* INHALT DES TAGES (AUFGEKLAPPT) */
+    /* INHALT (AUFGEKLAPPT) */
     .day-body {
       display: none;
       padding: 14px 16px;
@@ -614,7 +717,6 @@
       display: block;
     }
 
-    /* TEXTZUSAMMENFASSUNG DER KAPITEL */
     .summary-box {
       background: #f8fafc;
       border: 1px solid var(--border);
@@ -633,11 +735,6 @@
       align-items: center;
       gap: 6px;
     }
-    .summary-content {
-      font-size: 0.86rem;
-      color: #1e293b;
-      line-height: 1.55;
-    }
     .summary-items {
       display: flex;
       flex-wrap: wrap;
@@ -647,13 +744,13 @@
     .summary-tag {
       background: #ffffff;
       border: 1px solid #cbd5e1;
-      padding: 2px 8px;
+      padding: 3px 8px;
       border-radius: 6px;
-      font-size: 0.76rem;
+      font-size: 0.78rem;
       color: #334155;
     }
 
-    /* DAS WICHTIGSTE: DAS KOMMENTARFELD */
+    /* KOMMENTARFELD MIT FLÜSSIGEM SCHREIBEN */
     .comment-area-wrap {
       display: flex;
       flex-direction: column;
@@ -679,7 +776,7 @@
     }
     .comment-textarea {
       width: 100%;
-      min-height: 75px;
+      min-height: 85px;
       padding: 8px 12px;
       font-size: 0.85rem;
       border: 1.5px solid var(--border);
@@ -707,7 +804,7 @@
   <div class="sticky-top-nav">
     <div class="sticky-brand">
       <h1>🩺 M2 100-Tage-Lernplan</h1>
-      <span>Staatsexamen Medizin</span>
+      <span>Staatsexamen Medizin (H26 / F27)</span>
     </div>
 
     <!-- DIE DREI SCHNELLZUGRIFFSLINKS -->
@@ -730,10 +827,11 @@
       <div class="calendar-header">
         <div class="calendar-title">📅 Examens-Kalender</div>
         <div id="calendarStudyDaysCount" class="calendar-stats">Geplant: 0 Tage / 100 Tage</div>
+        <!-- LEGENDE: MIT "GEBLOCKT" STATT PAUSENTAG (WEISS) -->
         <div class="calendar-legend">
           <div class="legend-item"><span class="legend-dot" style="background:#10b981;"></span> Ganztags</div>
           <div class="legend-item"><span class="legend-dot" style="background:#f59e0b;"></span> Halbtags</div>
-          <div class="legend-item"><span class="legend-dot" style="background:#ffffff; border:1.5px solid #94a3b8;"></span> Pausentag (Weiß)</div>
+          <div class="legend-item"><span class="legend-dot" style="background:#ffffff; border:1.5px solid #94a3b8;"></span> Geblockt</div>
           <div class="legend-item"><span class="legend-dot" style="background:#dc2626;"></span> Prüfung</div>
         </div>
       </div>
@@ -742,7 +840,6 @@
 
     <!-- 2. MITTE: HAUPTBEREICH MIT ALLEN 100 TAGEN -->
     <main class="main-content">
-      <!-- Steuerung & Filter -->
       <div class="controls-bar">
         <div class="search-row">
           <input 
@@ -758,26 +855,44 @@
         <!-- FÄCHERFILTER -->
         <div class="filter-pills">
           <button class="filter-pill active" onclick="setFilter('alle')">Alle (100 Tage)</button>
-          <button class="filter-pill badge-innere" onclick="setFilter('innere')">Innere Medizin (T. 1–22)</button>
-          <button class="filter-pill badge-infekt" onclick="setFilter('infekt')">Infektiologie (T. 23–26)</button>
-          <button class="filter-pill badge-paediatrie" onclick="setFilter('paediatrie')">Pädiatrie (T. 27–33)</button>
-          <button class="filter-pill badge-dermatologie" onclick="setFilter('dermatologie')">Dermatologie (T. 34–37)</button>
-          <button class="filter-pill badge-anaesthesie" onclick="setFilter('anaesthesie')">Anästhesie & Notfall (T. 38–42)</button>
-          <button class="filter-pill badge-chirurgie" onclick="setFilter('chirurgie')">Chirurgie (T. 43–49)</button>
-          <button class="filter-pill badge-orthopaedie" onclick="setFilter('orthopaedie')">Orthopädie (T. 50–56)</button>
-          <button class="filter-pill badge-gynaekologie" onclick="setFilter('gynaekologie')">Gynäkologie (T. 57–63)</button>
-          <button class="filter-pill badge-urologie" onclick="setFilter('urologie')">Urologie (T. 64–66)</button>
-          <button class="filter-pill badge-neurologie" onclick="setFilter('neurologie')">Neurologie (T. 67–73)</button>
-          <button class="filter-pill badge-psychiatrie" onclick="setFilter('psychiatrie')">Psychiatrie (T. 74–78)</button>
-          <button class="filter-pill badge-radiologie" onclick="setFilter('radiologie')">Radiologie (Tag 79)</button>
-          <button class="filter-pill badge-auge" onclick="setFilter('auge')">Auge (T. 80–82)</button>
-          <button class="filter-pill badge-hno" onclick="setFilter('hno')">HNO (T. 83–85)</button>
-          <button class="filter-pill badge-querschnitt" onclick="setFilter('querschnitt')">Querschnittsfächer (T. 86–90)</button>
-          <button class="filter-pill badge-pharma" onclick="setFilter('pharma')">Pharmakologie (T. 91–94)</button>
-          <button class="filter-pill badge-generalprobe" onclick="setFilter('generalprobe')">Generalproben (T. 95–100)</button>
+          <button class="filter-pill badge-innere" onclick="setFilter('innere')">Innere Medizin</button>
+          <button class="filter-pill badge-infekt" onclick="setFilter('infekt')">Infektiologie</button>
+          <button class="filter-pill badge-paediatrie" onclick="setFilter('paediatrie')">Pädiatrie</button>
+          <button class="filter-pill badge-dermatologie" onclick="setFilter('dermatologie')">Dermatologie</button>
+          <button class="filter-pill badge-anaesthesie" onclick="setFilter('anaesthesie')">Anästhesie & Notfall</button>
+          <button class="filter-pill badge-chirurgie" onclick="setFilter('chirurgie')">Chirurgie</button>
+          <button class="filter-pill badge-orthopaedie" onclick="setFilter('orthopaedie')">Orthopädie</button>
+          <button class="filter-pill badge-gynaekologie" onclick="setFilter('gynaekologie')">Gynäkologie</button>
+          <button class="filter-pill badge-urologie" onclick="setFilter('urologie')">Urologie</button>
+          <button class="filter-pill badge-neurologie" onclick="setFilter('neurologie')">Neurologie</button>
+          <button class="filter-pill badge-psychiatrie" onclick="setFilter('psychiatrie')">Psychiatrie</button>
+          <button class="filter-pill badge-radiologie" onclick="setFilter('radiologie')">Radiologie</button>
+          <button class="filter-pill badge-hno" onclick="setFilter('hno')">HNO</button>
+          <button class="filter-pill badge-auge" onclick="setFilter('auge')">Auge</button>
+          <button class="filter-pill badge-pharma" onclick="setFilter('pharma')">Pharmakologie</button>
+          <button class="filter-pill badge-generalprobe" onclick="setFilter('generalprobe')">Generalproben</button>
         </div>
       </div>
 
+      <!-- TOP 100 KAPITEL BLOCK (ÜBER TAG 1) -->
+      <div class="top100-card" id="top100Card">
+        <div class="top100-header" onclick="toggleTop100()">
+          <div class="top100-title-wrap">
+            <span class="top100-title">⭐ Top 100 Kapitel</span>
+            <span class="top100-badge">AMBOSS Checkliste</span>
+          </div>
+          <div class="top100-progress-wrap">
+            <div class="top100-track"><div class="top100-fill" id="top100Fill"></div></div>
+            <span id="top100Count" style="font-size:0.75rem; font-weight:700; color:#92400e;">0/100 erledigt</span>
+            <span id="top100Chevron" style="font-size:0.8rem; color:#92400e; margin-left:4px;">▼</span>
+          </div>
+        </div>
+        <div class="top100-body" id="top100Body">
+          <div class="top100-grid" id="top100Grid"></div>
+        </div>
+      </div>
+
+      <!-- Container für alle 100 Lerntage -->
       <div id="daysContainer" class="days-container"></div>
     </main>
 
@@ -813,572 +928,42 @@
   </div>
 
   <script>
-    // FACH-KONFIGURATION
+    const M2_DAYS_DATA = JSON.parse(document.getElementById('m2DaysDataScript').textContent);
+    const TOP_100_DATA = JSON.parse(document.getElementById('top100DataScript').textContent);
+
     const SUBJECT_CONFIG = {
-      innere: { name: "Innere Medizin", badge: "badge-innere", colorClass: "color-innere" },
-      infekt: { name: "Infektiologie", badge: "badge-infekt", colorClass: "color-infekt" },
-      paediatrie: { name: "Pädiatrie", badge: "badge-paediatrie", colorClass: "color-paediatrie" },
-      dermatologie: { name: "Dermatologie", badge: "badge-dermatologie", colorClass: "color-dermatologie" },
-      anaesthesie: { name: "Anästhesie & Notfall", badge: "badge-anaesthesie", colorClass: "color-anaesthesie" },
-      chirurgie: { name: "Chirurgie", badge: "badge-chirurgie", colorClass: "color-chirurgie" },
-      orthopaedie: { name: "Orthopädie & Unfall", badge: "badge-orthopaedie", colorClass: "color-orthopaedie" },
-      gynaekologie: { name: "Gynäkologie & Geb.", badge: "badge-gynaekologie", colorClass: "color-gynaekologie" },
-      urologie: { name: "Urologie", badge: "badge-urologie", colorClass: "color-urologie" },
-      neurologie: { name: "Neurologie", badge: "badge-neurologie", colorClass: "color-neurologie" },
-      psychiatrie: { name: "Psychiatrie", badge: "badge-psychiatrie", colorClass: "color-psychiatrie" },
-      radiologie: { name: "Radiologie", badge: "badge-radiologie", colorClass: "color-radiologie" },
-      auge: { name: "Augenheilkunde", badge: "badge-auge", colorClass: "color-auge" },
-      hno: { name: "HNO", badge: "badge-hno", colorClass: "color-hno" },
-      querschnitt: { name: "Querschnittsfächer", badge: "badge-querschnitt", colorClass: "color-querschnitt" },
-      pharma: { name: "Pharmakologie", badge: "badge-pharma", colorClass: "color-pharma" },
-      generalprobe: { name: "Generalproben", badge: "badge-generalprobe", colorClass: "color-generalprobe" }
+      innere: { badge: 'badge-innere', colorClass: 'color-innere' },
+      infekt: { badge: 'badge-infekt', colorClass: 'color-infekt' },
+      paediatrie: { badge: 'badge-paediatrie', colorClass: 'color-paediatrie' },
+      humangenetik: { badge: 'badge-humangenetik', colorClass: 'color-humangenetik' },
+      dermatologie: { badge: 'badge-dermatologie', colorClass: 'color-dermatologie' },
+      anaesthesie: { badge: 'badge-anaesthesie', colorClass: 'color-anaesthesie' },
+      notfall: { badge: 'badge-notfall', colorClass: 'color-notfall' },
+      chirurgie: { badge: 'badge-chirurgie', colorClass: 'color-chirurgie' },
+      orthopaedie: { badge: 'badge-orthopaedie', colorClass: 'color-orthopaedie' },
+      gynaekologie: { badge: 'badge-gynaekologie', colorClass: 'color-gynaekologie' },
+      urologie: { badge: 'badge-urologie', colorClass: 'color-urologie' },
+      hno: { badge: 'badge-hno', colorClass: 'color-hno' },
+      auge: { badge: 'badge-auge', colorClass: 'color-auge' },
+      neurologie: { badge: 'badge-neurologie', colorClass: 'color-neurologie' },
+      psychiatrie: { badge: 'badge-psychiatrie', colorClass: 'color-psychiatrie' },
+      pharma: { badge: 'badge-pharma', colorClass: 'color-pharma' },
+      radiologie: { badge: 'badge-radiologie', colorClass: 'color-radiologie' },
+      arbeits: { badge: 'badge-arbeits', colorClass: 'color-arbeits' },
+      rechts: { badge: 'badge-rechts', colorClass: 'color-rechts' },
+      patho: { badge: 'badge-patho', colorClass: 'color-patho' },
+      epidem: { badge: 'badge-epidem', colorClass: 'color-epidem' },
+      sozial: { badge: 'badge-sozial', colorClass: 'color-sozial' },
+      wiederholung: { badge: 'badge-wiederholung', colorClass: 'color-wiederholung' },
+      generalprobe: { badge: 'badge-generalprobe', colorClass: 'color-generalprobe' }
     };
 
-    // VOLLSTÄNDIGER DATENSATZ ALLER 100 TAGE (OFFIZIELLE BEZEICHNUNGEN & VOLLSTÄNDIGE KAPITELZUSAMMENFASSUNGEN)
-    const M2_DAYS_DATA = [
-      // INNERE MEDIZIN (Tage 1 - 22)
-      { d: 1, s: "innere", name: "Tag 1 Innere Medizin", sub: "Kardiologie & Angiologie: Untersuchungsmethoden & Rhythmiologie", w: 125, chapters: [
-        "Untersuchungsmethoden in der Kardiologie (Echokardiographie, Ergometrie)",
-        "EKG-Grundlagen (Lagetypschema, Schenkelblöcke, Hypertrophiezeichen)",
-        "Supraventrikuläre Rhythmusstörungen (Vorhofflimmern, Vorhofflattern, AVNRT, WPW)",
-        "Bradykarde Rhythmusstörungen (Sick-Sinus-Syndrom, AV-Blöcke Grad I-III)",
-        "Ventrikuläre Extrasystolen, Kammertachykardie & Kammerflimmern",
-        "Synkopen & Schrittmacher-Indikationen"
-      ]},
-      { d: 2, s: "innere", name: "Tag 2 Innere Medizin", sub: "Kardiologie: KHK & Akutes Koronarsyndrom (ACS)", w: 135, chapters: [
-        "Atherosklerose & Fettstoffwechselstörungen (Dyslipidämien)",
-        "Koronare Herzkrankheit (KHK: Stabile Angina pectoris, CCS-Klassifikation)",
-        "Akutes Koronarsyndrom (NSTEMI, STEMI & instabile Angina)",
-        "Myokardinfarkt-Diagnostik (Troponin, Infarkt-EKG, prähospitale Notfalltherapie)",
-        "Invasive Herzkatheterdiagnostik (PCI, Stent, Bypass-Indikation)"
-      ]},
-      { d: 3, s: "innere", name: "Tag 3 Innere Medizin", sub: "Kardiologie: Herzinsuffizienz & Kardiomyopathien", w: 120, chapters: [
-        "Chronische Herzinsuffizienz (HFrEF / HFpEF, NYHA-Stadien, 4-Säulen-Therapie)",
-        "Akute Herzinsuffizienz, Lungenödem & kardiogener Schock",
-        "Kardiomyopathien (DCM, HCM, Takotsubo-Syndrom)",
-        "Myokarditis & entzündliche Herzerkrankungen"
-      ]},
-      { d: 4, s: "innere", name: "Tag 4 Innere Medizin", sub: "Kardiologie: Klappenvitien & Endokarditis", w: 110, chapters: [
-        "Aortenklappenstenose & Aortenklappeninsuffizienz (Auskultation, TAVI)",
-        "Mitralklappeninsuffizienz & Mitralklappenstenose",
-        "Infektiöse Endokarditis (Duke-Kriterien, Erreger & Endokarditisprophylaxe)",
-        "Perikarditis, Perikarderguss & Perikardtamponade"
-      ]},
-      { d: 5, s: "innere", name: "Tag 5 Innere Medizin", sub: "Angiologie: Hypertonie & Gefäßerkrankungen", w: 105, chapters: [
-        "Arterielle Hypertonie (Stufenschema, hypertensive Entgleisung/Krise)",
-        "Aortenaneurysma & Akutes Aortensyndrom / Aortendissektion (Stanford A/B)",
-        "Periphere arterielle Verschlusskrankheit (pAVK: Fontaine-Stadien)",
-        "Tiefe Beinvenenthrombose (TVT: Wells-Score, D-Dimere, Antikoagulation)"
-      ]},
-      { d: 6, s: "innere", name: "Tag 6 Innere Medizin", sub: "Pneumologie: Obstruktive Lungenerkrankungen", w: 100, chapters: [
-        "Lungenfunktionsprüfung (Spirometrie, Tiffeneau-Index, Bodyplethysmographie)",
-        "Asthma bronchiale (Stufentherapie nach GINA, Akutanfall)",
-        "COPD & akute Exazerbation (GOLD-Stadien, Langzeitsauerstofftherapie)"
-      ]},
-      { d: 7, s: "innere", name: "Tag 7 Innere Medizin", sub: "Pneumologie: Infektionen & Pulmonale Gefäße", w: 130, chapters: [
-        "Ambulant erworbene Pneumonie (CAP: CRB-65-Score, Erregerspektrum, Antibiotika)",
-        "Nosokomiale Pneumonie (HAP) & Aspiration",
-        "Lungenarterienembolie (LAE: Wells-Score, CT-Angio, Antikoagulation, Lyse)",
-        "Schlafbezogene Atmungsstörungen (OSAS)"
-      ]},
-      { d: 8, s: "innere", name: "Tag 8 Innere Medizin", sub: "Pneumologie: Neoplasien, Pleura & Interstitium", w: 95, chapters: [
-        "Bronchialkarzinom (NSCLC vs. SCLC, Staging, paraneoplastische Syndrome)",
-        "Sarkoidose (Morbus Boeck: Löfgren-Syndrom, Röntgen-Stadien I-IV)",
-        "Pneumothorax (Spannungspneumothorax, Bülau/Monaldi-Drainage)",
-        "Pleuraerguss & Pleurapunktion"
-      ]},
-      { d: 9, s: "innere", name: "Tag 9 Innere Medizin", sub: "Gastroenterologie: Ösophagus & Magen", w: 100, chapters: [
-        "Gastroösophageale Refluxkrankheit (GERD) & Barrett-Ösophagus",
-        "Ösophaguskarzinom & Motilitätsstörungen (Achalasie)",
-        "Gastritis, Ulkuskrankheit (Ulcus ventriculi / duodeni) & Helicobacter pylori",
-        "Magenkarzinom (Lauren-Klassifikation, Gastrektomie)"
-      ]},
-      { d: 10, s: "innere", name: "Tag 10 Innere Medizin", sub: "Gastroenterologie: Darm & CED", w: 110, chapters: [
-        "Chronisch entzündliche Darmerkrankungen (Morbus Crohn vs. Colitis ulcerosa)",
-        "Kolorektales Karzinom (Vorsorge, TNM-Staging, FAP, Lynch-Syndrom)",
-        "Zöliakie & Malassimilationssyndrome",
-        "Divertikulose & Divertikulitis"
-      ]},
-      { d: 11, s: "innere", name: "Tag 11 Innere Medizin", sub: "Hepatologie: Hepatitis & Leberzirrhose", w: 135, chapters: [
-        "Virushepatitis A, B, C, D, E (Serologie-Konstellationen, chronische Hepatitis)",
-        "Leberzirrhose (Child-Pugh-Score, MELD, portalvenöse Stauung)",
-        "Ösophagusvarizenblutung & Aszites (SBP: Spontan bakterielle Peritonitis)",
-        "Hepatische Enzephalopathie & Hepatorenales Syndrom"
-      ]},
-      { d: 12, s: "innere", name: "Tag 12 Innere Medizin", sub: "Galle & Pankreas", w: 115, chapters: [
-        "Cholelithiasis, Cholezystitis & Cholangitis (Charcot-Trias)",
-        "Akute Pankreatitis (Ätiologie, Atlanta-Klassifikation, Komplikationen)",
-        "Chronische Pankreatitis & exokrine Pankreasinsuffizienz",
-        "Pankreaskarzinom (Pankreaskopfresektion / Whipple-OP)"
-      ]},
-      { d: 13, s: "innere", name: "Tag 13 Innere Medizin", sub: "Nephrologie: Glomeruläre Erkrankungen", w: 120, chapters: [
-        "Urinbefund & Glomerulonephritis (Nephritisches vs. Nephrotisches Syndrom)",
-        "IgA-Nephropathie & Poststreptokokken-Glomerulonephritis",
-        "Minimal-Change-GN, Fokal-segmentale Glomerulosklerose (FSGS)",
-        "Membranöse Glomerulonephritis & Rapid-progressive GN (RPGN)"
-      ]},
-      { d: 14, s: "innere", name: "Tag 14 Innere Medizin", sub: "Nephrologie: Nierenversagen & Dialyse", w: 115, chapters: [
-        "Akutes Nierenversagen (KDIGO-Stadien, prärenal vs. renal vs. postrenal)",
-        "Chronische Nierenkrankheit (CKD-Stadien G1-G5, renale Anämie, Osteopathie)",
-        "Nierenersatztherapie (Hämodialyse, Peritonealdialyse, Shunt)"
-      ]},
-      { d: 15, s: "innere", name: "Tag 15 Innere Medizin", sub: "Wasser-, Elektrolyt- & Säure-Basen-Haushalt", w: 140, chapters: [
-        "Hyponatriämie & Hypernatriämie (SIADH, zentrale Pontine Myelinolyse)",
-        "Hypokaliämie & Hyperkaliämie (EKG-Kriterien, Kaliummanagement)",
-        "Metabolische & respiratorische Azidosen/Alkalosen (Anionenlücke)",
-        "Kalzium- & Phosphathaushalt"
-      ]},
-      { d: 16, s: "innere", name: "Tag 16 Innere Medizin", sub: "Endokrinologie: Diabetes mellitus", w: 130, chapters: [
-        "Diabetes Typ 1 vs. Typ 2 (HbA1c-Zielwerte, OGTT)",
-        "Orale Antidiabetika (Metformin, SGLT2-Inhibitoren, GLP-1-Rezeptoragonisten)",
-        "Insulintherapien & Diabetische Notfälle (Ketoazidose vs. HHS)",
-        "Spätkomplikationen (Retinopathie, Nephropathie, Diabetisches Fußsyndrom)"
-      ]},
-      { d: 17, s: "innere", name: "Tag 17 Innere Medizin", sub: "Endokrinologie: Schilddrüse & Nebenschilddrüse", w: 105, chapters: [
-        "Hyperthyreose (Morbus Basedow vs. Schilddrüsenautonomie, Thyreotoxikose)",
-        "Hypothyreose & Hashimoto-Thyreoiditis",
-        "Schilddrüsenmalignome (Papillär, Follikulär, Medullär, Anaplastisch)",
-        "Hyperparathyreoidismus (primär, sekundär, tertiär)"
-      ]},
-      { d: 18, s: "innere", name: "Tag 18 Innere Medizin", sub: "Endokrinologie: Nebenniere & Hypophyse", w: 110, chapters: [
-        "Cushing-Syndrom (Dexamethason-Hemmtest, Morbus Cushing)",
-        "Nebenniereninsuffizienz (Morbus Addison, Addison-Krise)",
-        "Hyperaldosteronismus (Conn-Syndrom) & Phäochromozytom",
-        "Hypophysenvorderlappeninsuffizienz & Prolaktinom"
-      ]},
-      { d: 19, s: "innere", name: "Tag 19 Innere Medizin", sub: "Hämatologie: Anämien & Eisenstoffwechsel", w: 110, chapters: [
-        "Eisenmangelanämie vs. Anämie chronischer Erkrankungen (Ferritin, Transferrin)",
-        "Megaloblastäre Anämien (Vitamin-B12-Mangel, Folsäuremangel)",
-        "Hämolytische Anämien (Coombs-Test, Kugelzellanämie, G6PD-Mangel)"
-      ]},
-      { d: 20, s: "innere", name: "Tag 20 Innere Medizin", sub: "Hämatologie: Leukämien & Myeloproliferative Neoplasien", w: 130, chapters: [
-        "Akute myeloische Leukämie (AML) & Akute lymphatische Leukämie (ALL)",
-        "Chronische myeloische Leukämie (CML: Philadelphia-Chromosom, Imatinib)",
-        "Chronische lymphatische Leukämie (CLL: Gumprecht-Kernschatten)",
-        "Polycythaemia vera & Essenzielle Thrombozythämie"
-      ]},
-      { d: 21, s: "innere", name: "Tag 21 Innere Medizin", sub: "Hämatologie: Lymphome & Multiples Myelom", w: 115, chapters: [
-        "Morbus Hodgkin (B-Symptome, Reed-Sternberg-Zellen, Ann-Arbor-Stadien)",
-        "Non-Hodgkin-Lymphome (DLBCL, Follikuläres Lymphom)",
-        "Multiples Myelom (CRAB-Kriterien, Monoklonale Gammopathie, Bence-Jones)"
-      ]},
-      { d: 22, s: "innere", name: "Tag 22 Innere Medizin", sub: "Hämostaseologie & Gerinnungsstörungen", w: 100, chapters: [
-        "Hämostase-Tests (Quick/INR, aPTT, Thrombozytenzahl)",
-        "Thrombozytopenien (ITP, TTP, Heparin-induzierte Thrombozytopenie HIT II)",
-        "Hämophilie A & B, von-Willebrand-Jürgens-Syndrom",
-        "Disseminierte intravasale Gerinnung (DIC)"
-      ]},
-
-      // INFEKTIOLOGIE & HYGIENE (Tage 23 - 26)
-      { d: 23, s: "infekt", name: "Tag 23 Infektiologie", sub: "Sepsis & Bakterielle Infektionen", w: 130, chapters: [
-        "Sepsis & Septischer Schock (SOFA-Score, qSOFA, Sepsis-Bundles)",
-        "Antibiotikaklassen & kalkulierte Initialtherapie",
-        "Tuberkulose (Primär- vs. Postprimärtuberkulose, 4-fach-Therapie nach RIPE)"
-      ]},
-      { d: 24, s: "infekt", name: "Tag 24 Infektiologie", sub: "Virale Infektionen & HIV", w: 120, chapters: [
-        "HIV & AIDS (CDC-Stadien, opportunistische Infektionen, ART)",
-        "Herpesviren (HSV, VZV / Gürtelrose, EBV / Mononukleose, CMV)",
-        "Influenza, COVID-19 & virale Gastroenteritiden"
-      ]},
-      { d: 25, s: "infekt", name: "Tag 25 Infektiologie", sub: "Zoonosen, Parasiten & Tropenmedizin", w: 90, chapters: [
-        "Lyme-Borreliose (Erythema migrans, Neuroborreliose)",
-        "Malaria (Tropica, Tertiana, Quartana, Dicker Tropfen)",
-        "Meningokokken-Meningitis & Waterhouse-Friderichsen-Syndrom"
-      ]},
-      { d: 26, s: "infekt", name: "Tag 26 Infektiologie", sub: "Infektiologie Abschluss & Hygiene", w: 95, chapters: [
-        "Krankenhaushygiene & multiresistente Erreger (MRSA, VRE, 4MRGN)",
-        "Clostridioides-difficile-Infektion (Fidaxomicin / Vancomycin p.o.)",
-        "Impfmanagement & Meldepflicht nach Infektionsschutzgesetz (IfSG)"
-      ]},
-
-      // PÄDIATRIE (Tage 27 - 33)
-      { d: 27, s: "paediatrie", name: "Tag 27 Pädiatrie", sub: "Neonatologie & Kindervorsorge", w: 110, chapters: [
-        "U-Untersuchungen (U1 bis U9) & Entwicklungsschritte",
-        "APGAR-Score, Erstversorgung & Neugeborenen-Screening",
-        "Icterus neonatorum & Morbus haemolyticus neonatorum",
-        "Hüftdysplasie & Sonographie nach Graf"
-      ]},
-      { d: 28, s: "paediatrie", name: "Tag 28 Pädiatrie", sub: "Angeborene Herzfehler & Pädiatrische Kardiologie", w: 135, chapters: [
-        "Azyanotische Vitien (VSD, ASD, Persistierender Ductus arteriosus Botalli, Aortenisthmusstenose)",
-        "Zyanotische Vitien (Fallot-Tetralogie, Transposition der großen Arterien TGA)",
-        "Kawasaki-Syndrom (Kriterien & Koronaraneurysmen)"
-      ]},
-      { d: 29, s: "paediatrie", name: "Tag 29 Pädiatrie", sub: "Kinderinfektiologie & Kinderkrankheiten", w: 120, chapters: [
-        "Masern, Mumps, Röteln, Ringelröteln (Parvovirus B19), Dreitagefieber, Scharlach",
-        "Pertussis (Keuchhusten) & Diphtherie",
-        "STIKO-Impfempfehlungen & Impfkalender"
-      ]},
-      { d: 30, s: "paediatrie", name: "Tag 30 Pädiatrie", sub: "Atemwege & Neuropädiatrie", w: 115, chapters: [
-        "Krupp-Syndrom (Pseudokrupp) vs. Epiglottitis",
-        "RSV-Infektion, Bronchiolitis & Mukoviszidose (Schweißtest)",
-        "Fieberkrämpfe (unkompliziert vs. kompliziert) & BNS-Epilepsie (West-Syndrom)"
-      ]},
-      { d: 31, s: "paediatrie", name: "Tag 31 Pädiatrie", sub: "Pädiatrische Onkologie & Nephrologie", w: 105, chapters: [
-        "Akute lymphoblastische Leukämie (ALL) im Kindesalter",
-        "Nephroblastom (Wilms-Tumor) & Neuroblastom",
-        "Hämolytisch-urämisches Syndrom (HUS)",
-        "Vesikoureteraler Reflux & Harnwegsinfektionen im Kindesalter"
-      ]},
-      { d: 32, s: "paediatrie", name: "Tag 32 Pädiatrie", sub: "Genetik & Stoffwechsel", w: 90, chapters: [
-        "Trisomie 21 (Down-Syndrom), Turner-Syndrom & Klinefelter-Syndrom",
-        "Phenylketonurie (PKU) & Galaktosämie",
-        "Hypertrophe Pylorusstenose & Invagination"
-      ]},
-      { d: 33, s: "paediatrie", name: "Tag 33 Pädiatrie", sub: "Pädiatrie Kreuz- & Wiederholungstag", w: 95, chapters: [
-        "Fächerübergreifende Fallfragen Pädiatrie",
-        "Typische IMPP-Fallstricke in der Kinderheilkunde"
-      ]},
-
-      // DERMATOLOGIE (Tage 34 - 37)
-      { d: 34, s: "dermatologie", name: "Tag 34 Dermatologie", sub: "Effloreszenzen, Infektionen & Parasiten", w: 95, chapters: [
-        "Primäre & sekundäre Hauteffloreszenzen",
-        "Bakterielle Infektionen (Impetigo contagiosa, Erysipel, Phlegmone)",
-        "Virale Infektionen (Herpes zoster, Mollusca contagiosa, HPV-Warzen)",
-        "Skabies (Krätze) & Mykosen"
-      ]},
-      { d: 35, s: "dermatologie", name: "Tag 35 Dermatologie", sub: "Entzündliche & schuppende Dermatosen", w: 105, chapters: [
-        "Psoriasis vulgaris (Plaque-Psoriasis, Phänomene nach Auspitz)",
-        "Atopische Dermatitis (Neurodermitis, Dennie-Morgan-Falte, Stigmata)",
-        "Lichen ruber planus (Wickham-Streifung) & Pityriasis rosea"
-      ]},
-      { d: 36, s: "dermatologie", name: "Tag 36 Dermatologie", sub: "Maligne Hauttumoren", w: 120, chapters: [
-        "Malignes Melanom (ABCDE-Regel, Tumordicke nach Breslow, Wächterlymphknoten)",
-        "Basalzellkarzinom (Basaliom) & Plattenepithelkarzinom der Haut (Spinaliom)",
-        "Aktinische Keratose & kutane T-Zell-Lymphome (Mycosis fungoides)"
-      ]},
-      { d: 37, s: "dermatologie", name: "Tag 37 Dermatologie", sub: "Blasenbildende Dermatosen & Allergologie", w: 100, chapters: [
-        "Pemphigus vulgaris vs. Bullöses Pemphigoid (Nikolski-Phänomen I & II)",
-        "Arzneimittelexantheme (Stevens-Johnson-Syndrom & Toxische epidermale Nekrolyse TEN)",
-        "Urtikaria, Angioödem & Kontaktdermatitis"
-      ]},
-
-      // ANÄSTHESIOLOGIE & NOTFALLMEDIZIN (Tage 38 - 42)
-      { d: 38, s: "anaesthesie", name: "Tag 38 Anästhesiologie & Notfallmedizin", sub: "Narkose & Atemwegsmanagement", w: 110, chapters: [
-        "Allgemeinanästhesie (Hypnotika, Opioide, Muskelrelaxanzien)",
-        "Atemwegsmanagement & schwieriger Intubation (Mallampati, Cormack/Lehane)",
-        "Maligne Hyperthermie (Dantrolen-Therapie)"
-      ]},
-      { d: 39, s: "anaesthesie", name: "Tag 39 Anästhesiologie & Notfallmedizin", sub: "Regionalanästhesie & Schmerztherapie", w: 95, chapters: [
-        "Spinalanästhesie vs. Periduralanästhesie (PDA, Kontraindikationen)",
-        "Lokalanästhetika & Lokalanästhetika-Intoxikation (Lipidrescue)",
-        "WHO-Stufenschema der Schmerztherapie & Co-Analgetika"
-      ]},
-      { d: 40, s: "anaesthesie", name: "Tag 40 Anästhesiologie & Notfallmedizin", sub: "Reanimation & Schock", w: 130, chapters: [
-        "Reanimation nach ERC-Leitlinien (BLS / ALS, Defibrillation, Adrenalin/Amiodaron)",
-        "Schockformen (Kardiogen, hypovolämisch, septisch, anaphylaktisch)",
-        "Anaphylaxie-Notfalltherapie (Adrenalin i.m.)"
-      ]},
-      { d: 41, s: "anaesthesie", name: "Tag 41 Anästhesiologie & Notfallmedizin", sub: "Traumaversorgung & Verbrennungen", w: 105, chapters: [
-        "Polytrauma-Management nach dem cABCDE-Schema",
-        "Schädel-Hirn-Trauma (GCS, Pupillendiagnostik, Cushing-Reflex)",
-        "Thermische Verletzungen (Neunerregel nach Wallace, Parkland-Formel)"
-      ]},
-      { d: 42, s: "anaesthesie", name: "Tag 42 Anästhesiologie & Notfallmedizin", sub: "Intensivmedizin & Beatmung", w: 90, chapters: [
-        "ARDS (Berlin-Definition) & maschinelle Beatmung (PEEP, Weaning)",
-        "Sepsis-Monitoring, Katecholamintherapie & Volumentherapie"
-      ]},
-
-      // CHIRURGIE (Tage 43 - 49)
-      { d: 43, s: "chirurgie", name: "Tag 43 Chirurgie", sub: "Allgemeinchirurgie & Wunden", w: 85, chapters: [
-        "Wundheilung, Nahttechniken & Wundinfektionen",
-        "Tetanus-Prophylaxe & postoperative Komplikationen"
-      ]},
-      { d: 44, s: "chirurgie", name: "Tag 44 Chirurgie", sub: "Viszeralchirurgie: Akutes Abdomen & Hernien", w: 125, chapters: [
-        "Akutes Abdomen & Peritonitis",
-        "Appendizitis (Druckpunkte: McBurney, Lanz, Blumberg, Rovsing)",
-        "Ileus (Mechanisch vs. paralytisch, Röntgendiagnostik)",
-        "Leistenhernien (indirekt vs. direkt, TEP, TAPP, Lichtenstein)"
-      ]},
-      { d: 45, s: "chirurgie", name: "Tag 45 Chirurgie", sub: "Viszeralchirurgie: Kolon, Rektum & Proktologie", w: 110, chapters: [
-        "Divertikulitis (Klassifikation nach Hansen/Stock & CDD)",
-        "Kolorektales Karzinom (Onkologische Resektionen, TME)",
-        "Proktologie (Hämorrhoidalleiden, Analabszess, Analfistel, Analfissur)"
-      ]},
-      { d: 46, s: "chirurgie", name: "Tag 46 Chirurgie", sub: "Viszeralchirurgie: Oberer GI-Trakt & Pankreas", w: 105, chapters: [
-        "Gastrektomie & Lymphadenektomie bei Magenkarzinom",
-        "Laparoskopische Cholezystektomie (Calot-Dreieck)",
-        "Pankreaskopfresektion (Whipple-Operation)"
-      ]},
-      { d: 47, s: "chirurgie", name: "Tag 47 Chirurgie", sub: "Gefäßchirurgie", w: 95, chapters: [
-        "Aortenaneurysma (BAA-Ruptur, EVAR vs. offene OP)",
-        "Karotisstenose (Indikation CEA / Thrombendarteriektomie)",
-        "Akuter arterieller Verschluss (6 P nach Pratt, Embolektomie)"
-      ]},
-      { d: 48, s: "chirurgie", name: "Tag 48 Chirurgie", sub: "Thoraxchirurgie", w: 90, chapters: [
-        "Spannungspneumothorax, Hämatothorax & Thoraxdrainagen",
-        "Lungenresektionen (Lobektomie, Pneumonektomie)"
-      ]},
-      { d: 49, s: "chirurgie", name: "Tag 49 Chirurgie", sub: "Chirurgie Kreuztag", w: 95, chapters: [
-        "Chirurgische Fallfragen & OP-Techniken Kreuz-Session"
-      ]},
-
-      // ORTHOPÄDIE & UNFALLCHIRURGIE (Tage 50 - 56)
-      { d: 50, s: "orthopaedie", name: "Tag 50 Orthopädie & Unfallchirurgie", sub: "Frakturlehre & Obere Extremität", w: 110, chapters: [
-        "Frakturzeichen, AO-Klassifikation & Frakturheilung",
-        "Klavikulafraktur & Schulterluxation (Bankart, Hill-Sachs)",
-        "Distale Radiusfraktur (Colles vs. Smith) & Scaphoidfraktur"
-      ]},
-      { d: 51, s: "orthopaedie", name: "Tag 51 Orthopädie & Unfallchirurgie", sub: "Untere Extremität & Becken", w: 125, chapters: [
-        "Schenkelhalsfraktur (Garden & Pauwels) & pertrochantäre Fraktur",
-        "Kniebinnentrauma (Kreuzbandruptur, Meniskusläsionen)",
-        "Sprunggelenksfrakturen (Weber A, B, C)",
-        "Kompartmentsyndrom (Dermatofasziotomie)"
-      ]},
-      { d: 52, s: "orthopaedie", name: "Tag 52 Orthopädie & Unfallchirurgie", sub: "Wirbelsäulenerkrankungen", w: 105, chapters: [
-        "Bandscheibenprolaps (L4/L5, L5/S1, Kauda-Syndrom, Konus-Syndrom)",
-        "Spinalkanalstenose & Spondylolisthesis",
-        "Skoliose & Morbus Scheuermann"
-      ]},
-      { d: 53, s: "orthopaedie", name: "Tag 53 Orthopädie & Unfallchirurgie", sub: "Degenerative Gelenke (Arthrose)", w: 100, chapters: [
-        "Koxarthrose & Gonarthrose (Kellgren-Lawrence-Score, Endoprothetik)",
-        "Impingement-Syndrom der Schulter & Rotatorenmanschettenruptur"
-      ]},
-      { d: 54, s: "orthopaedie", name: "Tag 54 Orthopädie & Unfallchirurgie", sub: "Knochentumoren & Osteologie", w: 95, chapters: [
-        "Osteosarkom, Ewing-Sarkom & Chondrosarkom",
-        "Osteoporose (DEXA-T-Score, Bisphosphonate)",
-        "Osteomyelitis & septische Arthritis"
-      ]},
-      { d: 55, s: "orthopaedie", name: "Tag 55 Orthopädie & Unfallchirurgie", sub: "Pädiatrische Orthopädie", w: 90, chapters: [
-        "Morbus Perthes vs. Epiphyseolysis capitis femoris (ECF)",
-        "Coxitis fugax (Hüftschnupfen) & Klumpfuß"
-      ]},
-      { d: 56, s: "orthopaedie", name: "Tag 56 Orthopädie & Unfallchirurgie", sub: "Orthopädie Kreuztag", w: 90, chapters: [
-        "Kreuz-Session Frakturen, Reposition & Gelenkersatz"
-      ]},
-
-      // GYNÄKOLOGIE & GEBURTSHILFE (Tage 57 - 63)
-      { d: 57, s: "gynaekologie", name: "Tag 57 Gynäkologie & Geburtshilfe", sub: "Zyklus, Entzündungen & Benigne Tumoren", w: 95, chapters: [
-        "Weiblicher Zyklus, Amenorrhoe & Kontrazeption",
-        "Endometriose & Uterus myomatosus",
-        "Pelvic Inflammatory Disease (PID) & Adnexitis"
-      ]},
-      { d: 58, s: "gynaekologie", name: "Tag 58 Gynäkologie & Geburtshilfe", sub: "Gynäkologische Onkologie I: Mamma & Zervix", w: 125, chapters: [
-        "Mammakarzinom (Subtypen, HER2, Hormonrezeptoren, operative Therapien)",
-        "Zervixkarzinom (HPV, Dysplasie, PAP-Abstrich, Konisation)"
-      ]},
-      { d: 59, s: "gynaekologie", name: "Tag 59 Gynäkologie & Geburtshilfe", sub: "Gynäkologische Onkologie II: Endometrium & Ovar", w: 105, chapters: [
-        "Endometriumkarzinom & Postmenopausenblutung",
-        "Ovarialkarzinom (CA-125, Tumordebulking)",
-        "Deszensus genitalis & Harninkontinenz der Frau"
-      ]},
-      { d: 60, s: "gynaekologie", name: "Tag 60 Gynäkologie & Geburtshilfe", sub: "Schwangerschaft & Pränataldiagnostik", w: 110, chapters: [
-        "Mutterschaftsrichtlinien & Ersttrimester-Screening",
-        "Extrauteringravidität (EUG: Tubargravidität)",
-        "Gestationsdiabetes & Rhesus-Inkompatibilität"
-      ]},
-      { d: 61, s: "gynaekologie", name: "Tag 61 Gynäkologie & Geburtshilfe", sub: "Schwangerschaftskomplikationen", w: 130, chapters: [
-        "Präeklampsie, HELLP-Syndrom & Eklampsie (Magnesiumsulfat)",
-        "Vorzeitige Plazentalösung vs. Placenta praevia",
-        "Frühgeburtlichkeit & medikamentöse Lungenreifeinduktion"
-      ]},
-      { d: 62, s: "gynaekologie", name: "Tag 62 Gynäkologie & Geburtshilfe", sub: "Geburt & Wochenbett", w: 100, chapters: [
-        "Geburtsphasen & CTG-Interpretation (Dezelerationen)",
-        "Sectio caesarea & Geburtsverletzungen (Dammriss I-IV)",
-        "Postpartale Blutung (Atonie) & Puerperalfieber"
-      ]},
-      { d: 63, s: "gynaekologie", name: "Tag 63 Gynäkologie & Geburtshilfe", sub: "Gynäkologie Kreuztag", w: 90, chapters: [
-        "Kreuz-Session Gynäkologie & Geburtshilfe"
-      ]},
-
-      // UROLOGIE (Tage 64 - 66)
-      { d: 64, s: "urologie", name: "Tag 64 Urologie", sub: "Prostata & Urolithiasis", w: 105, chapters: [
-        "Benigne Prostatahyperplasie (BPH: IPSS, Alpha-Blocker, TURP)",
-        "Prostatakarzinom (PSA, Gleason-Score, radikale Prostatektomie)",
-        "Urolithiasis (Nierenkolik, Steindiagnostik, ESWL)"
-      ]},
-      { d: 65, s: "urologie", name: "Tag 65 Urologie", sub: "Urogenitaltumoren & Urologische Notfälle", w: 110, chapters: [
-        "Nierenzellkarzinom (Trias, Paraneoplasien)",
-        "Harnblasenkarzinom (Schmerzloses Makrohämaturie)",
-        "Hodentumoren (Seminom vs. Nicht-Seminom, Tumormarker)",
-        "Hodentorsion (Prehn-Zeichen negativ) & Priapismus"
-      ]},
-      { d: 66, s: "urologie", name: "Tag 66 Urologie", sub: "Urologie Kreuztag", w: 80, chapters: [
-        "Harnwegsinfekte, Pyelonephritis & Urologie-Kreuz-Session"
-      ]},
-
-      // NEUROLOGIE (Tage 67 - 73)
-      { d: 67, s: "neurologie", name: "Tag 67 Neurologie", sub: "Zerebrovaskuläre Erkrankungen (Schlaganfall)", w: 140, chapters: [
-        "Ischämischer Schlaganfall (Gefäßterritorien: A. cerebri media/anterior/posterior)",
-        "Akuttherapie: Systemische Lysetherapie (Zeitfenster) & Thrombektomie",
-        "Intrazerebrale Blutung (ICB) & Subarachnoidalblutung (SAB: Aneurysma)"
-      ]},
-      { d: 68, s: "neurologie", name: "Tag 68 Neurologie", sub: "Epilepsien & Kopfschmerzsyndrome", w: 115, chapters: [
-        "Epilepsie (Generalisiert vs. fokal, Antikonvulsiva-Wahl)",
-        "Status epilepticus (Stufenplan)",
-        "Migräne, Spannungskopfschmerz & Cluster-Kopfschmerz"
-      ]},
-      { d: 69, s: "neurologie", name: "Tag 69 Neurologie", sub: "Neurodegenerative Erkrankungen & Bewegungsstörungen", w: 110, chapters: [
-        "Parkinson-Syndrom (TRAP-Symptome, L-Dopa, Dopaminagonisten)",
-        "Atypische Parkinson-Syndrome & Chorea Huntington",
-        "Amyotrophe Lateralsklerose (ALS) & Demenzerkrankungen"
-      ]},
-      { d: 70, s: "neurologie", name: "Tag 70 Neurologie", sub: "Multiple Sklerose & Infektionen des ZNS", w: 125, chapters: [
-        "Multiple Sklerose (McDonald-Kriterien, Schubtherapie, Verlaufsmodifikation)",
-        "Bakterielle vs. virale Meningitis (Liquorpunktion, Dexamethason)",
-        "Herpes-simplex-Enzephalitis (Aciclovir i.v.)"
-      ]},
-      { d: 71, s: "neurologie", name: "Tag 71 Neurologie", sub: "Periphere Nerven & Wurzelsyndrome", w: 105, chapters: [
-        "Polyneuropathien & Guillain-Barré-Syndrom (GBS)",
-        "Engpasssyndrome (Karpaltunnelsyndrom, Sulcus-ulnaris-Syndrom)",
-        "Hirnnervenausfälle (Zentrale vs. periphere Fazialisparese)"
-      ]},
-      { d: 72, s: "neurologie", name: "Tag 72 Neurologie", sub: "Myopathien & Hirntumoren", w: 95, chapters: [
-        "Myasthenia gravis (AChR-Antikörper, Thymom)",
-        "Glioblastom, Meningeom & Hirnmetastasen",
-        "Erhöhter Hirndruck & Einklemmungszeichen"
-      ]},
-      { d: 73, s: "neurologie", name: "Tag 73 Neurologie", sub: "Neurologie Kreuztag", w: 95, chapters: [
-        "Kreuz-Session Neurologische Top-Fallfragen"
-      ]},
-
-      // PSYCHIATRIE & PSYCHOSOMATIK (Tage 74 - 78)
-      { d: 74, s: "psychiatrie", name: "Tag 74 Psychiatrie & Psychosomatik", sub: "Affektive Störungen & Suizidalität", w: 110, chapters: [
-        "Depression (Haupt- und Zusatzkriterien, Antidepressiva)",
-        "Bipolare affektive Störung & Manie (Lithium, Phasenprophylaxe)",
-        "Suizidalität (Präsuizidales Syndrom, Krisenintervention)"
-      ]},
-      { d: 75, s: "psychiatrie", name: "Tag 75 Psychiatrie & Psychosomatik", sub: "Schizophrenie & Wahn", w: 115, chapters: [
-        "Schizophrenie (Positiv- vs. Negativsymptomatik, Schneider-Symptome)",
-        "Antipsychotika (Typika vs. Atypika, EPMS, Spätdyskinesien)",
-        "Malignes neuroleptisches Syndrom"
-      ]},
-      { d: 76, s: "psychiatrie", name: "Tag 76 Psychiatrie & Psychosomatik", sub: "Angst-, Zwangs- & Traumafolgestörungen", w: 100, chapters: [
-        "Panikstörung, Agoraphobie & Generalisierte Angststörung",
-        "Zwangsstörung & Posttraumatische Belastungsstörung (PTBS)",
-        "Somatoforme Störungen & Hypochondrie"
-      ]},
-      { d: 77, s: "psychiatrie", name: "Tag 77 Psychiatrie & Psychosomatik", sub: "Abhängigkeit & Organische Psychosen", w: 110, chapters: [
-        "Alkoholabhängigkeit (Entzugssyndrom, Delirium tremens)",
-        "Wernicke-Enzephalopathie & Korsakow-Syndrom",
-        "Delir vs. Demenz & Essstörungen (Anorexie, Bulimie)"
-      ]},
-      { d: 78, s: "psychiatrie", name: "Tag 78 Psychiatrie & Psychosomatik", sub: "Psychiatrie Kreuztag", w: 85, chapters: [
-        "Kreuz-Session Psychiatrie & Psychotherapie"
-      ]},
-
-      // RADIOLOGIE (Tag 79)
-      { d: 79, s: "radiologie", name: "Tag 79 Radiologie", sub: "Querschnittsbereich Radiologie & Strahlentherapie", w: 105, chapters: [
-        "Röntgen-Thorax & Röntgen-Skelett Grundlagen",
-        "Computertomografie (CT: Indikationen, Kontrastmittel, Strahlendosis)",
-        "Magnetresonanztomografie (MRT: T1/T2, Kontrastmittel Gadolinium)",
-        "Strahlentherapie & Radioonkologie",
-        "Radioiodtherapie & Schilddrüsenszintigrafie",
-        "Knochenszintigrafie",
-        "Ösophagusbreischluck & Motilitätsstörungen des oberen GI-Trakts",
-        "Wiederholung des Querschnittsbereichs Radiologie"
-      ]},
-
-      // AUGENHEILKUNDE (Tage 80 - 82)
-      { d: 80, s: "auge", name: "Tag 80 Augenheilkunde", sub: "Vorderer Augenabschnitt & Glaukom", w: 110, chapters: [
-        "Katarakt (Grauer Star) & Glaukom (Grüner Star)",
-        "Akuter Glaukomanfall (Klinik, Tonometrie, Notfallmedikation)",
-        "Konjunktivitis, Keratitis & Perforierende Augenverletzungen"
-      ]},
-      { d: 81, s: "auge", name: "Tag 81 Augenheilkunde", sub: "Hinterer Augenabschnitt & Netzhaut", w: 105, chapters: [
-        "Amotio retinae (Netzhautablösung: Symptome, Funduskopie)",
-        "Altersabhängige Makuladegeneration (AMD: feucht vs. trocken)",
-        "Zentralarterienverschluss vs. Zentralvenenverschluss",
-        "Diabetische Retinopathie"
-      ]},
-      { d: 82, s: "auge", name: "Tag 82 Augenheilkunde", sub: "Strabismus & Auge Kreuztag", w: 85, chapters: [
-        "Strabismus, Amblyopie & Gesichtsfeldausfälle",
-        "Kreuz-Session Augenheilkunde"
-      ]},
-
-      // HALS-NASEN-OHREN (Tage 83 - 85)
-      { d: 83, s: "hno", name: "Tag 83 HNO", sub: "Ohr & Hörstörungen", w: 110, chapters: [
-        "Otitis media acuta & Mastoiditis",
-        "Stimmgabelprüfungen (Weber & Rinne: Schallleitungs- vs. Schallempfindungsschwerhörigkeit)",
-        "Morbus Menière, BPPV (Lagerungsschwindel) & Hörsturz"
-      ]},
-      { d: 84, s: "hno", name: "Tag 84 HNO", sub: "Nase, Nebenhöhlen & Larynx", w: 95, chapters: [
-        "Rhinosinusitis & Komplikationen",
-        "Epistaxis (Gefäßversorgung, Nasentamponade)",
-        "Larynxkarzinom & Stimmlippenlähmungen (N. laryngeus recurrens)"
-      ]},
-      { d: 85, s: "hno", name: "Tag 85 HNO", sub: "Pharynx, Speicheldrüsen & HNO Kreuztag", w: 85, chapters: [
-        "Tonsillitis & Peritonsillarabszess",
-        "Speicheldrüsenerkrankungen (Sialolithiasis, Pleomorphes Adenom)",
-        "Kreuz-Session HNO-Heilkunde"
-      ]},
-
-      // QUERSCHNITTSFÄCHER (Tage 86 - 90)
-      { d: 86, s: "querschnitt", name: "Tag 86 Arbeitsmedizin & Umweltmedizin", sub: "Berufskrankheiten & Toxikologie", w: 100, chapters: [
-        "Berufskrankheiten der Lunge (Asbestose, Mesotheliom, Silikose)",
-        "Arbeitsbedingte Toxikologie (Blei, Quecksilber, Lösungsmittel, CO)",
-        "Lärmschwerhörigkeit & arbeitsmedizinische Vorsorge"
-      ]},
-      { d: 87, s: "querschnitt", name: "Tag 87 Rechtsmedizin", sub: "Todeszeichen & Forensik", w: 90, chapters: [
-        "Sichere & unsichere Todeszeichen (Livores, Rigor mortis, Fäulnis)",
-        "Ärztliche Leichenschau & Todesbescheinigung",
-        "Schuss-, Stich- & Stumpfe Gewaltverletzungen"
-      ]},
-      { d: 88, s: "querschnitt", name: "Tag 88 Humangenetik", sub: "Erbgänge & Chromosomenaberrationen", w: 85, chapters: [
-        "Mendelsche Erbgänge (Autosomal-dominant, rezessiv, X-chromosomal)",
-        "Chromosomenaberrationen & genetische Beratung"
-      ]},
-      { d: 89, s: "querschnitt", name: "Tag 89 Sozialmedizin & Epidemiologie", sub: "Studiendesigns & Biometrie", w: 85, chapters: [
-        "Studientypen (RCT, Kohortenstudie, Fall-Kontroll-Studie)",
-        "Statistische Kenngrößen (Sensitivität, Spezifität, PPV, NPV)",
-        "Rehabilitation & Sozialversicherungsträger"
-      ]},
-      { d: 90, s: "querschnitt", name: "Tag 90 Querschnittsfächer", sub: "Klinische Umweltmedizin & Notfallwiederholung", w: 80, chapters: [
-        "Wiederholung Querschnittsfächer & Querschnitt-Kreuzen"
-      ]},
-
-      // PHARMAKOLOGIE (Tage 91 - 94)
-      { d: 91, s: "pharma", name: "Tag 91 Pharmakologie", sub: "Kardiovaskuläre & Renale Pharmakologie", w: 120, chapters: [
-        "Antihypertensiva (ACE-Hemmer, Sartane, Calciumantagonisten, Betablocker)",
-        "Diuretika (Schleifendiuretika, Thiazide, Aldosteronantagonisten)",
-        "Antiarrhythmika nach Vaughan-Williams"
-      ]},
-      { d: 92, s: "pharma", name: "Tag 92 Pharmakologie", sub: "Antikoagulation & Stoffwechselpharmaka", w: 125, chapters: [
-        "Antikoagulanzien (DOAKs, Heparine, Vitamin-K-Antagonisten & Antidote)",
-        "Thrombozytenaggregationshemmer (ASS, P2Y12-Inhibitoren)",
-        "Lipidsenker (Statine, Ezetimib, PCSK9-Inhibitoren)"
-      ]},
-      { d: 93, s: "pharma", name: "Tag 93 Pharmakologie", sub: "Antiinfektiva & Immunsuppressiva", w: 130, chapters: [
-        "Antibiotikaklassen, Wirkspektren & Nebenwirkungen",
-        "Virostatika & Antimykotika",
-        "Immunsuppressiva (Glukokortikoide, Methotrexat, Biologika)"
-      ]},
-      { d: 94, s: "pharma", name: "Tag 94 Pharmakologie", sub: "ZNS-Pharmakologie & Toxikologie", w: 125, chapters: [
-        "Psychopharmaka (Antidepressiva, Antipsychotika, Benzodiazepine)",
-        "Analgetika (Opioide, NSAR)",
-        "Notfall-Antidote bei Intoxikationen"
-      ]},
-
-      // GENERALPROBEN (Tage 95 - 100)
-      { d: 95, s: "generalprobe", name: "Tag 95 Generalprobe 1 Tag 1", sub: "Prüfungssimulation Tag 1 (107 Fragen)", w: 160, chapters: [
-        "1. Prüfungstag des M2 Original-Examens unter Realbedingungen kreuzen",
-        "Detaillierte Analyse der falsch beantworteten Fragen"
-      ]},
-      { d: 96, s: "generalprobe", name: "Tag 96 Generalprobe 1 Tag 2", sub: "Prüfungssimulation Tag 2 (107 Fragen)", w: 160, chapters: [
-        "2. Prüfungstag des M2 Original-Examens unter Realbedingungen kreuzen",
-        "Detaillierte Analyse & Nachschlagen unklarer Fallaspekte"
-      ]},
-      { d: 97, s: "generalprobe", name: "Tag 97 Generalprobe 1 Tag 3", sub: "Prüfungssimulation Tag 3 (106 Fragen)", w: 160, chapters: [
-        "3. Prüfungstag des M2 Original-Examens kreuzen",
-        "Gesamtauswertung der Generalprobe 1 & Notenermittlung"
-      ]},
-      { d: 98, s: "generalprobe", name: "Tag 98 Generalprobe 2 Tag 1", sub: "Prüfungssimulation Tag 1", w: 160, chapters: [
-        "2. Examenstag im Probedurchlauf kreuzen & Zeitmanagement festigen"
-      ]},
-      { d: 99, s: "generalprobe", name: "Tag 99 Generalprobe 2 Tag 2", sub: "Prüfungssimulation Tag 2", w: 160, chapters: [
-        "Wiederholung der persönlichen IMPP-Fehlerprotokolle & Top-Hits"
-      ]},
-      { d: 100, s: "generalprobe", name: "Tag 100 Generalprobe 2 Tag 3", sub: "Finaler Vorbereitungstag & Entspannung", w: 50, chapters: [
-        "Organisatorisches für die Prüfungstage (13.-15. April 2027)",
-        "Notfallmedikation & Blickdiagnosen-Review",
-        "Ausruhen und mentale Vorbereitung auf das Examen!"
-      ]}
-    ];
-
-    // LOKALER SPEICHER
-    let dayStatus = JSON.parse(localStorage.getItem('m2_days_status_v2')) || {};
-    let dayComments = JSON.parse(localStorage.getItem('m2_day_comments_v2')) || {};
-    let openCards = JSON.parse(localStorage.getItem('m2_open_cards_v2')) || { 1: true };
-    let calendarState = JSON.parse(localStorage.getItem('m2_cal_state_v2')) || {};
+    let dayStatus = JSON.parse(localStorage.getItem('m2_days_status_v3')) || {};
+    let dayComments = JSON.parse(localStorage.getItem('m2_day_comments_v3')) || {};
+    let openCards = JSON.parse(localStorage.getItem('m2_open_cards_v3')) || { 1: true };
+    let calendarState = JSON.parse(localStorage.getItem('m2_cal_state_v3')) || {};
+    let top100Status = JSON.parse(localStorage.getItem('m2_top100_status_v3')) || {};
+    let top100Open = JSON.parse(localStorage.getItem('m2_top100_open_v3')) || false;
 
     let activeFilter = 'alle';
     let allExpanded = false;
@@ -1392,12 +977,12 @@
     function formatTime(sec) {
       const m = Math.floor(sec / 60);
       const s = sec % 60;
-      return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+      return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
     }
 
     function updateTimerUI() {
       document.getElementById('timerDisplay').textContent = formatTime(timerTimeLeft);
-      document.getElementById('btnTimerStart').textContent = timerRunning ? "Pause" : "Start";
+      document.getElementById('btnTimerStart').textContent = timerRunning ? 'Pause' : 'Start';
     }
 
     window.setTimerMode = function(minutes, label) {
@@ -1425,7 +1010,7 @@
             clearInterval(timerInterval);
             timerRunning = false;
             playChime();
-            alert("⏰ Die Zeit ist um!");
+            alert('⏰ Die Zeit ist um!');
             updateTimerUI();
           }
         }, 1000);
@@ -1447,7 +1032,7 @@
         const gain = audioCtx.createGain();
         osc.connect(gain);
         gain.connect(audioCtx.destination);
-        osc.type = "sine";
+        osc.type = 'sine';
         osc.frequency.setValueAtTime(587.33, audioCtx.currentTime);
         osc.frequency.setValueAtTime(880, audioCtx.currentTime + 0.15);
         gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
@@ -1457,14 +1042,14 @@
       } catch (e) {}
     }
 
-    // ---------------- KALENDER (NOV 2026 - APR 2027) ----------------
+    // ---------------- KALENDER ----------------
     const MONTHS_CONFIG = [
-      { name: "November 2026", year: 2026, month: 10, days: 30 },
-      { name: "Dezember 2026", year: 2026, month: 11, days: 31 },
-      { name: "Januar 2027", year: 2027, month: 0, days: 31 },
-      { name: "Februar 2027", year: 2027, month: 1, days: 28 },
-      { name: "März 2027", year: 2027, month: 2, days: 31 },
-      { name: "April 2027", year: 2027, month: 3, days: 30 }
+      { name: 'November 2026', year: 2026, month: 10, days: 30 },
+      { name: 'Dezember 2026', year: 2026, month: 11, days: 31 },
+      { name: 'Januar 2027', year: 2027, month: 0, days: 31 },
+      { name: 'Februar 2027', year: 2027, month: 1, days: 28 },
+      { name: 'März 2027', year: 2027, month: 2, days: 31 },
+      { name: 'April 2027', year: 2027, month: 3, days: 30 }
     ];
 
     function renderCalendar() {
@@ -1504,15 +1089,14 @@
 
         for (let d = 1; d <= cfg.days; d++) {
           const dayEl = document.createElement('div');
-          const dateKey = `${cfg.year}-${String(cfg.month + 1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+          const dateKey = cfg.year + '-' + String(cfg.month + 1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
           
-          // PRÜFUNGSTERMINE: 13. - 15. April 2027 ROT MARKIEREN
           const isExam = (cfg.year === 2027 && cfg.month === 3 && (d === 13 || d === 14 || d === 15));
 
           if (isExam) {
             dayEl.className = 'cal-day cal-exam';
             dayEl.textContent = d;
-            dayEl.title = `M2 Staatsexamen Prüfungstag (${d}. April 2027)`;
+            dayEl.title = 'M2 Staatsexamen Prüfungstag (' + d + '. April 2027)';
           } else {
             const state = calendarState[dateKey] || 'default';
             if (state === 'full') {
@@ -1522,23 +1106,22 @@
               dayEl.className = 'cal-day cal-half';
               plannedDays += 0.5;
             } else if (state === 'pause') {
-              // WEISS FÜR PAUSENTAGE
               dayEl.className = 'cal-day cal-pause';
             } else {
               dayEl.className = 'cal-day cal-default';
             }
 
             dayEl.textContent = d;
-            dayEl.title = `Klicken: Ganztags / Halbtags / Pause (Weiß) (${dateKey})`;
+            dayEl.title = 'Klicken: Ganztags / Halbtags / Geblockt (' + dateKey + ')';
 
             dayEl.onclick = () => {
               const current = calendarState[dateKey] || 'default';
               if (current === 'default') calendarState[dateKey] = 'full';
               else if (current === 'full') calendarState[dateKey] = 'half';
-              else if (current === 'half') calendarState[dateKey] = 'pause'; // Weiß
+              else if (current === 'half') calendarState[dateKey] = 'pause'; // Geblockt (Weiß)
               else calendarState[dateKey] = 'default';
 
-              localStorage.setItem('m2_cal_state_v2', JSON.stringify(calendarState));
+              localStorage.setItem('m2_cal_state_v3', JSON.stringify(calendarState));
               renderCalendar();
             };
           }
@@ -1550,8 +1133,53 @@
         container.appendChild(section);
       });
 
-      document.getElementById('calendarStudyDaysCount').textContent = `Geplant: ${plannedDays} / 100 Tage`;
+      document.getElementById('calendarStudyDaysCount').textContent = 'Geplant: ' + plannedDays + ' / 100 Tage';
     }
+
+    // ---------------- TOP 100 KAPITEL ----------------
+    function renderTop100() {
+      const card = document.getElementById('top100Card');
+      const grid = document.getElementById('top100Grid');
+      card.classList.toggle('open', top100Open);
+      document.getElementById('top100Chevron').style.transform = top100Open ? 'rotate(180deg)' : 'rotate(0deg)';
+
+      let done = 0;
+      grid.innerHTML = '';
+
+      TOP_100_DATA.forEach((title, idx) => {
+        const isDone = !!top100Status[idx];
+        if (isDone) done++;
+
+        const item = document.createElement('div');
+        item.className = 'top100-item ' + (isDone ? 'done' : '');
+        item.onclick = (e) => {
+          if (e.target.tagName !== 'INPUT') {
+            toggleTop100Item(idx);
+          }
+        };
+
+        item.innerHTML = 
+          '<input type="checkbox" class="top100-checkbox" ' + (isDone ? 'checked' : '') + ' onchange="toggleTop100Item(' + idx + ')" />' +
+          '<span>' + (idx + 1) + '. ' + escapeHtml(title) + '</span>';
+        grid.appendChild(item);
+      });
+
+      const percent = Math.round((done / TOP_100_DATA.length) * 100);
+      document.getElementById('top100Count').textContent = done + '/100 erledigt (' + percent + '%)';
+      document.getElementById('top100Fill').style.width = percent + '%';
+    }
+
+    window.toggleTop100 = function() {
+      top100Open = !top100Open;
+      localStorage.setItem('m2_top100_open_v3', JSON.stringify(top100Open));
+      renderTop100();
+    };
+
+    window.toggleTop100Item = function(idx) {
+      top100Status[idx] = !top100Status[idx];
+      localStorage.setItem('m2_top100_status_v3', JSON.stringify(top100Status));
+      renderTop100();
+    };
 
     // ---------------- TAGE & FORTSCHRITT ----------------
     function updateGlobalProgress() {
@@ -1563,21 +1191,21 @@
       const total = M2_DAYS_DATA.length;
       const percent = Math.round((completedDays / total) * 100);
 
-      document.getElementById('sidebarPercent').textContent = `${percent}%`;
-      document.getElementById('sidebarDaysText').textContent = `${completedDays}/${total} Tage`;
-      document.getElementById('sidebarMeterFill').style.height = `${percent}%`;
+      document.getElementById('sidebarPercent').textContent = percent + '%';
+      document.getElementById('sidebarDaysText').textContent = completedDays + '/' + total + ' Tage';
+      document.getElementById('sidebarMeterFill').style.height = percent + '%';
     }
 
     window.toggleDayComplete = function(dayNumber, isChecked) {
       dayStatus[dayNumber] = isChecked;
-      localStorage.setItem('m2_days_status_v2', JSON.stringify(dayStatus));
+      localStorage.setItem('m2_days_status_v3', JSON.stringify(dayStatus));
       updateGlobalProgress();
       renderDays();
     };
 
     window.toggleCardOpen = function(dayNumber) {
       openCards[dayNumber] = !openCards[dayNumber];
-      localStorage.setItem('m2_open_cards_v2', JSON.stringify(openCards));
+      localStorage.setItem('m2_open_cards_v3', JSON.stringify(openCards));
       renderDays();
     };
 
@@ -1586,28 +1214,34 @@
       M2_DAYS_DATA.forEach(d => {
         openCards[d.d] = allExpanded;
       });
-      localStorage.setItem('m2_open_cards_v2', JSON.stringify(openCards));
+      localStorage.setItem('m2_open_cards_v3', JSON.stringify(openCards));
       renderDays();
     };
 
-    window.saveComment = function(dayNumber, text) {
-      dayComments[dayNumber] = text.trim();
-      localStorage.setItem('m2_day_comments_v2', JSON.stringify(dayComments));
-      
-      const hint = document.getElementById(`save-hint-${dayNumber}`);
+    // FLÜSSIGE NOTIZ-EINGABE: KEIN RE-RENDER DES DOMS!
+    window.handleCommentInput = function(dayNumber, text) {
+      dayComments[dayNumber] = text;
+      localStorage.setItem('m2_day_comments_v3', JSON.stringify(dayComments));
+
+      const hint = document.getElementById('save-hint-' + dayNumber);
       if (hint) {
-        hint.textContent = "Gespeichert ✓";
-        setTimeout(() => { if (hint) hint.textContent = ""; }, 1800);
+        hint.textContent = 'Gespeichert ✓';
+        clearTimeout(window['hint_timeout_' + dayNumber]);
+        window['hint_timeout_' + dayNumber] = setTimeout(() => {
+          if (hint) hint.textContent = '';
+        }, 1500);
       }
-      
-      // Header-Badge aktualisieren
-      renderDays();
+
+      const badge = document.getElementById('note-badge-' + dayNumber);
+      if (badge) {
+        badge.style.display = text.trim().length > 0 ? 'inline-flex' : 'none';
+      }
     };
 
     window.setFilter = function(filter) {
       activeFilter = filter;
       document.querySelectorAll('.filter-pill').forEach(btn => {
-        btn.classList.toggle('active', btn.onclick.toString().includes(`'${filter}'`));
+        btn.classList.toggle('active', btn.onclick.toString().includes("'" + filter + "'"));
       });
       renderDays();
     };
@@ -1615,24 +1249,24 @@
     window.scrollToNextOpenDay = function() {
       const nextDay = M2_DAYS_DATA.find(day => !dayStatus[day.d]);
       if (!nextDay) {
-        alert("🎉 Alle 100 Tage des M2-Lernplans abgeschlossen!");
+        alert('🎉 Alle 100 Tage des M2-Lernplans abgeschlossen!');
         return;
       }
 
-      if (activeFilter !== 'alle' && nextDay.s !== activeFilter) {
+      if (activeFilter !== 'alle' && nextDay.cat !== activeFilter) {
         setFilter('alle');
       }
 
       openCards[nextDay.d] = true;
-      localStorage.setItem('m2_open_cards_v2', JSON.stringify(openCards));
+      localStorage.setItem('m2_open_cards_v3', JSON.stringify(openCards));
       renderDays();
 
       setTimeout(() => {
-        const el = document.getElementById(`day-${nextDay.d}`);
+        const el = document.getElementById('day-' + nextDay.d);
         if (el) {
           el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          el.style.boxShadow = "0 0 0 3px #10b981";
-          setTimeout(() => el.style.boxShadow = "", 1500);
+          el.style.boxShadow = '0 0 0 3px #10b981';
+          setTimeout(() => el.style.boxShadow = '', 1500);
         }
       }, 50);
     };
@@ -1649,24 +1283,23 @@
       container.innerHTML = '';
 
       const filtered = M2_DAYS_DATA.filter(day => {
-        if (activeFilter !== 'alle' && day.s !== activeFilter) return false;
+        if (activeFilter !== 'alle' && day.cat !== activeFilter) return false;
         if (!search) return true;
 
         const comment = (dayComments[day.d] || '').toLowerCase();
-        const inName = day.name.toLowerCase().includes(search);
-        const inSub = day.sub.toLowerCase().includes(search);
+        const inName = day.officialName.toLowerCase().includes(search);
+        const inFach = day.fach.toLowerCase().includes(search);
         const inChapters = day.chapters.some(c => c.toLowerCase().includes(search));
-        return inName || inSub || inChapters || comment.includes(search);
+        return inName || inFach || inChapters || comment.includes(search);
       });
 
       filtered.forEach(day => {
-        const subject = SUBJECT_CONFIG[day.s] || SUBJECT_CONFIG.querschnitt;
+        const subject = SUBJECT_CONFIG[day.cat] || { badge: 'badge-innere', colorClass: 'color-innere' };
         const isDone = !!dayStatus[day.d];
         const isOpen = !!openCards[day.d];
         const comment = dayComments[day.d] || '';
-        const hasComment = comment.length > 0;
+        const hasComment = comment.trim().length > 0;
 
-        // LERNAUFWAND PRO TAG (LERNPLAN.NET STIL)
         let effortClass = 'effort-normal';
         let effortPercent = day.w || 100;
         if (effortPercent < 90) effortClass = 'effort-low';
@@ -1675,75 +1308,48 @@
         else effortClass = 'effort-extreme';
 
         const card = document.createElement('div');
-        card.id = `day-${day.d}`;
-        card.className = `day-card ${isOpen ? 'open' : ''} ${isDone ? 'completed' : ''} ${subject.colorClass}`;
+        card.id = 'day-' + day.d;
+        card.className = 'day-card ' + (isOpen ? 'open' : '') + ' ' + (isDone ? 'completed' : '') + ' ' + subject.colorClass;
 
-        const chaptersHtml = day.chapters.map(ch => `<span class="summary-tag">• ${escapeHtml(ch)}</span>`).join('');
+        const chaptersHtml = day.chapters.map(ch => '<span class="summary-tag">• ' + escapeHtml(ch) + '</span>').join('');
 
-        card.innerHTML = `
-          <!-- TAGES-HEADER -->
-          <div class="day-header" onclick="toggleCardOpen(${day.d})">
-            <div class="day-header-top">
-              <input 
-                type="checkbox" 
-                class="day-checkbox" 
-                ${isDone ? 'checked' : ''} 
-                onclick="event.stopPropagation(); toggleDayComplete(${day.d}, this.checked)"
-                title="Tag als erledigt abhaken"
-              />
-              <div class="day-title-wrap">
-                <!-- EXAKTER TAGESNAME -->
-                <span class="day-official-name">${escapeHtml(day.name)}</span>
-                
-                <!-- GUT SICHTBARE NOTIZ-MARKIERUNG -->
-                ${hasComment ? `<span class="note-present-badge" title="Für diesen Tag hast du eine eigene Notiz hinterlegt">📝 Notiz vorhanden</span>` : ''}
-              </div>
-              <span class="day-chevron">▼</span>
-            </div>
-
-            <div class="day-meta-row">
-              <div class="meta-left">
-                <span class="subject-badge ${subject.badge}">${subject.name}</span>
-                <span class="day-topic-sub">${escapeHtml(day.sub)}</span>
-              </div>
-
-              <!-- LERNAUFWAND (LERNPLAN.NET STIL) -->
-              <div class="effort-net-box" title="Geschätzter Lernaufwand im Vergleich zum Durchschnittstag">
-                <span>Aufwand:</span>
-                <div class="effort-net-track">
-                  <div class="effort-net-bar ${effortClass}" style="width: ${Math.min(effortPercent, 180) / 1.8}%;"></div>
-                </div>
-                <span style="font-weight:700;">${effortPercent}%</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- INHALT (AUFGEKLAPPT) -->
-          <div class="day-body">
-            <!-- VOLLSTÄNDIGE TEXTZUSAMMENFASSUNG -->
-            <div class="summary-box">
-              <div class="summary-title">📖 Relevante Kapitel & Lernthemen dieses Tages:</div>
-              <div class="summary-items">
-                ${chaptersHtml}
-              </div>
-            </div>
-
-            <!-- DAS WICHTIGSTE: DAS KOMMENTARFELD -->
-            <div class="comment-area-wrap">
-              <div class="comment-header">
-                <label class="comment-label">
-                  ✍️ Persönliche Lernnotizen & Fallstricke für diesen Tag:
-                </label>
-                <span class="save-hint" id="save-hint-${day.d}"></span>
-              </div>
-              <textarea 
-                class="comment-textarea" 
-                placeholder="Schreibe hier deine Merksätze, Dosierungen, Fallstricke oder IMPP-Lieblingsfragen auf..."
-                oninput="saveComment(${day.d}, this.value)"
-              >${escapeHtml(comment)}</textarea>
-            </div>
-          </div>
-        `;
+        card.innerHTML = 
+          '<div class="day-header" onclick="toggleCardOpen(' + day.d + ')">' +
+            '<div class="day-header-top">' +
+              '<input type="checkbox" class="day-checkbox" ' + (isDone ? 'checked' : '') + ' onclick="event.stopPropagation(); toggleDayComplete(' + day.d + ', this.checked)" title="Tag als erledigt abhaken" />' +
+              '<div class="day-title-wrap">' +
+                '<span class="day-official-name">' + escapeHtml(day.officialName) + '</span>' +
+                '<span id="note-badge-' + day.d + '" class="note-present-badge" style="display: ' + (hasComment ? 'inline-flex' : 'none') + ';" title="Notiz vorhanden">📝 Notiz vorhanden</span>' +
+              '</div>' +
+              '<span class="day-chevron">▼</span>' +
+            '</div>' +
+            '<div class="day-meta-row">' +
+              '<div class="meta-left">' +
+                '<span class="subject-badge ' + subject.badge + '">' + escapeHtml(day.fach) + '</span>' +
+                '<span style="font-size:0.75rem; color:var(--text-muted);">' + day.chapters.length + ' Kapitel</span>' +
+              '</div>' +
+              '<div class="effort-net-box" title="Geschätzter Lernaufwand im Vergleich zum Durchschnittstag">' +
+                '<span>Aufwand:</span>' +
+                '<div class="effort-net-track">' +
+                  '<div class="effort-net-bar ' + effortClass + '" style="width: ' + (Math.min(effortPercent, 180) / 1.8) + '%;"></div>' +
+                '</div>' +
+                '<span style="font-weight:700;">' + effortPercent + '%</span>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="day-body">' +
+            '<div class="summary-box">' +
+              '<div class="summary-title">📖 Relevante Kapitel & Lernthemen laut offiziellem Lernplan:</div>' +
+              '<div class="summary-items">' + chaptersHtml + '</div>' +
+            '</div>' +
+            '<div class="comment-area-wrap">' +
+              '<div class="comment-header">' +
+                '<label class="comment-label">✍️ Persönliche Lernnotizen & Fallstricke für diesen Tag:</label>' +
+                '<span class="save-hint" id="save-hint-' + day.d + '"></span>' +
+              '</div>' +
+              '<textarea class="comment-textarea" placeholder="Hier eigene Merksätze, Dosierungen, Fallstricke oder IMPP-Fragen eintragen..." oninput="handleCommentInput(' + day.d + ', this.value)">' + escapeHtml(comment) + '</textarea>' +
+            '</div>' +
+          '</div>';
 
         container.appendChild(card);
       });
@@ -1751,8 +1357,8 @@
       updateGlobalProgress();
     }
 
-    // Initialisierung
     renderCalendar();
+    renderTop100();
     renderDays();
     updateTimerUI();
   </script>
