@@ -1032,9 +1032,142 @@
       outline: none;
     }
 
-    @media (max-width: 1080px) {
-      .calendar-sidebar { display: none; }
-      .right-sidebar { display: none; }
+    /* ==========================================
+       RESPONSIVE DESIGN FÜR IPAD & MOBILE
+       ========================================== */
+    .mobile-sidebar-toggle-btn {
+      display: none;
+    }
+
+    .sidebar-mobile-header {
+      display: none;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    .sidebar-mobile-title {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: #0f172a;
+    }
+    .sidebar-close-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 1.15rem;
+      width: 32px;
+      height: 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #64748b;
+      line-height: 1;
+      transition: all 0.15s ease;
+    }
+    .sidebar-close-btn:hover {
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+
+    .sidebar-backdrop {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      z-index: 1050;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      pointer-events: none;
+    }
+    .sidebar-backdrop.active {
+      display: block;
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* iPad Landscape & kompakte Desktop-Screens (1024px bis 1240px) */
+    @media (min-width: 1024px) and (max-width: 1240px) {
+      .app-layout {
+        gap: 12px;
+      }
+      .calendar-sidebar {
+        width: 215px;
+        padding: 10px;
+      }
+      .right-sidebar {
+        width: 120px;
+        gap: 8px;
+      }
+      .timer-display {
+        font-size: 1.25rem;
+      }
+      .sidebar-percent {
+        font-size: 1.2rem;
+      }
+    }
+
+    /* iPad Portrait, Tablets & Smartphones (< 1024px) */
+    @media (max-width: 1023px) {
+      .mobile-sidebar-toggle-btn {
+        display: inline-flex !important;
+      }
+      .sidebar-mobile-header {
+        display: flex !important;
+      }
+
+      .calendar-sidebar {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 320px !important;
+        max-width: 86vw !important;
+        height: 100vh !important;
+        z-index: 1100 !important;
+        border-radius: 0 18px 18px 0 !important;
+        box-shadow: 6px 0 30px rgba(0,0,0,0.3) !important;
+        transform: translateX(-105%) !important;
+        transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        display: flex !important;
+        background: var(--card-bg) !important;
+        overflow-y: auto !important;
+      }
+      .calendar-sidebar.open {
+        transform: translateX(0) !important;
+      }
+
+      .right-sidebar {
+        position: fixed !important;
+        top: 0 !important;
+        right: 0 !important;
+        width: 240px !important;
+        max-width: 86vw !important;
+        height: 100vh !important;
+        z-index: 1100 !important;
+        border-radius: 18px 0 0 18px !important;
+        box-shadow: -6px 0 30px rgba(0,0,0,0.3) !important;
+        transform: translateX(105%) !important;
+        transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        display: flex !important;
+        background: var(--card-bg) !important;
+        padding: 16px 12px !important;
+        overflow-y: auto !important;
+      }
+      .right-sidebar.open {
+        transform: translateX(0) !important;
+      }
+
+      .main-content {
+        width: 100%;
+        min-width: 0;
+      }
     }
 
     /* CLOUD-SYNC BUTTON & MODAL STYLES */
@@ -1260,6 +1393,15 @@
       box-shadow: 0 4px 14px rgba(0,0,0,0.3);
     }
     html.dark .calendar-title { color: #f8fafc; }
+    html.dark .sidebar-mobile-title { color: #f8fafc; }
+    html.dark .sidebar-close-btn {
+      border-color: var(--border);
+      color: #94a3b8;
+    }
+    html.dark .sidebar-close-btn:hover {
+      background: #1e293b;
+      color: #f8fafc;
+    }
     html.dark .month-name { color: #94a3b8; }
     html.dark .cal-default { background: #1e293b; color: #cbd5e1; }
     html.dark .cal-default:hover { background: #334155; }
@@ -1517,6 +1659,13 @@
       <button id="themeToggleBtn" class="nav-action-btn" onclick="toggleTheme()" title="Design wechseln (Hell/Dunkel)">
         🌙 Dunkel
       </button>
+      <!-- IPAD & MOBILE SCHNELL-TOGGLE FÜR KALENDER & FORTSCHRITT -->
+      <button class="nav-action-btn mobile-sidebar-toggle-btn" onclick="toggleSidebar('calendar')" title="Examens-Kalender öffnen">
+        📅 Kalender
+      </button>
+      <button class="nav-action-btn mobile-sidebar-toggle-btn" onclick="toggleSidebar('right')" title="Timer & Fortschrittsbalken öffnen">
+        ⏱️ Fortschritt (<span id="mobileProgressPercent">0%</span>)
+      </button>
     </div>
 
     <!-- DIE DREI SCHNELLZUGRIFFSLINKS -->
@@ -1533,9 +1682,16 @@
     </div>
   </div>
 
+  <!-- OVERLAY-BACKDROP FÜR IPAD / MOBILE SLIDE-OVER SEITENLEISTEN -->
+  <div id="sidebarBackdrop" class="sidebar-backdrop" onclick="closeSidebars()"></div>
+
   <div class="app-layout">
     <!-- 1. LINKS: MITWANDERNDER KALENDER (NOV 2026 - APR 2027) -->
-    <aside class="calendar-sidebar">
+    <aside id="calendarSidebar" class="calendar-sidebar">
+      <div class="sidebar-mobile-header">
+        <span class="sidebar-mobile-title">📅 Examens-Kalender</span>
+        <button class="sidebar-close-btn" onclick="closeSidebars()" title="Schließen">&times;</button>
+      </div>
       <div class="calendar-header">
         <div class="calendar-title">📅 Examens-Kalender</div>
         <div id="calendarStudyDaysCount" class="calendar-stats">Geplant: 0 Tage / 100 Tage</div>
@@ -1634,7 +1790,11 @@
     </main>
 
     <!-- 3. RECHTS: MITWANDERNDER TIMER & FORTSCHRITT -->
-    <aside class="right-sidebar">
+    <aside id="rightSidebar" class="right-sidebar">
+      <div class="sidebar-mobile-header">
+        <span class="sidebar-mobile-title">⏱️ Timer & Gesamtfortschritt</span>
+        <button class="sidebar-close-btn" onclick="closeSidebars()" title="Schließen">&times;</button>
+      </div>
       <div class="timer-card">
         <div class="timer-title" id="timerLabel">Fokus (45m)</div>
         <div class="timer-display" id="timerDisplay">45:00</div>
@@ -2768,11 +2928,48 @@ create policy "Nutzer verwaltet nur eigene M2-Daten"
       const percentEl = document.getElementById('sidebarPercent');
       const textEl = document.getElementById('sidebarDaysText');
       const fillEl = document.getElementById('sidebarMeterFill');
+      const mobilePercentEl = document.getElementById('mobileProgressPercent');
 
       if (percentEl) percentEl.textContent = percent + '%';
       if (textEl) textEl.textContent = completedDays + '/' + total + ' Tage';
       if (fillEl) fillEl.style.height = percent + '%';
+      if (mobilePercentEl) mobilePercentEl.textContent = percent + '%';
     }
+
+    // IPAD & MOBILE SEITENLEISTEN STEUERUNG
+    window.toggleSidebar = function(which) {
+      const cal = document.getElementById('calendarSidebar');
+      const right = document.getElementById('rightSidebar');
+      const backdrop = document.getElementById('sidebarBackdrop');
+
+      if (which === 'calendar') {
+        const isOpen = cal?.classList.contains('open');
+        closeSidebars();
+        if (!isOpen && cal) {
+          cal.classList.add('open');
+          backdrop?.classList.add('active');
+        }
+      } else if (which === 'right') {
+        const isOpen = right?.classList.contains('open');
+        closeSidebars();
+        if (!isOpen && right) {
+          right.classList.add('open');
+          backdrop?.classList.add('active');
+        }
+      }
+    };
+
+    window.closeSidebars = function() {
+      document.getElementById('calendarSidebar')?.classList.remove('open');
+      document.getElementById('rightSidebar')?.classList.remove('open');
+      document.getElementById('sidebarBackdrop')?.classList.remove('active');
+    };
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeSidebars();
+      }
+    });
 
     window.toggleDayComplete = function(dayNumber, isChecked) {
       dayStatus[dayNumber] = isChecked;
@@ -2895,6 +3092,10 @@ window.setFilter = function(filter) {
       if (!nextDay) {
         alert('🎉 Alle 100 Tage des M2-Lernplans abgeschlossen!');
         return;
+      }
+
+      if (window.innerWidth < 1024) {
+        closeSidebars();
       }
 
       if (activeFilter !== 'alle' && nextDay.cat !== activeFilter) {
