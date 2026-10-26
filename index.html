@@ -847,9 +847,29 @@
       padding: 2px 8px;
       border-radius: 6px;
     }
+    /* DEUTLICHE ROTE HINTERLEGUNG IM ZU- UND AUFGEKLAPPTEN ZUSTAND */
     .day-card.is-repeat-flagged {
-      border-right: 3px solid #ef4444;
-      background: #fffdfd;
+      border-right: 4px solid #ef4444 !important;
+      border-color: #fca5a5 !important;
+      background: #fef2f2 !important;
+    }
+    .day-card.is-repeat-flagged .day-header {
+      background: #fef2f2 !important;
+    }
+    .day-card.is-repeat-flagged.open .day-header {
+      background: #fee2e2 !important;
+      border-bottom-color: #fca5a5 !important;
+    }
+    .day-card.is-repeat-flagged .day-body {
+      background: #fff8f8 !important;
+    }
+    .day-card.is-repeat-flagged .summary-box {
+      background: #ffffff !important;
+      border-color: #fecaca !important;
+    }
+    .day-card.is-repeat-flagged .score-row-wrap {
+      background: #ffffff !important;
+      border-color: #fecaca !important;
     }
 
     /* KREUZERGEBNIS (SCORE) */
@@ -1098,21 +1118,111 @@
       pointer-events: auto;
     }
 
-    /* iPad Landscape & kompakte Desktop-Screens (1024px bis 1240px) */
-    @media (min-width: 1024px) and (max-width: 1240px) {
+    /* ==============================================================
+       DESKTOP & IPAD LANDSCAPE (>= 1024px): 
+       FESTSTEHENDES APP-LAYOUT (KEIN VERSCHIEBEN, KEIN UNTERER ABSCHNITT)
+       ============================================================== */
+    @media (min-width: 1024px) {
+      html, body {
+        height: 100vh;
+        height: 100dvh;
+        overflow: hidden;
+        margin: 0;
+        padding: 0 !important;
+      }
+      body {
+        display: flex;
+        flex-direction: column;
+      }
+      .sticky-top-nav {
+        position: relative !important;
+        top: 0 !important;
+        flex-shrink: 0;
+        margin-bottom: 0 !important;
+        padding: 8px 16px;
+        border-bottom: 1px solid var(--border);
+        box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+        z-index: 50;
+      }
       .app-layout {
-        gap: 12px;
+        flex: 1 1 0%;
+        min-height: 0;
+        height: calc(100dvh - 58px);
+        max-height: calc(100dvh - 58px);
+        width: 100%;
+        max-width: 1560px;
+        margin: 0 auto;
+        padding: 10px 14px 10px 14px;
+        box-sizing: border-box;
+        overflow: hidden;
+        gap: 14px;
+        align-items: stretch;
       }
       .calendar-sidebar {
-        width: 215px;
-        top: 68px;
-        height: calc(100vh - 86px);
+        position: static !important;
+        top: auto !important;
+        width: 250px;
+        height: 100% !important;
+        max-height: 100% !important;
+        flex-shrink: 0;
+        overflow: hidden;
+        box-sizing: border-box;
+      }
+      .calendar-scrollable {
+        flex: 1 1 0%;
+        min-height: 0;
+        overflow-y: auto;
+      }
+      .right-sidebar {
+        position: static !important;
+        top: auto !important;
+        width: 140px;
+        height: 100% !important;
+        max-height: 100% !important;
+        flex-shrink: 0;
+        overflow-y: auto;
+        overflow-x: hidden;
+        box-sizing: border-box;
+      }
+      .right-sidebar::-webkit-scrollbar {
+        width: 4px;
+      }
+      .right-sidebar::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 4px;
+      }
+      .main-content {
+        flex: 1 1 0%;
+        min-height: 0;
+        height: 100% !important;
+        max-height: 100% !important;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding-right: 8px;
+        padding-bottom: 30px;
+        box-sizing: border-box;
+      }
+      .main-content::-webkit-scrollbar {
+        width: 6px;
+      }
+      .main-content::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 4px;
+      }
+    }
+
+    /* iPad Landscape & kompakte Bildschirme (1024px bis 1240px) */
+    @media (min-width: 1024px) and (max-width: 1240px) {
+      .app-layout {
+        gap: 10px;
+        padding: 8px 10px;
+      }
+      .calendar-sidebar {
+        width: 215px !important;
         padding: 10px;
       }
       .right-sidebar {
-        width: 120px;
-        top: 68px;
-        height: calc(100vh - 86px);
+        width: 120px !important;
         gap: 8px;
       }
       .timer-display {
@@ -1131,6 +1241,9 @@
       .sidebar-mobile-header {
         display: flex !important;
       }
+      .desktop-calendar-title {
+        display: none !important;
+      }
 
       .calendar-sidebar {
         position: fixed !important;
@@ -1139,6 +1252,7 @@
         width: 320px !important;
         max-width: 86vw !important;
         height: 100vh !important;
+        height: 100dvh !important;
         z-index: 1100 !important;
         border-radius: 0 18px 18px 0 !important;
         box-shadow: 6px 0 30px rgba(0,0,0,0.3) !important;
@@ -1159,6 +1273,7 @@
         width: 240px !important;
         max-width: 86vw !important;
         height: 100vh !important;
+        height: 100dvh !important;
         z-index: 1100 !important;
         border-radius: 18px 0 0 18px !important;
         box-shadow: -6px 0 30px rgba(0,0,0,0.3) !important;
@@ -1176,6 +1291,8 @@
       .main-content {
         width: 100%;
         min-width: 0;
+        height: auto !important;
+        overflow: visible !important;
       }
     }
 
@@ -1564,8 +1681,27 @@
       border-color: #991b1b;
     }
     html.dark .day-card.is-repeat-flagged {
-      background: #1c151b;
-      border-right-color: #ef4444;
+      background: #251216 !important;
+      border-color: #7f1d1d !important;
+      border-right: 4px solid #ef4444 !important;
+    }
+    html.dark .day-card.is-repeat-flagged .day-header {
+      background: #251216 !important;
+    }
+    html.dark .day-card.is-repeat-flagged.open .day-header {
+      background: #2f161c !important;
+      border-bottom-color: #7f1d1d !important;
+    }
+    html.dark .day-card.is-repeat-flagged .day-body {
+      background: #201014 !important;
+    }
+    html.dark .day-card.is-repeat-flagged .summary-box {
+      background: #170d10 !important;
+      border-color: #551c24 !important;
+    }
+    html.dark .day-card.is-repeat-flagged .score-row-wrap {
+      background: #170d10 !important;
+      border-color: #551c24 !important;
     }
 
     html.dark .score-row-wrap {
@@ -1708,7 +1844,7 @@
   <div class="sticky-top-nav">
     <div class="sticky-brand">
       <h1>🩺 M2 100-Tage-Lernplan</h1>
-      <span>Staatsexamen Medizin (H26 / F27)</span>
+      <span>Staatsexamen Medizin (H26)</span>
     </div>
 
     <!-- CLOUD-SYNC STATUS BUTTON & AKTIONEN -->
@@ -1757,7 +1893,7 @@
         <button class="sidebar-close-btn" onclick="closeSidebars()" title="Schließen">&times;</button>
       </div>
       <div class="calendar-header">
-        <div class="calendar-title">📅 Examens-Kalender</div>
+        <div class="calendar-title desktop-calendar-title">📅 Examens-Kalender</div>
         <div id="calendarStudyDaysCount" class="calendar-stats">Geplant: 0 Tage / 100 Tage</div>
         <!-- LEGENDE: MIT "GEBLOCKT" STATT PAUSENTAG (WEISS) -->
         <div class="calendar-legend">
@@ -1812,7 +1948,6 @@
         <div class="top100-header" onclick="toggleTop100()">
           <div class="top100-title-wrap">
             <span class="top100-title">⭐ Top 100 Kapitel</span>
-            <span class="top100-badge">Offizielle AMBOSS-Auswahl</span>
           </div>
           <div class="top100-actions-wrap">
             <a 
@@ -2354,6 +2489,36 @@ create policy "Nutzer verwaltet nur eigene M2-Daten"
     let currentUser = null;
     let autoSyncTimer = null;
     let isSyncing = false;
+    let realtimeChannel = null;
+
+    function setupRealtimeSync() {
+      if (!supabaseClient || !currentUser) return;
+      if (realtimeChannel) {
+        try { supabaseClient.removeChannel(realtimeChannel); } catch (e) {}
+        realtimeChannel = null;
+      }
+      try {
+        realtimeChannel = supabaseClient
+          .channel('m2_sync_' + currentUser.id)
+          .on(
+            'postgres_changes',
+            {
+              event: '*',
+              schema: 'public',
+              table: 'm2_progress',
+              filter: 'user_id=eq.' + currentUser.id
+            },
+            () => {
+              if (!isSyncing) {
+                pullCloudData(true);
+              }
+            }
+          )
+          .subscribe();
+      } catch (err) {
+        console.warn('Realtime Setup:', err);
+      }
+    }
 
     function initSupabase() {
       const cleanUrl = sanitizeSupabaseUrl(sbConfig.url) || DEFAULT_SB_URL;
@@ -2387,6 +2552,10 @@ create policy "Nutzer verwaltet nur eigene M2-Daten"
               handleUserAuthenticated(session.user);
             } else {
               currentUser = null;
+              if (realtimeChannel && supabaseClient) {
+                try { supabaseClient.removeChannel(realtimeChannel); } catch (e) {}
+                realtimeChannel = null;
+              }
               updateSyncUI('offline', '☁️ Cloud-Sync: Bereit', 'Nicht angemeldet. Jetzt einloggen.');
               toggleAuthViews(false);
             }
@@ -2411,6 +2580,7 @@ create policy "Nutzer verwaltet nur eigene M2-Daten"
         localStorage.setItem(REMEMBER_EMAIL_KEY, user.email);
       }
 
+      setupRealtimeSync();
       pullCloudData(true);
     }
 
@@ -2636,6 +2806,10 @@ create policy "Nutzer verwaltet nur eigene M2-Daten"
     window.handleAuthLogout = async function() {
       if (!supabaseClient) return;
       try {
+        if (realtimeChannel) {
+          try { supabaseClient.removeChannel(realtimeChannel); } catch (e) {}
+          realtimeChannel = null;
+        }
         await supabaseClient.auth.signOut();
         currentUser = null;
         toggleAuthViews(false);
@@ -2663,13 +2837,13 @@ create policy "Nutzer verwaltet nur eigene M2-Daten"
       });
     };
 
-    function triggerAutoSync() {
+    function triggerAutoSync(immediate = false) {
       if (!supabaseClient || !currentUser) return;
       clearTimeout(autoSyncTimer);
       updateSyncUI('syncing', '🟡 Synchronisiere...', 'Änderungen werden übertragen...');
       autoSyncTimer = setTimeout(() => {
         pushCloudData();
-      }, 1000);
+      }, immediate ? 60 : 450);
     }
 
     window.triggerManualSync = function() {
@@ -2722,34 +2896,56 @@ create policy "Nutzer verwaltet nur eigene M2-Daten"
 
         if (data) {
           if (data.day_status && typeof data.day_status === 'object') {
-            dayStatus = { ...dayStatus, ...data.day_status };
+            dayStatus = data.day_status;
             localStorage.setItem('m2_days_status_v4', JSON.stringify(dayStatus));
           }
           if (data.day_comments && typeof data.day_comments === 'object') {
+            const activeEl = document.activeElement;
+            let activeDay = null;
+            if (activeEl && activeEl.classList.contains('comment-textarea')) {
+              const card = activeEl.closest('.day-card');
+              if (card && card.id) activeDay = card.id.replace('day-', '');
+            }
             Object.keys(data.day_comments).forEach(k => {
-              if (!dayComments[k] || dayComments[k].trim() === '') {
+              if (String(k) !== String(activeDay)) {
                 dayComments[k] = data.day_comments[k];
               }
             });
             localStorage.setItem('m2_day_comments_v4', JSON.stringify(dayComments));
           }
           if (data.quiz_scores && typeof data.quiz_scores === 'object') {
-            dayQuizScores = { ...dayQuizScores, ...data.quiz_scores };
+            dayQuizScores = data.quiz_scores;
             localStorage.setItem('m2_quiz_scores_v1', JSON.stringify(dayQuizScores));
           }
           if (data.repeat_flags && typeof data.repeat_flags === 'object') {
-            dayRepeatFlags = { ...dayRepeatFlags, ...data.repeat_flags };
+            dayRepeatFlags = data.repeat_flags;
             localStorage.setItem('m2_repeat_flags_v1', JSON.stringify(dayRepeatFlags));
           }
           if (data.calendar_state && typeof data.calendar_state === 'object') {
-            calendarState = { ...calendarState, ...data.calendar_state };
+            calendarState = data.calendar_state;
             localStorage.setItem('m2_cal_state_v4', JSON.stringify(calendarState));
           }
+
+          // Fokus & Cursorposition merken
+          const activeEl = document.activeElement;
+          const activeId = activeEl ? activeEl.id : null;
+          const selStart = (activeEl && 'selectionStart' in activeEl) ? activeEl.selectionStart : null;
+          const selEnd = (activeEl && 'selectionEnd' in activeEl) ? activeEl.selectionEnd : null;
 
           renderDays();
           renderCalendar();
           updateGlobalProgress();
           updateRepeatCountBadge();
+
+          if (activeId) {
+            const restoredEl = document.getElementById(activeId);
+            if (restoredEl) {
+              restoredEl.focus();
+              if (selStart !== null && selEnd !== null) {
+                try { restoredEl.setSelectionRange(selStart, selEnd); } catch (e) {}
+              }
+            }
+          }
 
           const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
           updateSyncUI('connected', '🟢 Synced (' + timeStr + ')', 'Cloud-Daten erfolgreich geladen (' + timeStr + ' Uhr).');
@@ -2763,6 +2959,25 @@ create policy "Nutzer verwaltet nur eigene M2-Daten"
         }
       }
     }
+
+    // Auto-Sync bei Tab-Aktivierung (z. B. Wechsel zwischen Laptop und iPad oder Display aufwecken)
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible' && currentUser && supabaseClient && !isSyncing) {
+        pullCloudData(true);
+      }
+    });
+    window.addEventListener('focus', () => {
+      if (currentUser && supabaseClient && !isSyncing) {
+        pullCloudData(true);
+      }
+    });
+
+    // 20s Heartbeat-Sync als Ausfallsicherung für mobile Schlafmodi
+    setInterval(() => {
+      if (document.visibilityState === 'visible' && currentUser && supabaseClient && !isSyncing) {
+        pullCloudData(true);
+      }
+    }, 20000);
 
     // ---------------- TIMER ----------------
     let timerDuration = 45 * 60;
@@ -2922,7 +3137,7 @@ create policy "Nutzer verwaltet nur eigene M2-Daten"
 
               localStorage.setItem('m2_cal_state_v4', JSON.stringify(calendarState));
               renderCalendar();
-              triggerAutoSync();
+              triggerAutoSync(true);
             };
           }
 
@@ -3050,7 +3265,7 @@ create policy "Nutzer verwaltet nur eigene M2-Daten"
       localStorage.setItem('m2_days_status_v4', JSON.stringify(dayStatus));
       updateGlobalProgress();
       renderDays();
-      triggerAutoSync();
+      triggerAutoSync(true);
     };
 
     window.toggleCardOpen = function(dayNumber) {
@@ -3144,7 +3359,7 @@ create policy "Nutzer verwaltet nur eigene M2-Daten"
       localStorage.setItem('m2_repeat_flags_v1', JSON.stringify(dayRepeatFlags));
       updateRepeatCountBadge();
       renderDays();
-      triggerAutoSync();
+      triggerAutoSync(true);
     };
 
     function updateRepeatCountBadge() {
