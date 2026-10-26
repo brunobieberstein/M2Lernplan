@@ -1406,13 +1406,13 @@
 
       <!-- ABSCHNITT 1: SUPABASE PROJEKT DATEN -->
       <div class="sync-section">
-        <div class="sync-section-title">🔑 1. Supabase Projekt-Zugangsdaten (0 € Free Tier)</div>
+        <div class="sync-section-title">🔑 1. Supabase Projekt-Zugangsdaten (automatisch integriert)</div>
         <p style="font-size:0.75rem; color:#64748b; margin-bottom:10px;">
-          Findest du im Supabase Dashboard unter <b>Settings ➔ API</b> (Project URL & anon public key):
+          Deine Zugangsdaten wurden automatisch hinterlegt und für die Auth-API bereinigt (Basis-URL ohne <code>/rest/v1/</code>):
         </p>
         <div class="form-group">
           <label class="form-label" for="sbUrlInput">Project URL:</label>
-          <input type="text" id="sbUrlInput" class="form-input" placeholder="https://xyzcompany.supabase.co" />
+          <input type="text" id="sbUrlInput" class="form-input" placeholder="https://zvjqjillunoyojldagzl.supabase.co" />
         </div>
         <div class="form-group">
           <label class="form-label" for="sbKeyInput">Project API Anon Key (public):</label>
@@ -1535,20 +1535,45 @@ create policy "Nutzer verwaltet nur eigene M2-Daten"
     // ==========================================
     // SUPABASE CLOUD-SYNCHRONISATION & PERSISTENZ
     // ==========================================
+    const DEFAULT_SB_URL = 'https://zvjqjillunoyojldagzl.supabase.co';
+    const DEFAULT_SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp2anFqaWxsdW5veW9qbGRhZ3psIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMwMDQ4NDcsImV4cCI6MjEwODU4MDg0N30.YRSXccQ0naZahVbNUm7A2pRb1IdNfMOaCrH10FnNkyY';
+
+    function sanitizeSupabaseUrl(url) {
+      if (!url || typeof url !== 'string') return '';
+      let cleaned = url.trim();
+      // Supabase JS benötigt die reine Basis-URL (z. B. https://xyz.supabase.co).
+      // Eventuell angehängte Pfade wie /rest/v1 oder /auth/v1 und Slashes am Ende entfernen:
+      cleaned = cleaned.replace(/\/rest\/v1\/?$/i, '');
+      cleaned = cleaned.replace(/\/auth\/v1\/?$/i, '');
+      cleaned = cleaned.replace(/\/+$/, '');
+      return cleaned;
+    }
+
+    let storedRawUrl = localStorage.getItem('m2_sb_url');
+    let sanitizedStoredUrl = sanitizeSupabaseUrl(storedRawUrl);
+
+    // Falls zuvor ein unbereinigter Pfad mit /rest/v1 im Speicher lag, korrigieren:
+    if (storedRawUrl && storedRawUrl !== sanitizedStoredUrl) {
+      localStorage.setItem('m2_sb_url', sanitizedStoredUrl || DEFAULT_SB_URL);
+    }
+
+    let sbConfig = {
+      url: sanitizedStoredUrl || DEFAULT_SB_URL,
+      key: (localStorage.getItem('m2_sb_key') || '').trim() || DEFAULT_SB_KEY
+    };
+
     let supabaseClient = null;
     let currentUser = null;
     let autoSyncTimer = null;
     let isSyncing = false;
 
-    let sbConfig = {
-      url: localStorage.getItem('m2_sb_url') || '',
-      key: localStorage.getItem('m2_sb_key') || ''
-    };
-
     function initSupabase() {
-      if (window.supabase && sbConfig.url && sbConfig.key) {
+      const cleanUrl = sanitizeSupabaseUrl(sbConfig.url) || DEFAULT_SB_URL;
+      const cleanKey = (sbConfig.key || '').trim() || DEFAULT_SB_KEY;
+
+      if (window.supabase && cleanUrl && cleanKey) {
         try {
-          supabaseClient = window.supabase.createClient(sbConfig.url, sbConfig.key, {
+          supabaseClient = window.supabase.createClient(cleanUrl, cleanKey, {
             auth: {
               persistSession: true,
               autoRefreshToken: true,
@@ -1561,8 +1586,10 @@ create policy "Nutzer verwaltet nur eigene M2-Daten"
             if (!error && data?.session?.user) {
               handleUserAuthenticated(data.session.user);
             } else {
-              updateSyncUI('offline', '⚪ Offline: Nicht angemeldet', 'Bereit zur Anmeldung');
+              updateSyncUI('offline', '☁️ Cloud-Sync: Bereit', 'Supabase aktiv. Jetzt anmelden oder registrieren.');
             }
+          }).catch(() => {
+            updateSyncUI('offline', '☁️ Cloud-Sync: Bereit', 'Supabase aktiv. Jetzt anmelden oder registrieren.');
           });
 
           // Auth State Listener
@@ -1571,7 +1598,7 @@ create policy "Nutzer verwaltet nur eigene M2-Daten"
               handleUserAuthenticated(session.user);
             } else {
               currentUser = null;
-              updateSyncUI('offline', '⚪ Offline: Nicht angemeldet', 'Bereit zur Anmeldung');
+              updateSyncUI('offline', '☁️ Cloud-Sync: Bereit', 'Nicht angemeldet. Jetzt einloggen.');
               toggleAuthViews(false);
             }
           });
@@ -1580,7 +1607,7 @@ create policy "Nutzer verwaltet nur eigene M2-Daten"
           updateSyncUI('error', '⚠️ Supabase Fehler', e.message);
         }
       } else {
-        updateSyncUI('offline', '☁️ Cloud-Sync: Lokal', 'Kostenlose Supabase-Synchronisation einrichten');
+        updateSyncUI('offline', '☁️ Cloud-Sync: Bereit', 'Supabase Projekt hinterlegt');
       }
     }
 
@@ -1615,7 +1642,7 @@ create policy "Nutzer verwaltet nur eigene M2-Daten"
         if (status === 'connected') bTitle.textContent = 'Status: 🟢 Aktiv synchronisiert';
         else if (status === 'syncing') bTitle.textContent = 'Status: 🟡 Synchronisiere mit Cloud...';
         else if (status === 'error') bTitle.textContent = 'Status: ⚠️ Verbindung prüfen';
-        else bTitle.textContent = 'Status: ⚪ Offline / Lokal';
+        else bTitle.textContent = 'Status: ⚪ Bereit zum Login / Registrieren';
       }
       if (bSub && bannerSubtitle) bSub.textContent = bannerSubtitle;
     }
@@ -1625,8 +1652,8 @@ create policy "Nutzer verwaltet nur eigene M2-Daten"
       const modal = document.getElementById('syncModal');
       const urlInput = document.getElementById('sbUrlInput');
       const keyInput = document.getElementById('sbKeyInput');
-      if (urlInput) urlInput.value = sbConfig.url;
-      if (keyInput) keyInput.value = sbConfig.key;
+      if (urlInput) urlInput.value = sbConfig.url || DEFAULT_SB_URL;
+      if (keyInput) keyInput.value = sbConfig.key || DEFAULT_SB_KEY;
       if (modal) modal.classList.add('open');
     };
 
@@ -1649,8 +1676,9 @@ create policy "Nutzer verwaltet nur eigene M2-Daten"
     };
 
     window.saveSupabaseConfig = function() {
-      const url = (document.getElementById('sbUrlInput')?.value || '').trim();
-      const key = (document.getElementById('sbKeyInput')?.value || '').trim();
+      const rawUrl = (document.getElementById('sbUrlInput')?.value || '').trim();
+      const url = sanitizeSupabaseUrl(rawUrl) || DEFAULT_SB_URL;
+      const key = (document.getElementById('sbKeyInput')?.value || '').trim() || DEFAULT_SB_KEY;
       const fb = document.getElementById('configFeedback');
 
       if (!url || !key) {
@@ -1661,6 +1689,10 @@ create policy "Nutzer verwaltet nur eigene M2-Daten"
         return;
       }
 
+      // Bereinigte URL auch im Input-Feld anzeigen
+      const urlInput = document.getElementById('sbUrlInput');
+      if (urlInput) urlInput.value = url;
+
       sbConfig.url = url;
       sbConfig.key = key;
       localStorage.setItem('m2_sb_url', url);
@@ -1670,14 +1702,17 @@ create policy "Nutzer verwaltet nur eigene M2-Daten"
 
       if (fb) {
         fb.className = 'modal-feedback success';
-        fb.textContent = '✓ Zugangsdaten erfolgreich gespeichert! Du kannst dich jetzt einloggen oder registrieren.';
+        fb.textContent = '✓ Zugangsdaten erfolgreich gespeichert & URL bereinigt! Du kannst dich jetzt einloggen oder registrieren.';
         setTimeout(() => fb.style.display = 'none', 4000);
       }
     };
 
     window.handleAuthLogin = async function() {
       if (!supabaseClient) {
-        alert('Bitte zuerst die Supabase Project URL und Anon Key eintragen und speichern.');
+        initSupabase();
+      }
+      if (!supabaseClient) {
+        alert('Supabase-Client konnte nicht initialisiert werden. Bitte Zugangsdaten prüfen.');
         return;
       }
       const email = (document.getElementById('authEmailInput')?.value || '').trim();
@@ -1708,14 +1743,23 @@ create policy "Nutzer verwaltet nur eigene M2-Daten"
       } catch (err) {
         if (fb) {
           fb.className = 'modal-feedback error';
-          fb.textContent = 'Login fehlgeschlagen: ' + (err.message || err);
+          let msg = err.message || String(err);
+          if (msg.includes('Invalid login credentials')) {
+            msg = 'Falsche E-Mail-Adresse oder falsches Passwort (oder Konto noch nicht registriert).';
+          } else if (msg.includes('Email not confirmed')) {
+            msg = 'E-Mail noch nicht bestätigt. Bitte Posteingang prüfen oder im Supabase Dashboard "Confirm email" deaktivieren.';
+          }
+          fb.textContent = 'Login fehlgeschlagen: ' + msg;
         }
       }
     };
 
     window.handleAuthSignUp = async function() {
       if (!supabaseClient) {
-        alert('Bitte zuerst die Supabase Project URL und Anon Key eintragen und speichern.');
+        initSupabase();
+      }
+      if (!supabaseClient) {
+        alert('Supabase-Client konnte nicht initialisiert werden. Bitte Zugangsdaten prüfen.');
         return;
       }
       const email = (document.getElementById('authEmailInput')?.value || '').trim();
@@ -1740,7 +1784,12 @@ create policy "Nutzer verwaltet nur eigene M2-Daten"
         if (error) throw error;
         if (fb) {
           fb.className = 'modal-feedback success';
-          fb.textContent = '✓ Konto erstellt! Falls Supabase E-Mail-Bestätigung fordert, prüfe kurz dein Postfach (oder deaktiviere "Confirm Email" im Supabase Auth Dashboard).';
+          if (data?.session?.user) {
+            fb.textContent = '✓ Konto erfolgreich erstellt und direkt angemeldet!';
+            handleUserAuthenticated(data.session.user);
+          } else {
+            fb.textContent = '✓ Registrierung erfolgreich! Falls du eine Bestätigungs-Mail erhältst, kurz anklicken (oder im Supabase Dashboard unter Authentication > Providers > Email "Confirm email" ausschalten für Sofort-Login ohne Mail).';
+          }
         }
       } catch (err) {
         if (fb) {
