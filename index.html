@@ -1223,6 +1223,277 @@
       max-height: 120px;
       border: 1px solid #334155;
     }
+
+    /* ==========================================
+       DARK MODE THEMING
+       ========================================== */
+    html.dark {
+      --bg: #090e17;
+      --card-bg: #141c2e;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --primary: #10b981;
+      --primary-hover: #059669;
+      --primary-light: rgba(16, 185, 129, 0.16);
+      --border: #243048;
+      --danger: #ef4444;
+    }
+
+    html.dark body {
+      background-color: var(--bg);
+      color: var(--text);
+    }
+
+    html.dark .sticky-top-nav {
+      background: rgba(15, 23, 42, 0.94);
+      border-bottom-color: var(--border);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+    }
+    html.dark .sticky-brand h1 { color: #f8fafc; }
+    html.dark .sticky-brand span { background: #1e293b; color: #94a3b8; }
+
+    html.dark .calendar-sidebar,
+    html.dark .timer-card,
+    html.dark .progress-sidebar-card {
+      background: var(--card-bg);
+      border-color: var(--border);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+    }
+    html.dark .calendar-title { color: #f8fafc; }
+    html.dark .month-name { color: #94a3b8; }
+    html.dark .cal-default { background: #1e293b; color: #cbd5e1; }
+    html.dark .cal-default:hover { background: #334155; }
+    html.dark .cal-pause {
+      background: #0f172a !important;
+      color: #94a3b8 !important;
+      border-color: #475569 !important;
+    }
+
+    html.dark .search-input {
+      background: #141c2e;
+      border-color: var(--border);
+      color: #f1f5f9;
+    }
+    html.dark .search-input:focus {
+      border-color: var(--primary);
+    }
+    html.dark .toggle-all-btn {
+      background: #141c2e;
+      border-color: var(--border);
+      color: #cbd5e1;
+    }
+    html.dark .toggle-all-btn:hover { background: #1e293b; color: #f1f5f9; }
+
+    html.dark .filter-pill {
+      background: #141c2e;
+      border-color: var(--border);
+      color: #94a3b8;
+    }
+    html.dark .filter-pill:hover { color: #f1f5f9; border-color: #475569; }
+    html.dark .filter-pill.active {
+      color: #ffffff !important;
+      background: #059669 !important;
+      border-color: #059669 !important;
+    }
+
+    /* TOP 100 IN DARK MODE */
+    html.dark .top100-card {
+      background: #151d30;
+      border-color: #854d0e;
+      border-left-color: #f59e0b;
+    }
+    html.dark .top100-header {
+      background: linear-gradient(to right, #241c15, #151d30);
+    }
+    html.dark .top100-title { color: #fde68a; }
+    html.dark .top100-badge {
+      background: #451a03;
+      color: #fde68a;
+      border-color: #78350f;
+    }
+    html.dark .top100-intro {
+      background: #1c1917;
+      border-color: #44403c;
+      color: #e7e5e4;
+    }
+    html.dark .top100-tag {
+      background: #1e293b;
+      border-color: #334155;
+      color: #cbd5e1;
+    }
+    html.dark .top100-subject-title { color: #cbd5e1; }
+
+    /* DAY CARDS IN DARK MODE */
+    html.dark .day-card {
+      background: var(--card-bg);
+      border-color: var(--border);
+    }
+    html.dark .day-card.completed {
+      background: #0f1624;
+      opacity: 0.78;
+    }
+    html.dark .day-card.open .day-header {
+      background: #172033;
+      border-bottom-color: var(--border);
+    }
+    html.dark .day-official-name { color: #f8fafc; }
+    html.dark .day-body { background: #141c2e; }
+
+    html.dark .effort-dual-box {
+      background: #0d1422;
+      border-color: var(--border);
+    }
+    html.dark .effort-label { color: #94a3b8; }
+    html.dark .effort-track { background: #232f48; }
+    html.dark .effort-val { color: #f8fafc; }
+
+    html.dark .repeat-flag-btn {
+      background: #0d1422;
+      border-color: #334155;
+      color: #cbd5e1;
+    }
+    html.dark .repeat-flag-btn:hover { background: #1e293b; }
+    html.dark .repeat-flag-btn.active {
+      background: #450a0a;
+      border-color: #991b1b;
+    }
+    html.dark .day-card.is-repeat-flagged {
+      background: #1c151b;
+      border-right-color: #ef4444;
+    }
+
+    html.dark .score-row-wrap {
+      background: #0d1422;
+      border-color: var(--border);
+    }
+    html.dark .score-input-label { color: #cbd5e1; }
+    html.dark .score-input-inner {
+      background: #141c2e;
+      border-color: #334155;
+    }
+    html.dark .score-number-input { color: #f8fafc; }
+    html.dark .summary-box {
+      background: #0d1422;
+      border-color: var(--border);
+    }
+    html.dark .summary-tag {
+      background: #141c2e;
+      border-color: #334155;
+      color: #cbd5e1;
+    }
+    html.dark .comment-label { color: #cbd5e1; }
+    html.dark .comment-textarea {
+      background: #0d1422;
+      border-color: var(--border);
+      color: #f1f5f9;
+    }
+
+    /* RIGHT SIDEBAR IN DARK MODE */
+    html.dark .timer-display { color: #f8fafc; }
+    html.dark .timer-mode-btn {
+      background: #0d1422;
+      border-color: var(--border);
+      color: #cbd5e1;
+    }
+    html.dark .btn-timer-ctrl {
+      background: #1e293b;
+      border-color: var(--border);
+      color: #cbd5e1;
+    }
+    html.dark .btn-timer-ctrl.primary {
+      background: #059669;
+      color: #ffffff;
+      border-color: #059669;
+    }
+    html.dark .sidebar-next-btn {
+      background: #0d1422;
+      border-color: var(--border);
+      color: #cbd5e1;
+    }
+    html.dark .sidebar-next-btn:hover {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+    html.dark .vertical-meter-track { background: #232f48; }
+
+    /* MODAL IN DARK MODE */
+    html.dark .modal-box {
+      background: #141c2e;
+      border-color: #334155;
+      color: #f1f5f9;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.6);
+    }
+    html.dark .modal-header { border-bottom-color: #232f48; }
+    html.dark .modal-title { color: #f8fafc; }
+    html.dark .modal-close-btn:hover { color: #f8fafc; }
+    html.dark .sync-section {
+      background: #0d1422;
+      border-color: var(--border);
+    }
+    html.dark .sync-section-title { color: #f8fafc; }
+    html.dark .form-label { color: #cbd5e1; }
+    html.dark .form-input {
+      background: #141c2e;
+      border-color: #334155;
+      color: #f8fafc;
+    }
+    html.dark .modal-btn-secondary {
+      background: #232f48;
+      color: #f1f5f9;
+    }
+    html.dark .modal-btn-secondary:hover { background: #334155; }
+    html.dark .sync-banner.offline {
+      background: #0d1422;
+      border-color: var(--border);
+      color: #cbd5e1;
+    }
+    html.dark .sync-banner.offline #bannerSubtitle { color: #94a3b8 !important; }
+    html.dark .sync-banner.connected {
+      background: rgba(16, 185, 129, 0.15);
+      border-color: #059669;
+      color: #a7f3d0;
+    }
+    html.dark .sync-status-btn {
+      background: #141c2e;
+      border-color: #334155;
+      color: #cbd5e1;
+    }
+    html.dark .sync-status-btn:hover {
+      background: #1e293b;
+      border-color: #475569;
+    }
+
+    /* TOP BAR ACTION BUTTONS */
+    .nav-action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 11px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #334155;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+    .nav-action-btn:hover {
+      background: #f8fafc;
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+    html.dark .nav-action-btn {
+      background: #141c2e;
+      border-color: #334155;
+      color: #cbd5e1;
+    }
+    html.dark .nav-action-btn:hover {
+      background: #1e293b;
+      border-color: var(--primary);
+      color: var(--primary);
+    }
   </style>
 </head>
 <body>
@@ -1234,11 +1505,17 @@
       <span>Staatsexamen Medizin (H26 / F27)</span>
     </div>
 
-    <!-- CLOUD-SYNC STATUS BUTTON -->
-    <div class="sync-nav-item">
+    <!-- CLOUD-SYNC STATUS BUTTON & AKTIONEN -->
+    <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
       <button id="syncStatusBtn" class="sync-status-btn" onclick="openSyncModal()" title="Kostenlose Supabase Cloud-Synchronisation öffnen">
         <span id="syncStatusDot" class="sync-status-dot offline"></span>
         <span id="syncStatusText">☁️ Cloud-Sync: Lokal</span>
+      </button>
+      <button class="nav-action-btn" onclick="openBackupModal()" title="Lokales Daten-Backup (JSON Export & Import)">
+        💾 Backup
+      </button>
+      <button id="themeToggleBtn" class="nav-action-btn" onclick="toggleTheme()" title="Design wechseln (Hell/Dunkel)">
+        🌙 Dunkel
       </button>
     </div>
 
@@ -1440,6 +1717,13 @@
             <label class="form-label" for="authPasswordInput">Passwort:</label>
             <input type="password" id="authPasswordInput" class="form-input" placeholder="Mindestens 6 Zeichen" />
           </div>
+          <div class="form-group" style="display:flex; align-items:center; gap:8px; margin-top:2px;">
+            <input type="checkbox" id="rememberEmailCheckbox" checked style="width:16px; height:16px; cursor:pointer; accent-color:var(--primary);" onchange="handleRememberEmailChange(this.checked)" />
+            <label for="rememberEmailCheckbox" style="font-size:0.75rem; color:var(--text-muted); cursor:pointer; user-select:none;">
+              Login-Konto merken (E-Mail & Sitzung auf diesem Gerät merken)
+            </label>
+          </div>
+          <div id="rememberedEmailHint" style="font-size:0.72rem; color:var(--primary); margin-top:-4px; margin-bottom:8px; display:none;"></div>
           <div class="modal-btn-row">
             <button class="modal-btn modal-btn-primary" onclick="handleAuthLogin()">Einloggen</button>
             <button class="modal-btn modal-btn-secondary" onclick="handleAuthSignUp()">Konto neu registrieren</button>
@@ -1447,11 +1731,15 @@
         </div>
 
         <div id="authLoggedInView" style="display:none;">
-          <p style="font-size:0.8rem; color:#0f172a; margin-bottom:10px;">
+          <p style="font-size:0.8rem; color:var(--text); margin-bottom:6px;">
             Angemeldet als: <b id="loggedInUserEmail">-</b>
           </p>
+          <div style="font-size:0.73rem; color:var(--primary); margin-bottom:10px; display:flex; align-items:center; gap:5px;">
+            <span>✓</span> <span>Konto auf diesem Gerät gemerkt & Sitzung bleibt aktiv</span>
+          </div>
           <div class="modal-btn-row">
             <button class="modal-btn modal-btn-primary" onclick="triggerManualSync()">🔄 Jetzt synchronisieren</button>
+            <button class="modal-btn modal-btn-secondary" onclick="openBackupModal()">💾 Backup ziehen</button>
             <button class="modal-btn modal-btn-danger" onclick="handleAuthLogout()">Abmelden</button>
           </div>
         </div>
@@ -1486,6 +1774,58 @@ create policy "Nutzer verwaltet nur eigene M2-Daten"
         <div id="copySqlFeedback" style="font-size:0.7rem; color:#059669; margin-top:4px; display:none;">✓ SQL in die Zwischenablage kopiert!</div>
       </div>
 
+    </div>
+  </div>
+
+  <!-- MODAL: BACKUP & DATEN-EXPORT (JSON) -->
+  <div id="backupModal" class="modal-backdrop" onclick="handleBackupModalBackdropClick(event)">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="modal-title">
+          <span>💾</span>
+          <span>Lokales Daten-Backup (JSON Export / Import)</span>
+        </div>
+        <button class="modal-close-btn" onclick="closeBackupModal()" title="Schließen">&times;</button>
+      </div>
+
+      <!-- VORTEILE BANNER -->
+      <div class="sync-banner" style="background:var(--primary-light); border-color:var(--primary); color:var(--text); margin-bottom:14px;">
+        <div style="font-weight:700; font-size:0.85rem;">🛡️ Datensouveränität & Ausfallsicherheit (Disaster Recovery)</div>
+        <div style="font-size:0.75rem; color:var(--text-muted); margin-top:2px; line-height:1.4;">
+          Alle deine Notizen, Kreuzergebnisse, Lernfortschritte und Kalenderdaten gehören zu 100% dir. Speichere regelmäßige Backups offline auf deinem Mac oder übertrage deinen Stand jederzeit ohne Cloud auf ein anderes Gerät.
+        </div>
+      </div>
+
+      <!-- ABSCHNITT 1: EXPORT -->
+      <div class="sync-section">
+        <div class="sync-section-title">📤 1. Daten exportieren (Backup herunterladen)</div>
+        <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:10px;">
+          Erstellt eine standardisierte <code>.json</code>-Datei mit allen aktuellen Haken, Kommentaren, Prozenten und Kalendertagen:
+        </p>
+        <div id="backupStatsPreview" style="font-size:0.74rem; color:var(--text); background:var(--card-bg); border:1px solid var(--border); border-radius:8px; padding:10px 12px; margin-bottom:12px; line-height:1.4;">
+          Wird berechnet...
+        </div>
+        <div class="modal-btn-row">
+          <button class="modal-btn modal-btn-primary" onclick="exportBackupFile()">📥 JSON-Datei herunterladen</button>
+          <button class="modal-btn modal-btn-secondary" onclick="copyBackupToClipboard()">📋 In Zwischenablage kopieren</button>
+        </div>
+        <div id="exportFeedback" class="modal-feedback"></div>
+      </div>
+
+      <!-- ABSCHNITT 2: IMPORT -->
+      <div class="sync-section" style="margin-bottom:0;">
+        <div class="sync-section-title">📥 2. Backup wiederherstellen (Importieren)</div>
+        <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:10px;">
+          Wähle eine zuvor gespeicherte JSON-Backup-Datei aus, um deinen Stand wiederherzustellen:
+        </p>
+        <div class="form-group">
+          <input type="file" id="backupFileInput" accept=".json,application/json" class="form-input" onchange="handleBackupFileSelect(event)" />
+        </div>
+        <div class="modal-btn-row">
+          <button class="modal-btn modal-btn-primary" id="btnRestoreBackup" disabled onclick="restoreSelectedBackup()">⚡ Daten wiederherstellen</button>
+        </div>
+        <div id="importFeedback" class="modal-feedback"></div>
+      </div>
     </div>
   </div>
 
@@ -1533,16 +1873,241 @@ create policy "Nutzer verwaltet nur eigene M2-Daten"
     let allExpanded = false;
 
     // ==========================================
+    // THEME & DARK MODE SYSTEM
+    // ==========================================
+    function getInitialTheme() {
+      const saved = localStorage.getItem('m2_theme');
+      if (saved === 'dark' || saved === 'light') return saved;
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        return 'dark';
+      }
+      return 'light';
+    }
+
+    function applyTheme(theme) {
+      const htmlEl = document.documentElement;
+      const toggleBtn = document.getElementById('themeToggleBtn');
+      if (theme === 'dark') {
+        htmlEl.classList.add('dark');
+        if (toggleBtn) toggleBtn.innerHTML = '☀️ Hell';
+      } else {
+        htmlEl.classList.remove('dark');
+        if (toggleBtn) toggleBtn.innerHTML = '🌙 Dunkel';
+      }
+      localStorage.setItem('m2_theme', theme);
+    }
+
+    window.toggleTheme = function() {
+      const isDark = document.documentElement.classList.contains('dark');
+      applyTheme(isDark ? 'light' : 'dark');
+    };
+
+    // Sofortige Aktivierung beim Laden zur Vermeidung von Flackern
+    applyTheme(getInitialTheme());
+
+    // ==========================================
+    // LOKALES BACKUP (EXPORT & IMPORT / DISASTER RECOVERY)
+    // ==========================================
+    window.openBackupModal = function() {
+      const modal = document.getElementById('backupModal');
+      updateBackupStatsPreview();
+      if (modal) modal.classList.add('open');
+    };
+
+    window.closeBackupModal = function() {
+      const modal = document.getElementById('backupModal');
+      if (modal) modal.classList.remove('open');
+    };
+
+    window.handleBackupModalBackdropClick = function(event) {
+      if (event.target && event.target.id === 'backupModal') {
+        closeBackupModal();
+      }
+    };
+
+    function getCompleteBackupPayload() {
+      return {
+        meta: {
+          app: 'M2 100-Tage-Lernplan – Staatsexamen Medizin',
+          version: 4,
+          exportedAt: new Date().toISOString(),
+          account: currentUser?.email || 'lokal'
+        },
+        dayStatus: dayStatus || {},
+        dayComments: dayComments || {},
+        quizScores: dayQuizScores || {},
+        repeatFlags: dayRepeatFlags || {},
+        calendarState: calendarState || {}
+      };
+    }
+
+    function updateBackupStatsPreview() {
+      const preview = document.getElementById('backupStatsPreview');
+      if (!preview) return;
+      const completedDaysCount = Object.values(dayStatus).filter(Boolean).length;
+      const notesCount = Object.keys(dayComments).filter(k => dayComments[k] && dayComments[k].trim()).length;
+      const quizCount = Object.keys(dayQuizScores).filter(k => dayQuizScores[k] !== undefined && dayQuizScores[k] !== null && dayQuizScores[k] !== '').length;
+      const flagsCount = Object.values(dayRepeatFlags).filter(Boolean).length;
+      const calPlanned = Object.values(calendarState).filter(s => s && s.type && s.type !== 'empty').length;
+
+      preview.innerHTML = `<strong>Enthaltene Daten im Backup:</strong><br />` +
+        `• <b>${completedDaysCount}/100</b> Tage abgehakt<br />` +
+        `• <b>${notesCount}</b> persönliche Lernnotizen & Fallstricke<br />` +
+        `• <b>${quizCount}</b> dokumentierte Kreuzergebnisse<br />` +
+        `• <b>${flagsCount}</b> Wiederholungsflaggen (🚩)<br />` +
+        `• <b>${calPlanned}</b> geplante Kalendertage`;
+    }
+
+    window.exportBackupFile = function() {
+      const payload = getCompleteBackupPayload();
+      const dateStr = new Date().toISOString().slice(0, 10);
+      const jsonStr = JSON.stringify(payload, null, 2);
+      const blob = new Blob([jsonStr], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `m2_lernplan_backup_${dateStr}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      const fb = document.getElementById('exportFeedback');
+      if (fb) {
+        fb.className = 'modal-feedback success';
+        fb.textContent = '✓ Backup-Datei erfolgreich heruntergeladen (liegt im Downloads-Ordner)!';
+        setTimeout(() => fb.style.display = 'none', 3500);
+      }
+    };
+
+    window.copyBackupToClipboard = function() {
+      const payload = getCompleteBackupPayload();
+      const jsonStr = JSON.stringify(payload, null, 2);
+      navigator.clipboard.writeText(jsonStr).then(() => {
+        const fb = document.getElementById('exportFeedback');
+        if (fb) {
+          fb.className = 'modal-feedback success';
+          fb.textContent = '✓ Backup-JSON in die Zwischenablage kopiert!';
+          setTimeout(() => fb.style.display = 'none', 3500);
+        }
+      }).catch(() => {
+        alert('Kopieren nicht unterstützt. Bitte den Download-Button nutzen.');
+      });
+    };
+
+    let pendingBackupData = null;
+
+    window.handleBackupFileSelect = function(event) {
+      const file = event.target.files?.[0];
+      const restoreBtn = document.getElementById('btnRestoreBackup');
+      const fb = document.getElementById('importFeedback');
+      pendingBackupData = null;
+
+      if (!file) {
+        if (restoreBtn) restoreBtn.disabled = true;
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const parsed = JSON.parse(e.target.result);
+          if (!parsed || typeof parsed !== 'object') {
+            throw new Error('Datei enthält kein gültiges JSON-Objekt.');
+          }
+          pendingBackupData = parsed;
+          if (restoreBtn) restoreBtn.disabled = false;
+          if (fb) {
+            fb.className = 'modal-feedback info';
+            const dCount = parsed.dayStatus ? Object.values(parsed.dayStatus).filter(Boolean).length : 0;
+            const nCount = parsed.dayComments ? Object.keys(parsed.dayComments).filter(k => parsed.dayComments[k] && parsed.dayComments[k].trim()).length : 0;
+            fb.textContent = `✓ Gültiges Backup erkannt (${dCount} abgehakte Tage, ${nCount} Notizen). Klicke auf 'Daten wiederherstellen', um zu laden.`;
+          }
+        } catch (err) {
+          if (restoreBtn) restoreBtn.disabled = true;
+          if (fb) {
+            fb.className = 'modal-feedback error';
+            fb.textContent = 'Fehler beim Lesen der Backup-Datei: ' + (err.message || 'Ungültiges Format');
+          }
+        }
+      };
+      reader.readAsText(file);
+    };
+
+    window.restoreSelectedBackup = function() {
+      if (!pendingBackupData) return;
+      if (!confirm('Möchtest du dieses Backup wirklich importieren? Deine aktuellen lokalen Einträge werden mit den Daten aus der Backup-Datei aktualisiert.')) {
+        return;
+      }
+
+      try {
+        if (pendingBackupData.dayStatus && typeof pendingBackupData.dayStatus === 'object') {
+          dayStatus = { ...dayStatus, ...pendingBackupData.dayStatus };
+          localStorage.setItem('m2_days_status_v4', JSON.stringify(dayStatus));
+        }
+        if (pendingBackupData.dayComments && typeof pendingBackupData.dayComments === 'object') {
+          dayComments = { ...dayComments, ...pendingBackupData.dayComments };
+          localStorage.setItem('m2_day_comments_v4', JSON.stringify(dayComments));
+        }
+        if (pendingBackupData.quizScores && typeof pendingBackupData.quizScores === 'object') {
+          dayQuizScores = { ...dayQuizScores, ...pendingBackupData.quizScores };
+          localStorage.setItem('m2_quiz_scores_v1', JSON.stringify(dayQuizScores));
+        }
+        if (pendingBackupData.repeatFlags && typeof pendingBackupData.repeatFlags === 'object') {
+          dayRepeatFlags = { ...dayRepeatFlags, ...pendingBackupData.repeatFlags };
+          localStorage.setItem('m2_repeat_flags_v1', JSON.stringify(dayRepeatFlags));
+        }
+        if (pendingBackupData.calendarState && typeof pendingBackupData.calendarState === 'object') {
+          calendarState = { ...calendarState, ...pendingBackupData.calendarState };
+          localStorage.setItem('m2_cal_state_v4', JSON.stringify(calendarState));
+        }
+
+        renderDays();
+        renderCalendar();
+        updateGlobalProgress();
+        updateRepeatCountBadge();
+        updateBackupStatsPreview();
+
+        // Wenn mit Supabase angemeldet, direkt auch in die Cloud pushen
+        if (currentUser && supabaseClient) {
+          pushCloudData();
+        }
+
+        const fb = document.getElementById('importFeedback');
+        if (fb) {
+          fb.className = 'modal-feedback success';
+          fb.textContent = '✓ Backup erfolgreich wiederhergestellt und angewendet!';
+          setTimeout(() => {
+            closeBackupModal();
+            fb.style.display = 'none';
+          }, 1500);
+        }
+      } catch (err) {
+        alert('Fehler beim Wiederherstellen: ' + err.message);
+      }
+    };
+
+    // ==========================================
     // SUPABASE CLOUD-SYNCHRONISATION & PERSISTENZ
     // ==========================================
     const DEFAULT_SB_URL = 'https://zvjqjillunoyojldagzl.supabase.co';
     const DEFAULT_SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp2anFqaWxsdW5veW9qbGRhZ3psIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMwMDQ4NDcsImV4cCI6MjEwODU4MDg0N30.YRSXccQ0naZahVbNUm7A2pRb1IdNfMOaCrH10FnNkyY';
 
+    const REMEMBER_EMAIL_KEY = 'm2_saved_email';
+    const REMEMBER_CHECKBOX_KEY = 'm2_remember_pref';
+
+    window.handleRememberEmailChange = function(checked) {
+      localStorage.setItem(REMEMBER_CHECKBOX_KEY, String(checked));
+      if (!checked) {
+        localStorage.removeItem(REMEMBER_EMAIL_KEY);
+        const remHint = document.getElementById('rememberedEmailHint');
+        if (remHint) remHint.style.display = 'none';
+      }
+    };
+
     function sanitizeSupabaseUrl(url) {
       if (!url || typeof url !== 'string') return '';
       let cleaned = url.trim();
-      // Supabase JS benötigt die reine Basis-URL (z. B. https://xyz.supabase.co).
-      // Eventuell angehängte Pfade wie /rest/v1 oder /auth/v1 und Slashes am Ende entfernen:
       cleaned = cleaned.replace(/\/rest\/v1\/?$/i, '');
       cleaned = cleaned.replace(/\/auth\/v1\/?$/i, '');
       cleaned = cleaned.replace(/\/+$/, '');
@@ -1552,7 +2117,6 @@ create policy "Nutzer verwaltet nur eigene M2-Daten"
     let storedRawUrl = localStorage.getItem('m2_sb_url');
     let sanitizedStoredUrl = sanitizeSupabaseUrl(storedRawUrl);
 
-    // Falls zuvor ein unbereinigter Pfad mit /rest/v1 im Speicher lag, korrigieren:
     if (storedRawUrl && storedRawUrl !== sanitizedStoredUrl) {
       localStorage.setItem('m2_sb_url', sanitizedStoredUrl || DEFAULT_SB_URL);
     }
@@ -1577,7 +2141,8 @@ create policy "Nutzer verwaltet nur eigene M2-Daten"
             auth: {
               persistSession: true,
               autoRefreshToken: true,
-              detectSessionInUrl: true
+              detectSessionInUrl: true,
+              storage: window.localStorage
             }
           });
 
@@ -1615,6 +2180,13 @@ create policy "Nutzer verwaltet nur eigene M2-Daten"
       currentUser = user;
       toggleAuthViews(true, user.email);
       updateSyncUI('connected', '🟢 Verbunden (' + user.email.split('@')[0] + ')', 'Geräte-Synchronisation aktiv');
+
+      // Login-Konto merken (E-Mail persistent hinterlegen)
+      const rememberPref = localStorage.getItem(REMEMBER_CHECKBOX_KEY) !== 'false';
+      if (rememberPref && user.email) {
+        localStorage.setItem(REMEMBER_EMAIL_KEY, user.email);
+      }
+
       pullCloudData(true);
     }
 
@@ -1652,8 +2224,30 @@ create policy "Nutzer verwaltet nur eigene M2-Daten"
       const modal = document.getElementById('syncModal');
       const urlInput = document.getElementById('sbUrlInput');
       const keyInput = document.getElementById('sbKeyInput');
+      const emailInput = document.getElementById('authEmailInput');
+      const remBox = document.getElementById('rememberEmailCheckbox');
+      const remHint = document.getElementById('rememberedEmailHint');
+
       if (urlInput) urlInput.value = sbConfig.url || DEFAULT_SB_URL;
       if (keyInput) keyInput.value = sbConfig.key || DEFAULT_SB_KEY;
+
+      const savedEmail = localStorage.getItem(REMEMBER_EMAIL_KEY) || '';
+      const remPref = localStorage.getItem(REMEMBER_CHECKBOX_KEY) !== 'false';
+      if (remBox) remBox.checked = remPref;
+
+      if (emailInput && (!emailInput.value || emailInput.value.trim() === '') && savedEmail) {
+        emailInput.value = savedEmail;
+      }
+
+      if (remHint) {
+        if (savedEmail && remPref) {
+          remHint.textContent = '✓ Gemerktes Konto: ' + savedEmail;
+          remHint.style.display = 'block';
+        } else {
+          remHint.style.display = 'none';
+        }
+      }
+
       if (modal) modal.classList.add('open');
     };
 
@@ -1689,7 +2283,6 @@ create policy "Nutzer verwaltet nur eigene M2-Daten"
         return;
       }
 
-      // Bereinigte URL auch im Input-Feld anzeigen
       const urlInput = document.getElementById('sbUrlInput');
       if (urlInput) urlInput.value = url;
 
@@ -1725,6 +2318,15 @@ create policy "Nutzer verwaltet nur eigene M2-Daten"
           fb.textContent = 'Bitte E-Mail und Passwort eingeben.';
         }
         return;
+      }
+
+      // Login-Konto merken Präferenz speichern
+      const rememberChecked = document.getElementById('rememberEmailCheckbox')?.checked ?? true;
+      localStorage.setItem(REMEMBER_CHECKBOX_KEY, String(rememberChecked));
+      if (rememberChecked) {
+        localStorage.setItem(REMEMBER_EMAIL_KEY, email);
+      } else {
+        localStorage.removeItem(REMEMBER_EMAIL_KEY);
       }
 
       if (fb) {
@@ -1774,6 +2376,14 @@ create policy "Nutzer verwaltet nur eigene M2-Daten"
         return;
       }
 
+      const rememberChecked = document.getElementById('rememberEmailCheckbox')?.checked ?? true;
+      localStorage.setItem(REMEMBER_CHECKBOX_KEY, String(rememberChecked));
+      if (rememberChecked) {
+        localStorage.setItem(REMEMBER_EMAIL_KEY, email);
+      } else {
+        localStorage.removeItem(REMEMBER_EMAIL_KEY);
+      }
+
       if (fb) {
         fb.className = 'modal-feedback info';
         fb.textContent = 'Registrierung läuft...';
@@ -1805,7 +2415,14 @@ create policy "Nutzer verwaltet nur eigene M2-Daten"
         await supabaseClient.auth.signOut();
         currentUser = null;
         toggleAuthViews(false);
-        updateSyncUI('offline', '⚪ Offline: Nicht angemeldet', 'Abgemeldet. Daten bleiben lokal gespeichert.');
+        updateSyncUI('offline', '⚪ Offline: Nicht angemeldet', 'Abgemeldet. Lokale Daten bleiben erhalten.');
+        
+        // Gespeicherte E-Mail im Eingabefeld wieder anbieten falls gemerkt
+        const savedEmail = localStorage.getItem(REMEMBER_EMAIL_KEY) || '';
+        const emailInput = document.getElementById('authEmailInput');
+        if (emailInput && savedEmail) {
+          emailInput.value = savedEmail;
+        }
       } catch (e) {
         console.error(e);
       }
