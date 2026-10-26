@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>M2 100-Tage-Lernplan – Staatsexamen Medizin</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     :root {
       --bg: #f8fafc;
@@ -1035,6 +1036,193 @@
       .calendar-sidebar { display: none; }
       .right-sidebar { display: none; }
     }
+
+    /* CLOUD-SYNC BUTTON & MODAL STYLES */
+    .sync-nav-item {
+      display: flex;
+      align-items: center;
+    }
+    .sync-status-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 12px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #334155;
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .sync-status-btn:hover {
+      background: #f1f5f9;
+      border-color: #94a3b8;
+    }
+    .sync-status-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+    .sync-status-dot.offline { background: #94a3b8; }
+    .sync-status-dot.syncing { background: #f59e0b; animation: pulseDot 1s infinite alternate; }
+    .sync-status-dot.connected { background: #10b981; }
+    .sync-status-dot.error { background: #ef4444; }
+
+    @keyframes pulseDot {
+      from { opacity: 0.5; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1.15); }
+    }
+
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+    }
+    .modal-backdrop.open {
+      display: flex;
+    }
+    .modal-box {
+      background: #ffffff;
+      border-radius: 14px;
+      max-width: 580px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 40px -10px rgba(0,0,0,0.3);
+      border: 1px solid #e2e8f0;
+      padding: 22px;
+      position: relative;
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .modal-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .modal-close-btn {
+      background: transparent;
+      border: none;
+      font-size: 1.4rem;
+      cursor: pointer;
+      color: #94a3b8;
+      padding: 4px;
+      line-height: 1;
+    }
+    .modal-close-btn:hover { color: #0f172a; }
+
+    .sync-banner {
+      padding: 10px 14px;
+      border-radius: 8px;
+      margin-bottom: 14px;
+      border: 1px solid transparent;
+    }
+    .sync-banner.offline { background: #f8fafc; border-color: #e2e8f0; }
+    .sync-banner.connected { background: #ecfdf5; border-color: #a7f3d0; }
+    .sync-banner.syncing { background: #fffbeb; border-color: #fde68a; }
+
+    .sync-section {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 14px;
+    }
+    .sync-section-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .form-group {
+      margin-bottom: 10px;
+    }
+    .form-label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #475569;
+      margin-bottom: 4px;
+    }
+    .form-input {
+      width: 100%;
+      padding: 8px 10px;
+      font-size: 0.82rem;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      box-sizing: border-box;
+      font-family: inherit;
+    }
+    .form-input:focus {
+      border-color: #059669;
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(5,150,105,0.15);
+    }
+    .modal-btn-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+    .modal-btn {
+      padding: 7px 14px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .modal-btn-primary { background: #059669; color: #fff; }
+    .modal-btn-primary:hover { background: #047857; }
+    .modal-btn-secondary { background: #e2e8f0; color: #334155; }
+    .modal-btn-secondary:hover { background: #cbd5e1; }
+    .modal-btn-danger { background: #fee2e2; color: #dc2626; border: 1px solid #fca5a5; }
+    .modal-btn-danger:hover { background: #fecaca; }
+    .modal-feedback {
+      font-size: 0.75rem;
+      margin-top: 8px;
+      padding: 6px 10px;
+      border-radius: 6px;
+      display: none;
+    }
+    .modal-feedback.success { background: #dcfce7; color: #166534; display: block; }
+    .modal-feedback.info { background: #e0f2fe; color: #075985; display: block; }
+    .modal-feedback.error { background: #fee2e2; color: #991b1b; display: block; }
+    .code-snippet {
+      background: #1e293b;
+      color: #f8fafc;
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-family: monospace;
+      white-space: pre-wrap;
+      overflow-x: auto;
+      max-height: 120px;
+      border: 1px solid #334155;
+    }
   </style>
 </head>
 <body>
@@ -1044,6 +1232,14 @@
     <div class="sticky-brand">
       <h1>🩺 M2 100-Tage-Lernplan</h1>
       <span>Staatsexamen Medizin (H26 / F27)</span>
+    </div>
+
+    <!-- CLOUD-SYNC STATUS BUTTON -->
+    <div class="sync-nav-item">
+      <button id="syncStatusBtn" class="sync-status-btn" onclick="openSyncModal()" title="Kostenlose Supabase Cloud-Synchronisation öffnen">
+        <span id="syncStatusDot" class="sync-status-dot offline"></span>
+        <span id="syncStatusText">☁️ Cloud-Sync: Lokal</span>
+      </button>
     </div>
 
     <!-- DIE DREI SCHNELLZUGRIFFSLINKS -->
@@ -1191,6 +1387,108 @@
     </aside>
   </div>
 
+  <!-- MODAL: SUPABASE CLOUD-SYNCHRONISATION -->
+  <div id="syncModal" class="modal-backdrop" onclick="handleModalBackdropClick(event)">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="modal-title">
+          <span>☁️</span>
+          <span>Supabase Geräte-Synchronisation</span>
+        </div>
+        <button class="modal-close-btn" onclick="closeSyncModal()" title="Schließen">&times;</button>
+      </div>
+
+      <!-- STATUS LEISTE -->
+      <div id="syncStatusBanner" class="sync-banner offline">
+        <div style="font-weight:700; font-size:0.85rem;" id="bannerTitle">Status: Offline / Lokal</div>
+        <div style="font-size:0.75rem; color:#475569;" id="bannerSubtitle">Alle Änderungen werden sicher lokal auf diesem Gerät gespeichert.</div>
+      </div>
+
+      <!-- ABSCHNITT 1: SUPABASE PROJEKT DATEN -->
+      <div class="sync-section">
+        <div class="sync-section-title">🔑 1. Supabase Projekt-Zugangsdaten (0 € Free Tier)</div>
+        <p style="font-size:0.75rem; color:#64748b; margin-bottom:10px;">
+          Findest du im Supabase Dashboard unter <b>Settings ➔ API</b> (Project URL & anon public key):
+        </p>
+        <div class="form-group">
+          <label class="form-label" for="sbUrlInput">Project URL:</label>
+          <input type="text" id="sbUrlInput" class="form-input" placeholder="https://xyzcompany.supabase.co" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="sbKeyInput">Project API Anon Key (public):</label>
+          <input type="password" id="sbKeyInput" class="form-input" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." />
+        </div>
+        <div class="modal-btn-row">
+          <button class="modal-btn modal-btn-primary" onclick="saveSupabaseConfig()">Zugangsdaten speichern</button>
+          <button class="modal-btn modal-btn-secondary" onclick="toggleKeyVisibility()">Schlüssel anzeigen</button>
+        </div>
+        <div id="configFeedback" class="modal-feedback"></div>
+      </div>
+
+      <!-- ABSCHNITT 2: BENUTZER-KONTO / LOGIN -->
+      <div class="sync-section">
+        <div class="sync-section-title">👤 2. Dein Lern-Account (Cross-Device Synchronisation)</div>
+        <div id="authLoggedOutView">
+          <p style="font-size:0.75rem; color:#64748b; margin-bottom:10px;">
+            Erstelle einen Login für deine Geräte (Mac, iPad, iPhone), damit deine Haken, Notizen & Kreuzergebnisse überall synchron sind:
+          </p>
+          <div class="form-group">
+            <label class="form-label" for="authEmailInput">E-Mail-Adresse:</label>
+            <input type="email" id="authEmailInput" class="form-input" placeholder="deine-email@beispiel.de" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="authPasswordInput">Passwort:</label>
+            <input type="password" id="authPasswordInput" class="form-input" placeholder="Mindestens 6 Zeichen" />
+          </div>
+          <div class="modal-btn-row">
+            <button class="modal-btn modal-btn-primary" onclick="handleAuthLogin()">Einloggen</button>
+            <button class="modal-btn modal-btn-secondary" onclick="handleAuthSignUp()">Konto neu registrieren</button>
+          </div>
+        </div>
+
+        <div id="authLoggedInView" style="display:none;">
+          <p style="font-size:0.8rem; color:#0f172a; margin-bottom:10px;">
+            Angemeldet als: <b id="loggedInUserEmail">-</b>
+          </p>
+          <div class="modal-btn-row">
+            <button class="modal-btn modal-btn-primary" onclick="triggerManualSync()">🔄 Jetzt synchronisieren</button>
+            <button class="modal-btn modal-btn-danger" onclick="handleAuthLogout()">Abmelden</button>
+          </div>
+        </div>
+        <div id="authFeedback" class="modal-feedback"></div>
+      </div>
+
+      <!-- ABSCHNITT 3: TABELLEN SETUP HILFE -->
+      <div class="sync-section" style="margin-bottom:0;">
+        <div class="sync-section-title" style="justify-content:space-between; display:flex;">
+          <span>🛠️ 3. SQL-Tabelle in Supabase anlegen</span>
+          <button class="modal-btn modal-btn-secondary" style="padding:2px 8px; font-size:0.7rem;" onclick="copySqlSnippet()">📋 SQL kopieren</button>
+        </div>
+        <p style="font-size:0.74rem; color:#64748b; margin-bottom:6px;">
+          Führe diesen Befehl 1× im Supabase <b>SQL Editor</b> aus (legt Tabelle <code>m2_progress</code> und Row Level Security an):
+        </p>
+        <pre class="code-snippet" id="sqlSnippetBlock">create table if not exists m2_progress (
+  user_id uuid primary key references auth.users(id) on delete cascade,
+  day_status jsonb default '{}'::jsonb,
+  day_comments jsonb default '{}'::jsonb,
+  quiz_scores jsonb default '{}'::jsonb,
+  repeat_flags jsonb default '{}'::jsonb,
+  calendar_state jsonb default '{}'::jsonb,
+  updated_at timestamptz default timezone('utc'::text, now()) not null
+);
+
+alter table m2_progress enable row level security;
+
+create policy "Nutzer verwaltet nur eigene M2-Daten"
+  on m2_progress for all
+  using (auth.uid() = user_id)
+  with check (auth.uid() = user_id);</pre>
+        <div id="copySqlFeedback" style="font-size:0.7rem; color:#059669; margin-top:4px; display:none;">✓ SQL in die Zwischenablage kopiert!</div>
+      </div>
+
+    </div>
+  </div>
+
   <script>
     const M2_DAYS_DATA = [{"d":1,"officialName":"Tag 1 | Innere Medizin","fach":"Innere Medizin","cat":"innere","w":135,"chapters":["Handbuch - Vorbereitung auf das Zweite Staatsexamen","Kreuztipps zum Zweiten Staatsexamen","Untersuchungsmethoden in der Kardiologie","EKG","Herzrhythmusstörungen","Supraventrikuläre Extrasystolen","Vorhofflimmern","Sick-Sinus-Syndrom","AV-Block","AV-Knoten-Reentrytachykardie","Atrioventrikuläre Reentrytachykardie"],"pages":52,"questions":92},{"d":2,"officialName":"Tag 2 | Innere Medizin","fach":"Innere Medizin","cat":"innere","w":100,"chapters":["Ventrikuläre Extrasystolen","Ventrikuläre Tachykardie","Kammer flattern und - flimmern","Herzschrittmacher","Synkope","Subclavian-Steal-Syndrom"],"pages":35,"questions":62},{"d":3,"officialName":"Tag 3 | Innere Medizin","fach":"Innere Medizin","cat":"innere","w":115,"chapters":["Dyslipidämien","Atherosklerose und kardiovaskuläre Prävention","Koronare Herzkrankheit","Thoraxschmerz","Akutes Koronarsyndrom","Myokardinfarkt","Herzkatheteruntersuchung"],"pages":40,"questions":71},{"d":4,"officialName":"Tag 4 | Innere Medizin","fach":"Innere Medizin","cat":"innere","w":115,"chapters":["Herzinsuffizienz","Kardiomyopathien","Dilatative Kardiomyopathie","Hypertrophe Kardiomyopathie","Herzklappenerkrankungen","Aortenklappenstenose","Aortenklappeninsuffizienz","Mitralklappenstenose","Mitralklappeninsuffizienz"],"pages":43,"questions":77},{"d":5,"officialName":"Tag 5 | Innere Medizin","fach":"Innere Medizin","cat":"innere","w":100,"chapters":["Infektiöse Endokarditis","Rheumatisches Fieber","Myokarditis","Perikarditis","Coxsackievirus-Infektionen","Perikarderguss und Perikardtamponade"],"pages":35,"questions":62},{"d":6,"officialName":"Tag 6 | Innere Medizin","fach":"Innere Medizin","cat":"innere","w":100,"chapters":["Arterielle Hypertonie","Pulmonale Hypertonie","Varikosis und chronisch-venöse Insuf fi zienz","Phlebothrombose","Lungenembolie"],"pages":34,"questions":59},{"d":7,"officialName":"Tag 7 | Innere Medizin","fach":"Innere Medizin","cat":"innere","w":135,"chapters":["Periphere arterielle Verschlusskrankheit","Erythrozytenmorphologie und Hämoglobinvarianten","Anämie","Eisenmangel","Hämolytische Anämie","Kugelzellanämie","Glucose-6-phosphat-Dehydrogenase-Mangel","Sichelzellkrankheit","Thalassämie","Myelodysplastische Syndrome"],"pages":50,"questions":89},{"d":8,"officialName":"Tag 8 | Innere Medizin","fach":"Innere Medizin","cat":"innere","w":135,"chapters":["Akute Leukämien","Myeloproliferative Neoplasien","Chronische myeloische Leukämie","Polycythaemia vera","Hodgkin-Lymphom","Non-Hodgkin-Lymphome","Multiples Myelom","Chronische lymphatische Leukämie","MALT-Lymphom","Kutane Lymphome"],"pages":50,"questions":89},{"d":9,"officialName":"Tag 9 | Innere Medizin","fach":"Innere Medizin","cat":"innere","w":115,"chapters":["Blutgerinnung und hämorrhagische Diathesen","Von-Willebrand-Syndrom","Hämophilie","Antiphospholipid-Syndrom","Thrombozytopenien","Thrombotische Mikroangiopathie","Splenomegalie","Asplenie und Hyposplenismus"],"pages":42,"questions":74},{"d":10,"officialName":"Tag 10 | Innere Medizin","fach":"Innere Medizin","cat":"innere","w":135,"chapters":["Klinische Untersuchung der Lunge","Lungenfunktionsuntersuchung","Akute Bronchitis","Pneumonie","Ambulant erworbene Pneumonie","Nosokomiale Pneumonie","Akute unkomplizierte Atemwegsinfektionen","Legionellose","Pneumocystis-jirovecii-Pneumonie","Tuberkulose","Sarkoidose"],"pages":52,"questions":92},{"d":11,"officialName":"Tag 11 | Innere Medizin","fach":"Innere Medizin","cat":"innere","w":115,"chapters":["Lungenkarzinom","Pleuraerguss","Atelektase","Asthma bronchiale","Chronisch-obstruktive Lungenerkrankung","Interstitielle Lungenparenchymerkrankungen","Exogen-allergische Alveolitis","Schlafbezogene Atmungsstörungen","Husten"],"pages":43,"questions":77},{"d":12,"officialName":"Tag 12 | Innere Medizin","fach":"Innere Medizin","cat":"innere","w":115,"chapters":["Achalasie","Gastrointestinale Blutung","Mallory-Weiss-Syndrom","Gastroösophageale Re fl uxkrankheit","Gastroduodenale Ulkuskrankheit","Chronische Gastritis","Malassimilation","Zöliakie","Lactoseintoleranz"],"pages":43,"questions":77},{"d":13,"officialName":"Tag 13 | Innere Medizin","fach":"Innere Medizin","cat":"innere","w":100,"chapters":["Morbus Crohn","Colitis ulcerosa","Divertikulose, Divertikelkrankheit und Divertikulitis","Reizdarmsyndrom","Gutartige Leberraumforderungen","Leberabszess"],"pages":35,"questions":62},{"d":14,"officialName":"Tag 14 | Innere Medizin","fach":"Innere Medizin","cat":"innere","w":135,"chapters":["Hepatitis A","Hepatitis B und HBV-Infektion","Hepatitis C und HCV-Infektion","Alkoholtoxischer Leberschaden","Autoimmunhepatitis","Primär biliäre Cholangitis","Primär sklerosierende Cholangitis","Morbus Wilson","Hämochromatose","Leberzirrhose","Portale Hypertension"],"pages":52,"questions":92},{"d":15,"officialName":"Tag 15 | Innere Medizin","fach":"Innere Medizin","cat":"innere","w":100,"chapters":["Ikterus und Cholestase","Akute Pankreatitis","Chronische Pankreatitis","Pankreaskarzinom","Aszites"],"pages":34,"questions":59},{"d":16,"officialName":"Tag 16 | Innere Medizin","fach":"Innere Medizin","cat":"innere","w":115,"chapters":["Hypophysenvorderlappeninsuffizienz","Prolaktinom","Akromegalie","Nebennierenrindeninsuffizienz","Primärer Hyperaldosteronismus","Cushing-Syndrom","Phäochromozytom","Multiple endokrine Neoplasie"],"pages":42,"questions":74},{"d":17,"officialName":"Tag 17 | Innere Medizin","fach":"Innere Medizin","cat":"innere","w":115,"chapters":["Struma","Anti-Schilddrüsen-Antikörper","Hyperthyreose","Hypothyreose","Hashimoto-Thyreoiditis","Thyreoiditis de Quervain","Hyperparathyreoidismus"],"pages":40,"questions":71},{"d":18,"officialName":"Tag 18 | Innere Medizin","fach":"Innere Medizin","cat":"innere","w":85,"chapters":["Metabolisches Syndrom","Diabetes mellitus","Hyperglykämisches Koma","Hypoglykämie"],"pages":28,"questions":55},{"d":19,"officialName":"Tag 19 | Innere Medizin","fach":"Innere Medizin","cat":"innere","w":115,"chapters":["Diagnostik von Erkrankungen der Niere und der ableitenden Harnwege","Dehydratation","Ödeme","Elektrolytstörungen Natrium","Elektrolytstörungen Kalium","Elektrolytstörungen Calcium","Akute Nierenfunktionseinschränkung","Chronische Nierenkrankheit","Transplantation"],"pages":43,"questions":77},{"d":20,"officialName":"Tag 20 | Innere Medizin","fach":"Innere Medizin","cat":"innere","w":135,"chapters":["Vasopressin-assoziierte Erkrankungen (Diabetes insipidus)","Syndrom der inadäquaten ADH-Sekretion","Grundlagen nephrologischer Krankheitsbilder","Infektassoziierte Glomerulonephritiden","Rapid-progressive Glomerulonephritis","Nephrotisches Syndrom","IgA-Nephropathie","Renale tubuläre Partialfunktionsstörungen","Proteinurie","Nierenersatzverfahren"],"pages":50,"questions":89},{"d":21,"officialName":"Tag 21 | Innere Medizin","fach":"Innere Medizin","cat":"innere","w":115,"chapters":["Immunsystem","Fieber und Entzündungsreaktionen","Allergische Erkrankungen","Kontaktekzem","Anaphylaxie","Raynaud-Syndrom","Fibromyalgiesyndrom"],"pages":40,"questions":71},{"d":22,"officialName":"Tag 22 | Innere Medizin","fach":"Innere Medizin","cat":"innere","w":100,"chapters":["Rheumatoide Arthritis","Axiale Spondylarthritis","Reaktive Arthritis","Psoriasis-Arthritis","Hyperurikämie und Gicht"],"pages":34,"questions":59},{"d":23,"officialName":"Tag 23 | Innere Medizin","fach":"Innere Medizin","cat":"innere","w":135,"chapters":["Kollagenosen","Lupus erythematodes","Polymyositis und Dermatomyositis","Systemische Sklerose","Vaskulitiden","Riesenzellarteriitis","Polymyalgia rheumatica","Granulomatose mit Polyangiitis","Kawasaki-Syndrom","Thrombangiitis obliterans","Rheumatologische Antikörperdiagnostik"],"pages":52,"questions":92},{"d":24,"officialName":"Tag 24 | Infektiologie und Hygiene","fach":"Infektiologie und Hygiene","cat":"infekt","w":135,"chapters":["Mikrobiologische Untersuchungen","Blutkulturen","Sepsis","Durchfall","Lebensmittelvergiftung","Norovirus-Infektion","Rotavirus-Infektion","Bakterielle Durchfallerkrankungen","Darmpathogene E.-coli-Infektion","Clostridioides-dif fi cile-Infektion","Amöbiasis","Giardiasis"],"pages":53,"questions":94},{"d":25,"officialName":"Tag 25 | Infektiologie und Hygiene","fach":"Infektiologie und Hygiene","cat":"infekt","w":135,"chapters":["Erkrankungen durch Staphylokokken","Erkrankungen durch Streptokokken","Toxische Schocksyndrome","Chlamydien-Infektionen","Lyme-Borreliose","Brucellose","Typhus, Paratyphus","Milzbrand","Leptospirose","Diphtherie","Listeriose","Katzenkratzkrankheit"],"pages":53,"questions":94},{"d":26,"officialName":"Tag 26 | Infektiologie und Hygiene","fach":"Infektiologie und Hygiene","cat":"infekt","w":135,"chapters":["COVID-19","In fl uenza","Herpesvirus-Infektionen","Zytomegalievirus-Infektionen","Infektiöse Mononukleose","HIV-Infektion","Virales hämorrhagisches Fieber","Gelb fieber","Dengue fieber","Zika-Virus-Infektion","Mpox","Tollwut"],"pages":53,"questions":94},{"d":27,"officialName":"Tag 27 | Infektiologie und Hygiene","fach":"Infektiologie und Hygiene","cat":"infekt","w":135,"chapters":["Aspergillose","Malaria","Toxoplasmose","Leishmaniose","Chagas-Krankheit","Schlafkrankheit","Wurmerkrankungen","Echinokokkose","Schistosomiasis","Lepra","Seltene Zoonosen"],"pages":52,"questions":92},{"d":28,"officialName":"Tag 28 | Infektiologie und Hygiene","fach":"Infektiologie und Hygiene","cat":"infekt","w":115,"chapters":["Antisepsis","Nosokomiale Infektionen","Lymphknotenschwellung","Impfungen allgemein","Impfempfehlungen der STIKO","Infektionsschutzgesetz","Wasserhygiene"],"pages":40,"questions":71},{"d":29,"officialName":"Tag 29 | Pädiatrie","fach":"Pädiatrie","cat":"paediatrie","w":135,"chapters":["Das neugeborene Kind","Geburtstraumen","Perinatale Asphyxie und hypoxisch-ischämische Enzephalopathie","Zerebralparese","Neugeboreneninfektion","Omphalitis","Atemnotsyndrom des Neugeborenen","Embryofetopathien durch Noxen","Embryofetopathien durch Infektionserreger","Plötzlicher Säuglingstod","Kinderschutzmedizin"],"pages":52,"questions":92},{"d":30,"officialName":"Tag 30 | Pädiatrie","fach":"Pädiatrie","cat":"paediatrie","w":135,"chapters":["Icterus neonatorum","Morbus haemolyticus neonatorum","Morbus haemorrhagicus neonatorum","Hyperbilirubinämie-Syndrome","Nahrungsmittelallergie","Entwicklung des Kindes","Kindervorsorgeuntersuchungen","Enuresis und funktionelle Harninkontinenz im Kindes- und Jugendalter","Kleinwuchs","Großwuchs","Pubertät"],"pages":52,"questions":92},{"d":31,"officialName":"Tag 31 | Pädiatrie","fach":"Pädiatrie","cat":"paediatrie","w":135,"chapters":["Neuroblastom","Nephroblastom","Retinoblastom","Lippen-Kiefer-Gaumen-Spalte","Zystische Fibrose","Adrenogenitales Syndrom","Seltene hereditäre Syndrome","Hereditäre Stoffwechselerkrankungen","Hereditäre Störungen des Aminosäurestoffwechsels","Hereditäre Störungen des Kohlenhydratstoffwechsels","Hereditäre Störungen des Fettsäurestoffwechsels","Hereditäre Störungen im Abbau komplexer Moleküle"],"pages":53,"questions":94},{"d":32,"officialName":"Tag 32 | Pädiatrie","fach":"Pädiatrie","cat":"paediatrie","w":135,"chapters":["Atopische Dermatitis","Windeldermatitis","Masern","Scharlach","Röteln","Ringelröteln","Exanthema subitum","Windpocken","IgA-Vaskulitis","Mumps","Pertussis","Poliomyelitis","Fieberkrampf"],"pages":55,"questions":97},{"d":33,"officialName":"Tag 33 | Pädiatrie","fach":"Pädiatrie","cat":"paediatrie","w":135,"chapters":["Akute Bronchiolitis im Säuglingsalter","Pseudokrupp","Epiglottitis","Fremdkörperaspiration","Azyanotische angeborene Herzfehler","Ventrikelseptumdefekt","Atriumseptumdefekt","Zyanotische angeborene Herzfehler","Fallot-Tetralogie","Choanalatresie","Ösophagusatresie","Hypertrophe Pylorusstenose","Duodenalatresie","Morbus Hirschsprung","Viszerale Fehlbildungen","Nekrotisierende Enterokolitis","Darminvagination"],"pages":56,"questions":98},{"d":34,"officialName":"Tag 34 | Pädiatrie","fach":"Pädiatrie","cat":"paediatrie","w":115,"chapters":["Hüftreifungsstörung (Developmental Dysplasia of the Hip)","Morbus Perthes","Epiphyseolysis capitis femoris","Juvenile idiopathische Arthritis","Morbus Scheuermann","Kraniosynostosen","Hydrozephalus","Fehlbildungen des kraniozervikalen Übergangs","Neuralrohrdefekte"],"pages":43,"questions":77},{"d":35,"officialName":"Tag 35 | Humangenetik","fach":"Humangenetik","cat":"humangenetik","w":85,"chapters":["Humangenetik (Klinik)","Chromosomenaberrationen","Trisomie 21","Ehlers-Danlos-Syndrom und Marfan-Syndrom"],"pages":18,"questions":58},{"d":36,"officialName":"Tag 36 | Dermatologie","fach":"Dermatologie","cat":"dermatologie","w":135,"chapters":["Grundlagen der Dermatologie","Herpes zoster","Molluscum contagiosum","Impetigo contagiosa","Staphylococcal scalded Skin Syndrome","Intertriginöse Dermatosen","Allgemeine Mykologie","Dermatophytosen","Onychomykose","Kandidosen","Pityriasis versicolor","Skabies","Lauserkrankungen","Fotodermatosen","Porphyrien","Angioödem","Urtikaria"],"pages":56,"questions":98},{"d":37,"officialName":"Tag 37 | Dermatologie","fach":"Dermatologie","cat":"dermatologie","w":135,"chapters":["Erythema nodosum","Erythema exsudativum multiforme","Epidermale Nekrolyse","Blasenbildende Autoimmundermatosen","Psoriasis vulgaris","Lichen ruber planus","Ichthyosen","Pityriasis rosea","Seborrhoisches Ekzem","Acne vulgaris","Rosazea","Granulomatöse Hauterkrankungen"],"pages":53,"questions":94},{"d":38,"officialName":"Tag 38 | Dermatologie","fach":"Dermatologie","cat":"dermatologie","w":135,"chapters":["Benigne Hauttumoren","Aktinische Keratose","Malignes Melanom","Plattenepithelkarzinom der Haut","Basalzellkarzinom","Parapsoriasis en plaques","Vitiligo","Alopezien","Sexuell übertragbare Infektionen","Gonorrhö","Syphilis","Ulcus molle","Sammelsurium der Dermatologie","Periorale Dermatitis"],"pages":56,"questions":98},{"d":39,"officialName":"Tag 39 | Anästhesie","fach":"Anästhesie","cat":"anaesthesie","w":135,"chapters":["Lokalanästhetika","Regionalanästhesie","Allgemeinanästhesie","Maschinelle Beatmung","Rapid Sequence Induction","Inhalationsanästhetika","Injektionsanästhetika","Muskelrelaxanzien","Benzodiazepine","Maligne Hyperthermie"],"pages":50,"questions":89},{"d":40,"officialName":"Tag 40 | Intensiv- und Notfallmedizin","fach":"Intensiv- und Notfallmedizin","cat":"notfall","w":135,"chapters":["Grundlagen der Schmerztherapie","Nicht-Opioid-Analgetika","Opioide","Pulsoxymetrie und Blutgasanalyse","Flüssigkeits- und Volumentherapie","Künstliche Ernährung","Transfusionen","Präklinische Traumaversorgung","Grundlagen der Reanimation","Reanimation - AMBOSS-SOP","Polytrauma"],"pages":52,"questions":92},{"d":41,"officialName":"Tag 41 | Intensiv- und Notfallmedizin","fach":"Intensiv- und Notfallmedizin","cat":"notfall","w":115,"chapters":["Schock","Acute Respiratory Distress Syndrome","Rhabdomyolyse und Crush-Syndrom","Verbrennung","Hypothermie und Erfrierungen","Thoraxtrauma","Pneumothorax","Intoxikation mit Kohlenstoffmonoxid oder -dioxid"],"pages":42,"questions":74},{"d":42,"officialName":"Tag 42 | Chirurgie","fach":"Chirurgie","cat":"chirurgie","w":135,"chapters":["Akute Wunden und Wundverschluss","Chronische Wunden und Wundbehandlung","Bakterielle Infektionen von Haut und Weichgewebe","Paronychie und Panaritium","Tetanus","Aktinomykose","Perioperatives Management","Laparoskopische Chirurgie","Koronararterielle Bypasschirurgie","Aneurysma","Aortenaneurysma","Aortendissektion","Akuter arterieller Extremitätenverschluss"],"pages":55,"questions":97},{"d":43,"officialName":"Tag 43 | Chirurgie","fach":"Chirurgie","cat":"chirurgie","w":135,"chapters":["Schilddrüsenkarzinom","Schilddrüsenchirurgie","Ösophagusdivertikel","Boerhaave-Syndrom","Ösophaguskarzinom","Zwerchfellhernie","Milzruptur","Magenkarzinom","Neuroendokrine Neoplasien","Akutes Abdomen","Peritonitis","Ileus"],"pages":53,"questions":94},{"d":44,"officialName":"Tag 44 | Chirurgie","fach":"Chirurgie","cat":"chirurgie","w":115,"chapters":["Mesenteriale Ischämie","Appendizitis","Kolonpolypen","Kolorektales Karzinom","Hereditäres, nicht-polypöses Kolonkarzinom","Obstipation","Darmchirurgie"],"pages":40,"questions":71},{"d":45,"officialName":"Tag 45 | Chirurgie","fach":"Chirurgie","cat":"chirurgie","w":135,"chapters":["Cholelithiasis, Cholezystitis und Cholangitis","Biliäre Karzinome","Hepatozelluläres Karzinom","Pankreas- und Leberchirurgie","Anal- und Rektumprolaps","Hämorrhoiden und Hämorrhoidalleiden","Analvenenthrombose","Anal fi ssur","Analabszess und Anal fi stel","Analkarzinom","Sinus pilonidalis","Hernien","Leistenhernie","Schenkelhernie"],"pages":56,"questions":98},{"d":46,"officialName":"Tag 46 | Chirurgie","fach":"Chirurgie","cat":"chirurgie","w":135,"chapters":["Allgemeine Frakturlehre","Konservative Verfahren in der Frakturversorgung","Operative Verfahren der Unfallchirurgie/Orthopädie","Frakturen im Kindesalter","Kompartmentsyndrom","Claviculafraktur","Luxation des Akromioklavikulargelenks","Humerusfraktur","Distale Radiusfraktur","Schaftfrakturen des Unterarmes"],"pages":50,"questions":89},{"d":47,"officialName":"Tag 47 | Chirurgie","fach":"Chirurgie","cat":"chirurgie","w":115,"chapters":["Kahnbeinfraktur","Mittelhandfrakturen","Wirbelsäulenverletzungen","Beckenringfrakturen","Proximale Femurfrakturen","Femurschaft- und distale Femurfrakturen","Frakturen des Unterschenkels","Sprunggelenksfraktur"],"pages":42,"questions":74},{"d":48,"officialName":"Tag 48 | Orthopädie","fach":"Orthopädie","cat":"orthopaedie","w":135,"chapters":["Orthopädische Untersuchungszeichen","Arthrose","Osteomalazie und Rachitis","Osteodystrophia deformans","Osteoporose","Laborkonstellation Knochenerkrankungen","Seronegative Spondylarthritis","Osteomyelitis","Spondylodiszitis","Bakterielle Arthritis"],"pages":50,"questions":89},{"d":49,"officialName":"Tag 49 | Orthopädie","fach":"Orthopädie","cat":"orthopaedie","w":100,"chapters":["Benigne Knochen- und Knorpeltumoren","Maligne Knochen- und Knorpeltumoren","Spondylolisthese","Bandscheibenprolaps","Adoleszente idiopathische Skoliose","Rückenschmerzen"],"pages":35,"questions":62},{"d":50,"officialName":"Tag 50 | Orthopädie","fach":"Orthopädie","cat":"orthopaedie","w":135,"chapters":["Morbus Dupuytren","Tendovaginitis","Tendinopathie","Komplexes regionales Schmerzsyndrom","Thoracic-Outlet-Syndrom","Schulterläsionen","Rotatorenmanschettenruptur","Schultergelenkluxation","Bizepssehnenruptur","Luxationen des Ellenbogengelenks","Radiuskopf-Subluxation","Karpaltunnelsyndrom","Sehnenverletzung der Hand","Sammelsurium der Unfallchirurgie und Orthopädie"],"pages":56,"questions":98},{"d":51,"officialName":"Tag 51 | Orthopädie","fach":"Orthopädie","cat":"orthopaedie","w":135,"chapters":["Osteochondrosis dissecans","Osteonekrosen","Aseptische Femurkopfnekrose im Erwachsenenalter","Fehlstellungen der unteren Extremität","Koxarthrose","Gonarthrose","Sportverletzungen","Meniskusruptur","Patellaluxation","Bandverletzungen des Knies","Achillessehnenruptur","Fußdeformitäten","Zehendeformitäten"],"pages":55,"questions":97},{"d":52,"officialName":"Tag 52 | Gynäkologie","fach":"Gynäkologie","cat":"gynaekologie","w":135,"chapters":["Diagnostik in der Gynäkologie","Fehlbildungen der weiblichen Geschlechtsorgane","Androgenresistenz","Östrogenwirkung und assoziierte Erkrankungen","Menstruationszyklus und Zyklusanomalien","Endometriose","Polyzystisches Ovarialsyndrom","Klimakterium","Entzündungen des weiblichen Genitaltrakts","Entzündliche und benigne Veränderungen der Mamma"],"pages":50,"questions":89},{"d":53,"officialName":"Tag 53 | Gynäkologie","fach":"Gynäkologie","cat":"gynaekologie","w":85,"chapters":["Mammakarzinom","Uterusmyom","Benigne Ovarialtumoren","Maligne Ovarialtumoren"],"pages":28,"questions":55},{"d":54,"officialName":"Tag 54 | Gynäkologie","fach":"Gynäkologie","cat":"gynaekologie","w":85,"chapters":["Infektion mit humanen Papillomaviren","Zervixkarzinom","Endometriumkarzinom","Vulvakarzinom"],"pages":28,"questions":55},{"d":55,"officialName":"Tag 55 | Gynäkologie","fach":"Gynäkologie","cat":"gynaekologie","w":135,"chapters":["Schwangerschaftsabbruch","Sterilität, Infertilität und Impotenz","Nicht-hormonelle Kontrazeption","Schwangerschaft","Vorsorgeuntersuchungen in der Schwangerschaft","Pränataldiagnostik","Kardiotokografie (CTG)","Mehrlingsschwangerschaft","Extrauteringravidität","Fruchtwasseranomalien"],"pages":50,"questions":89},{"d":56,"officialName":"Tag 56 | Gynäkologie","fach":"Gynäkologie","cat":"gynaekologie","w":135,"chapters":["Hypertensive Schwangerschaftserkrankungen","HELLP-Syndrom","Blutungen während der Schwangerschaft","Intra- und postpartale Blutungen","Fetale Wachstumsrestriktion","Vorzeitige Plazentalösung","Placenta praevia","Nabelschnurkomplikationen","Trophoblasttumoren","Geburtsablauf","Geburtsmechanik","Geburtseinleitung","Operative Geburtshilfe","Drohende Frühgeburt","Abort und intrauteriner Fruchttod","Uterusruptur","Wochenbett"],"pages":56,"questions":98},{"d":57,"officialName":"Tag 57 | Urologie","fach":"Urologie","cat":"urologie","w":135,"chapters":["Apparative Diagnostik in der Urologie","Kongenitale Anomalien der Nieren und ableitenden Harnwege","Polyzystische Nierenerkrankung","Blasenekstrophie, Fehlanlagen der männlichen Harnröhre und Palmure","Balanitis und Balanoposthitis","Phimose","Hodenhochstand","Harninkontinenz","Belastungsinkontinenz","Dranginkontinenz","Harnverhalt","Harnab fl ussstörungen","Vesikoureteraler Re fl ux","Morbus Ormond","Urozystitis","Urethritis","Pyelonephritis","Perinephritischer Abszess","Prostatitis","Epididymitis und Orchitis","Hydrocele testis, Varikozele und Spermatozele","Skrotalabszess"],"pages":56,"questions":98},{"d":58,"officialName":"Tag 58 | Urologie","fach":"Urologie","cat":"urologie","w":135,"chapters":["Nierenzellkarzinom","Benignes Prostatasyndrom","Prostatakarzinom","Urothelkarzinom","Maligne Hodentumoren","Peniskarzinom","Urolithiasis","Traumatische Verletzungen der Niere und der ableitenden Harnwege","Hodentorsion","Priapismus","Penisruptur","Sexuelle Funktionsstörungen","Spermiogramm"],"pages":55,"questions":97},{"d":59,"officialName":"Tag 59 | HNO","fach":"HNO","cat":"hno","w":135,"chapters":["Audiometrische Verfahren in der HNO","Othämatom und Otserom","Otitis externa","Akute Otitis media","Mastoiditis und Labyrinthitis","Tubenfunktionsstörungen","Otosklerose","Chronische Otitis media","Glomustumor","Hörsturz","Akustisches Trauma","Tinnitus","Peripherer paroxysmaler Lagerungsschwindel","Morbus Menière","Neuropathia vestibularis","Epistaxis","Tumoren der Nasenhaupthöhle und Nasennebenhöhlen","Sinusitis","Allergische Rhinitis","Gesichts- und Felsenbeinfrakturen"],"pages":56,"questions":98},{"d":60,"officialName":"Tag 60 | HNO","fach":"HNO","cat":"hno","w":135,"chapters":["Adenoide Vegetationen","Juveniles Angio fi brom","Zungenveränderungen","Akute bakterielle Tonsillopharyngitis","Peritonsillar-, Parapharyngeal- und Retropharyngealabszess","Pharynxkarzinom","Kehlkop fl ähmung","Benigne Tumoren und Präkanzerosen des Larynx","Larynxkarzinom","Halszyste und Hals fi stel","Kopfspeicheldrüsenerkrankungen","Sjögren-Syndrom","Sprach- und Sprechentwicklungsstörungen","Sammelsurium der HNO"],"pages":56,"questions":98},{"d":61,"officialName":"Tag 61 | Augenheilkunde","fach":"Augenheilkunde","cat":"auge","w":135,"chapters":["Untersuchungsmethoden in der Augenheilkunde","Störungen der Lidstellung","Entzündungen der Augenlider","Erkrankungen des Tränenapparats","Infektiöse Konjunktivitis","Nicht-infektiöse Konjunktivitis","Allergische Konjunktivitiden","Degenerationen, Dystrophien und Tumoren der Konjunktiven","Erkrankungen der Hornhaut","Keratitis","Entzündungen der Sklera","Erkrankungen der Linse","Katarakt","Erkrankungen der Uvea","Aderhautmelanom"],"pages":56,"questions":98},{"d":62,"officialName":"Tag 62 | Augenheilkunde","fach":"Augenheilkunde","cat":"auge","w":135,"chapters":["Pupillenstörungen","Sehstörungen","Erkrankungen des Glaskörpers","Endophthalmitis","Glaukom","Erkrankungen der Netzhaut","Retinale Gefäßverschlüsse","Netzhautablösung","Altersbedingte Makuladegeneration","Störungen der Sehbahn","Erkrankungen der Augenhöhle","Horner-Syndrom","Störungen der Optik","Störungen der Bulbusmotilität und Strabismus","Traumatische Augenverletzungen"],"pages":56,"questions":98},{"d":63,"officialName":"Tag 63 | Neurologie","fach":"Neurologie","cat":"urologie","w":115,"chapters":["Neurologische Untersuchung","Tremor","Parkinson-Syndrom und Parkinson-Krankheit","Atypische Parkinson-Syndrome","Normaldruckhydrozephalus","Huntington-Erkrankung","Restless-Legs-Syndrom","Grundlagen der Kleinhirnerkrankungen","Friedreich-Ataxie"],"pages":43,"questions":77},{"d":64,"officialName":"Tag 64 | Neurologie","fach":"Neurologie","cat":"urologie","w":135,"chapters":["Epileptische Anfälle","Status epilepticus","Epilepsien und Epilepsiesyndrome","Transiente globale Amnesie","Narkolepsie","Vigilanzminderung","Irreversibler Hirnfunktionsausfall","Syndrome mit anhaltender minimaler Interaktionsfähigkeit","Intrakranielle Druckerhöhung","Schädel-Hirn-Trauma"],"pages":50,"questions":89},{"d":65,"officialName":"Tag 65 | Neurologie","fach":"Neurologie","cat":"urologie","w":115,"chapters":["Intrazerebrale Blutung","Epidurales Hämatom","Subdurales Hämatom","Subarachnoidalblutung","Ischämischer Schlaganfall","Karotis- und Vertebralisdissektion","Zerebrale Sinus- und Venenthrombose","Carotis-Sinus-cavernosus-Fistel"],"pages":42,"questions":74},{"d":66,"officialName":"Tag 66 | Neurologie","fach":"Neurologie","cat":"urologie","w":135,"chapters":["Kopfschmerzen","Migräne","Kopfschmerz vom Spannungstyp","Cluster-Kopfschmerz","Trigeminusneuralgie","Kopfschmerz bei Medikamentenübergebrauch","Idiopathische intrakranielle Hypertension","Meningitis","Liquorpunktion","FSME-Virus-Infektion","Herpes-simplex-Enzephalitis","Hirnabszess","Creutzfeldt-Jakob-Krankheit"],"pages":55,"questions":97},{"d":67,"officialName":"Tag 67 | Neurologie","fach":"Neurologie","cat":"urologie","w":135,"chapters":["Multiple Sklerose","Neuromyelitis-optica-Spektrum-Erkrankungen","Amyotrophe Lateralsklerose","Spinale Muskelatrophien","Myasthenia gravis","Myotone Dystrophien und nicht-dystrophe Myotonien","Progressive Muskeldystrophien","Stiff-Person-Syndrom","Dystonie","Hereditäre spastische Paraplegie"],"pages":50,"questions":89},{"d":68,"officialName":"Tag 68 | Neurologie","fach":"Neurologie","cat":"urologie","w":135,"chapters":["Tumoren des zentralen Nervensystems","Gliome","Meningeom","Vestibularisschwannom und andere Neurinome","Meningeosis neoplastica","Hirnnerven-Syndrome","Periphere Fazialisparese","Syndrome der Schädelbasis","Komplettes Querschnittsyndrom","Inkomplette Querschnittsyndrome","Arteria-spinalis-anterior-Syndrom","Zervikale Myelopathie","Degenerative Spinalkanalstenose"],"pages":55,"questions":97},{"d":69,"officialName":"Tag 69 | Neurologie","fach":"Neurologie","cat":"urologie","w":115,"chapters":["Neurophysiologische Diagnostik","Periphere Nervenläsionen","Läsion des N. radialis","Läsion des N. ulnaris","Läsion des N. medianus","Neuralgische Amyotrophie","Polyneuropathie","Guillain-Barré-Syndrom","Vitamin-B12-Mangel"],"pages":43,"questions":77},{"d":70,"officialName":"Tag 70 | Psychiatrie","fach":"Psychiatrie","cat":"psychiatrie","w":135,"chapters":["Psychopathologischer Befund","Psychotherapeutische Verfahren (Klinik)","Delir","Demenzen","Alzheimer-Krankheit","Frontotemporale Demenz","Vaskuläre Demenz","Somatoforme Störungen","Unipolare Depression","Bipolare affektive Störung","Neuromodulationsverfahren"],"pages":52,"questions":92},{"d":71,"officialName":"Tag 71 | Psychiatrie","fach":"Psychiatrie","cat":"psychiatrie","w":135,"chapters":["Zwangsstörungen","Reaktionen auf schwere Belastungen und Anpassungsstörungen","Dissoziative Störungen","Opioidbezogene Störungen","Cannabinoide","Sedativa (Intoxikation und Abhängigkeit)","Rauchen und Tabakkonsum","Psychostimulanzien","Alkoholbezogene Störungen","Wernicke-Enzephalopathie","Schizophrenie"],"pages":52,"questions":92},{"d":72,"officialName":"Tag 72 | Psychiatrie","fach":"Psychiatrie","cat":"psychiatrie","w":115,"chapters":["Persönlichkeitsstörungen","Borderline-Persönlichkeitsstörung","Tiefgreifende Entwicklungsstörungen","Tic-Störungen","Essstörungen","Angststörungen","Insomnien","Parasomnien"],"pages":42,"questions":74},{"d":73,"officialName":"Tag 73 | Psychiatrie","fach":"Psychiatrie","cat":"psychiatrie","w":100,"chapters":["Verhaltens- und emotionale Störungen im Kindes- und Jugendalter","Aufmerksamkeitsde fi zit-/Hyperaktivitätsstörung","Geschlechtsinkongruenz","Paraphile Störungen","Suizidalität","Betreuung und Zwangsmaßnahmen"],"pages":35,"questions":62},{"d":74,"officialName":"Tag 74 | Pharmakologie","fach":"Pharmakologie","cat":"pharma","w":135,"chapters":["Pharmakologische Grundlagen","Arzneimittelrezept","Parasympathomimetika","Parasympatholytika","Anticholinerges Syndrom","β 2-Sympathomimetika","Sympathomimetika","Antisympathotonika","Betablocker","Calciumantagonisten","RAAS-Inhibitoren"],"pages":52,"questions":92},{"d":75,"officialName":"Tag 75 | Pharmakologie","fach":"Pharmakologie","cat":"pharma","w":135,"chapters":["Amiodaron","Nitrate und Molsidomin","Phosphodiesterase-Hemmer","Herzglykoside","Thrombozytenaggregationshemmer","Parenterale Antikoagulanzien","Orale Antikoagulanzien","Diuretika","Thiaziddiuretika","Schleifendiuretika","Kaliumsparende Diuretika","Überblick über Vergiftungen"],"pages":53,"questions":94},{"d":76,"officialName":"Tag 76 | Pharmakologie","fach":"Pharmakologie","cat":"pharma","w":135,"chapters":["Antihistaminika","Glucocorticoide","Protonenpumpenhemmer","Lipidsenker","Antidiabetika","Insuline","Bisphosphonate und andere antiosteoporotische Medikamente","Thyreostatika","Hormonelle Kontrazeption","Pharmakotherapie in der Schwangerschaft"],"pages":50,"questions":89},{"d":77,"officialName":"Tag 77 | Pharmakologie","fach":"Pharmakologie","cat":"pharma","w":100,"chapters":["Antipsychotika","Antidepressiva","Lithium","Anfallssuppressiva","Parkinson-Medikamente"],"pages":34,"questions":59},{"d":78,"officialName":"Tag 78 | Pharmakologie","fach":"Pharmakologie","cat":"pharma","w":115,"chapters":["Antibiotika","Virostatika","Interferontherapie","Antimykotika","Immunsuppressiva","Chloroquin und Hydroxychloroquin","Zytostatika","Medikamente der zielgerichteten Tumortherapie","Antiemetika"],"pages":43,"questions":77},{"d":79,"officialName":"Tag 79 | Radiologie","fach":"Radiologie","cat":"radiologie","w":115,"chapters":["Röntgen","Computertomografie","Magnetresonanztomografie","Strahlentherapie","Radioiodtherapie","Schilddrüsenszintigrafie","Knochenszintigrafie","Ösophagusbreischluck und Störungen der Ösophagusmotilität","Tag 79 M2-Lernplan - Wiederholung des Querschnittbereichs Radiologie"],"pages":43,"questions":77},{"d":80,"officialName":"Tag 80 | Arbeits- und Umweltmedizin","fach":"Arbeits- und Umweltmedizin","cat":"arbeits","w":135,"chapters":["Arbeitsmedizinische Organe und Gesetze","Verhütung und Früherkennung beru fl ich bedingter Schäden","Anerkennung von Berufskrankheiten","Messkriterien der Arbeitsplatzbelastung","Berufskrankheiten durch physikalische Belastungen","Erkrankungen durch Metalle","Erkrankungen durch organische Lösungsmittel, Insektizide, Halogenkohlenwasserstoffe, Benzol und Homologe","Lungenerkrankungen durch Inhalation anorganischer Stäube","Asbestose und Mesotheliom","Silikose","Lungenerkrankungen durch Inhalation organischer Stäube","Erkrankungen durch Einwirkung reizender Gase","Berufserkrankungen der Haut","Erkrankungen durch chlorierte und polyzyklische aromatische Kohlenwasserstoffe"],"pages":56,"questions":98},{"d":81,"officialName":"Tag 81 | Rechtsmedizin","fach":"Rechtsmedizin","cat":"rechts","w":85,"chapters":["Ärztliche Rechtskunde","Thanatologie","Verletzungen und Gewalteinwirkung"],"pages":18,"questions":58},{"d":82,"officialName":"Tag 82 | Rechtsmedizin","fach":"Rechtsmedizin","cat":"rechts","w":100,"chapters":["Strangulation und Ersticken","Ertrinken","Zeichen thermischer Schädigungen","Schussverletzungen","Spurensicherung","Arti fi zielle Störungen"],"pages":25,"questions":60},{"d":83,"officialName":"Tag 83 | Pathologie","fach":"Pathologie","cat":"patho","w":115,"chapters":["Zelluläre Veränderungen und Anpassungsreaktionen","Untersuchungsmethoden in der Pathologie","Allgemeine Onkologie","Tumormarker","Neurokutane Syndrome","Paraneoplastische Syndrome","Systemische Amyloidose"],"pages":40,"questions":71},{"d":84,"officialName":"Tag 84 | Epidemiologie","fach":"Epidemiologie","cat":"epidem","w":115,"chapters":["Grundbegriffe medizinischer Forschung","Angewandte Statistik","Epidemiologie und Wahrscheinlichkeiten","Studientypen der medizinischen Forschung","Sammelsurium der Epidemiologie","Diagnose- und Klassi fi kationssysteme","Qualitätsmanagement","Prävention"],"pages":42,"questions":74},{"d":85,"officialName":"Tag 85 | Sozialmedizin & Alternative Heilverfahren und Rehabilitation","fach":"Sozialmedizin & Alternative Heilverfahren und Rehabilitation","cat":"sozial","w":135,"chapters":["Soziale Sicherung","Gesetzliche Unfallversicherung","Gesetzliche Krankenversicherung","Ökonomische Aspekte von Gesundheit und Krankheit","Behinderung und Einschränkung der Arbeitsfähigkeit","Grundlagen der allgemeinmedizinischen Versorgung","Übersicht Geriatrie","Palliativmedizin","Rehabilitation","Physikalische Therapie","Phytotherapeutika","Komplementärmedizin einschließlich Naturheilkunde","Ernährungsmedizin","Zweites Staatsexamen"],"pages":56,"questions":98},{"d":86,"officialName":"Tag 86 | Wiederholung","fach":"Wiederholung","cat":"wiederholung","w":85,"chapters":["Erstes Wiederholungsexamen Tag 1","IMPP-Originalfragen kreuzen","Detaillierte Fehleranalyse & Wissenslücken schließen"],"pages":16,"questions":80},{"d":87,"officialName":"Tag 87 | Wiederholung","fach":"Wiederholung","cat":"wiederholung","w":85,"chapters":["Erstes Wiederholungsexamen Tag 2","IMPP-Originalfragen kreuzen","Detaillierte Fehleranalyse & Wissenslücken schließen"],"pages":16,"questions":80},{"d":88,"officialName":"Tag 88 | Wiederholung","fach":"Wiederholung","cat":"wiederholung","w":85,"chapters":["Erstes Wiederholungsexamen Tag 3","IMPP-Originalfragen kreuzen","Detaillierte Fehleranalyse & Wissenslücken schließen"],"pages":16,"questions":80},{"d":89,"officialName":"Tag 89 | Wiederholung","fach":"Wiederholung","cat":"wiederholung","w":85,"chapters":["Zweites Wiederholungsexamen Tag 1","IMPP-Originalfragen kreuzen","Detaillierte Fehleranalyse & Wissenslücken schließen"],"pages":16,"questions":80},{"d":90,"officialName":"Tag 90 | Wiederholung","fach":"Wiederholung","cat":"wiederholung","w":85,"chapters":["Zweites Wiederholungsexamen Tag 2","IMPP-Originalfragen kreuzen","Detaillierte Fehleranalyse & Wissenslücken schließen"],"pages":16,"questions":80},{"d":91,"officialName":"Tag 91 | Wiederholung","fach":"Wiederholung","cat":"wiederholung","w":85,"chapters":["Zweites Wiederholungsexamen Tag 3","IMPP-Originalfragen kreuzen","Detaillierte Fehleranalyse & Wissenslücken schließen"],"pages":16,"questions":80},{"d":92,"officialName":"Tag 92 | Generalprobe","fach":"Generalprobe","cat":"generalprobe","w":160,"chapters":["Erste Generalprobe (Tag 1)","Examenstag unter realen Bedingungen kreuzen (107 Fragen)","Auswertung & Schließen letzter Unsicherheiten"],"pages":12,"questions":107},{"d":93,"officialName":"Tag 93 | Generalprobe","fach":"Generalprobe","cat":"generalprobe","w":160,"chapters":["Erste Generalprobe (Tag 2)","Examenstag unter realen Bedingungen kreuzen (107 Fragen)","Auswertung & Schließen letzter Unsicherheiten"],"pages":12,"questions":107},{"d":94,"officialName":"Tag 94 | Generalprobe","fach":"Generalprobe","cat":"generalprobe","w":160,"chapters":["Erste Generalprobe (Tag 3)","Examenstag unter realen Bedingungen kreuzen (107 Fragen)","Auswertung & Schließen letzter Unsicherheiten"],"pages":12,"questions":107},{"d":95,"officialName":"Tag 95 | Generalprobe","fach":"Generalprobe","cat":"generalprobe","w":160,"chapters":["Zweite Generalprobe (Tag 1)","Examenstag unter realen Bedingungen kreuzen (107 Fragen)","Auswertung & Schließen letzter Unsicherheiten"],"pages":12,"questions":107},{"d":96,"officialName":"Tag 96 | Generalprobe","fach":"Generalprobe","cat":"generalprobe","w":160,"chapters":["Zweite Generalprobe (Tag 2)","Examenstag unter realen Bedingungen kreuzen (107 Fragen)","Auswertung & Schließen letzter Unsicherheiten"],"pages":12,"questions":107},{"d":97,"officialName":"Tag 97 | Generalprobe","fach":"Generalprobe","cat":"generalprobe","w":160,"chapters":["Zweite Generalprobe (Tag 3)","Examenstag unter realen Bedingungen kreuzen (107 Fragen)","Auswertung & Schließen letzter Unsicherheiten"],"pages":12,"questions":107},{"d":98,"officialName":"Tag 98 | Generalprobe","fach":"Generalprobe","cat":"generalprobe","w":160,"chapters":["Dritte Generalprobe (Tag 1)","Examenstag unter realen Bedingungen kreuzen (107 Fragen)","Auswertung & Schließen letzter Unsicherheiten"],"pages":12,"questions":107},{"d":99,"officialName":"Tag 99 | Generalprobe","fach":"Generalprobe","cat":"generalprobe","w":160,"chapters":["Dritte Generalprobe (Tag 2)","Examenstag unter realen Bedingungen kreuzen (107 Fragen)","Auswertung & Schließen letzter Unsicherheiten"],"pages":12,"questions":107},{"d":100,"officialName":"Tag 100 | Generalprobe","fach":"Generalprobe","cat":"generalprobe","w":160,"chapters":["Dritte Generalprobe (Tag 3)","Examenstag unter realen Bedingungen kreuzen (107 Fragen)","Auswertung & Schließen letzter Unsicherheiten"],"pages":12,"questions":107}];
 
@@ -1233,6 +1531,348 @@
 
     let activeFilter = 'alle';
     let allExpanded = false;
+
+    // ==========================================
+    // SUPABASE CLOUD-SYNCHRONISATION & PERSISTENZ
+    // ==========================================
+    let supabaseClient = null;
+    let currentUser = null;
+    let autoSyncTimer = null;
+    let isSyncing = false;
+
+    let sbConfig = {
+      url: localStorage.getItem('m2_sb_url') || '',
+      key: localStorage.getItem('m2_sb_key') || ''
+    };
+
+    function initSupabase() {
+      if (window.supabase && sbConfig.url && sbConfig.key) {
+        try {
+          supabaseClient = window.supabase.createClient(sbConfig.url, sbConfig.key, {
+            auth: {
+              persistSession: true,
+              autoRefreshToken: true,
+              detectSessionInUrl: true
+            }
+          });
+
+          // Session prüfen
+          supabaseClient.auth.getSession().then(({ data, error }) => {
+            if (!error && data?.session?.user) {
+              handleUserAuthenticated(data.session.user);
+            } else {
+              updateSyncUI('offline', '⚪ Offline: Nicht angemeldet', 'Bereit zur Anmeldung');
+            }
+          });
+
+          // Auth State Listener
+          supabaseClient.auth.onAuthStateChange((event, session) => {
+            if (session?.user) {
+              handleUserAuthenticated(session.user);
+            } else {
+              currentUser = null;
+              updateSyncUI('offline', '⚪ Offline: Nicht angemeldet', 'Bereit zur Anmeldung');
+              toggleAuthViews(false);
+            }
+          });
+        } catch (e) {
+          console.error('Fehler beim Initialisieren von Supabase:', e);
+          updateSyncUI('error', '⚠️ Supabase Fehler', e.message);
+        }
+      } else {
+        updateSyncUI('offline', '☁️ Cloud-Sync: Lokal', 'Kostenlose Supabase-Synchronisation einrichten');
+      }
+    }
+
+    function handleUserAuthenticated(user) {
+      currentUser = user;
+      toggleAuthViews(true, user.email);
+      updateSyncUI('connected', '🟢 Verbunden (' + user.email.split('@')[0] + ')', 'Geräte-Synchronisation aktiv');
+      pullCloudData(true);
+    }
+
+    function toggleAuthViews(isLoggedIn, email) {
+      const loggedOutView = document.getElementById('authLoggedOutView');
+      const loggedInView = document.getElementById('authLoggedInView');
+      const emailEl = document.getElementById('loggedInUserEmail');
+      if (loggedOutView) loggedOutView.style.display = isLoggedIn ? 'none' : 'block';
+      if (loggedInView) loggedInView.style.display = isLoggedIn ? 'block' : 'none';
+      if (emailEl && email) emailEl.textContent = email;
+    }
+
+    function updateSyncUI(status, navText, bannerSubtitle) {
+      const dot = document.getElementById('syncStatusDot');
+      const text = document.getElementById('syncStatusText');
+      const banner = document.getElementById('syncStatusBanner');
+      const bTitle = document.getElementById('bannerTitle');
+      const bSub = document.getElementById('bannerSubtitle');
+
+      if (dot) dot.className = 'sync-status-dot ' + status;
+      if (text) text.textContent = navText;
+
+      if (banner) banner.className = 'sync-banner ' + status;
+      if (bTitle) {
+        if (status === 'connected') bTitle.textContent = 'Status: 🟢 Aktiv synchronisiert';
+        else if (status === 'syncing') bTitle.textContent = 'Status: 🟡 Synchronisiere mit Cloud...';
+        else if (status === 'error') bTitle.textContent = 'Status: ⚠️ Verbindung prüfen';
+        else bTitle.textContent = 'Status: ⚪ Offline / Lokal';
+      }
+      if (bSub && bannerSubtitle) bSub.textContent = bannerSubtitle;
+    }
+
+    // Modal Funktionen
+    window.openSyncModal = function() {
+      const modal = document.getElementById('syncModal');
+      const urlInput = document.getElementById('sbUrlInput');
+      const keyInput = document.getElementById('sbKeyInput');
+      if (urlInput) urlInput.value = sbConfig.url;
+      if (keyInput) keyInput.value = sbConfig.key;
+      if (modal) modal.classList.add('open');
+    };
+
+    window.closeSyncModal = function() {
+      const modal = document.getElementById('syncModal');
+      if (modal) modal.classList.remove('open');
+    };
+
+    window.handleModalBackdropClick = function(event) {
+      if (event.target && event.target.id === 'syncModal') {
+        closeSyncModal();
+      }
+    };
+
+    window.toggleKeyVisibility = function() {
+      const keyInput = document.getElementById('sbKeyInput');
+      if (keyInput) {
+        keyInput.type = (keyInput.type === 'password') ? 'text' : 'password';
+      }
+    };
+
+    window.saveSupabaseConfig = function() {
+      const url = (document.getElementById('sbUrlInput')?.value || '').trim();
+      const key = (document.getElementById('sbKeyInput')?.value || '').trim();
+      const fb = document.getElementById('configFeedback');
+
+      if (!url || !key) {
+        if (fb) {
+          fb.className = 'modal-feedback error';
+          fb.textContent = 'Bitte sowohl Project URL als auch Anon Key eingeben.';
+        }
+        return;
+      }
+
+      sbConfig.url = url;
+      sbConfig.key = key;
+      localStorage.setItem('m2_sb_url', url);
+      localStorage.setItem('m2_sb_key', key);
+
+      initSupabase();
+
+      if (fb) {
+        fb.className = 'modal-feedback success';
+        fb.textContent = '✓ Zugangsdaten erfolgreich gespeichert! Du kannst dich jetzt einloggen oder registrieren.';
+        setTimeout(() => fb.style.display = 'none', 4000);
+      }
+    };
+
+    window.handleAuthLogin = async function() {
+      if (!supabaseClient) {
+        alert('Bitte zuerst die Supabase Project URL und Anon Key eintragen und speichern.');
+        return;
+      }
+      const email = (document.getElementById('authEmailInput')?.value || '').trim();
+      const password = (document.getElementById('authPasswordInput')?.value || '').trim();
+      const fb = document.getElementById('authFeedback');
+
+      if (!email || !password) {
+        if (fb) {
+          fb.className = 'modal-feedback error';
+          fb.textContent = 'Bitte E-Mail und Passwort eingeben.';
+        }
+        return;
+      }
+
+      if (fb) {
+        fb.className = 'modal-feedback info';
+        fb.textContent = 'Anmeldung läuft...';
+      }
+
+      try {
+        const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+        if (error) throw error;
+        if (fb) {
+          fb.className = 'modal-feedback success';
+          fb.textContent = '✓ Erfolgreich angemeldet!';
+          setTimeout(() => fb.style.display = 'none', 3000);
+        }
+      } catch (err) {
+        if (fb) {
+          fb.className = 'modal-feedback error';
+          fb.textContent = 'Login fehlgeschlagen: ' + (err.message || err);
+        }
+      }
+    };
+
+    window.handleAuthSignUp = async function() {
+      if (!supabaseClient) {
+        alert('Bitte zuerst die Supabase Project URL und Anon Key eintragen und speichern.');
+        return;
+      }
+      const email = (document.getElementById('authEmailInput')?.value || '').trim();
+      const password = (document.getElementById('authPasswordInput')?.value || '').trim();
+      const fb = document.getElementById('authFeedback');
+
+      if (!email || password.length < 6) {
+        if (fb) {
+          fb.className = 'modal-feedback error';
+          fb.textContent = 'Bitte gültige E-Mail und ein Passwort mit mind. 6 Zeichen angeben.';
+        }
+        return;
+      }
+
+      if (fb) {
+        fb.className = 'modal-feedback info';
+        fb.textContent = 'Registrierung läuft...';
+      }
+
+      try {
+        const { data, error } = await supabaseClient.auth.signUp({ email, password });
+        if (error) throw error;
+        if (fb) {
+          fb.className = 'modal-feedback success';
+          fb.textContent = '✓ Konto erstellt! Falls Supabase E-Mail-Bestätigung fordert, prüfe kurz dein Postfach (oder deaktiviere "Confirm Email" im Supabase Auth Dashboard).';
+        }
+      } catch (err) {
+        if (fb) {
+          fb.className = 'modal-feedback error';
+          fb.textContent = 'Registrierung fehlgeschlagen: ' + (err.message || err);
+        }
+      }
+    };
+
+    window.handleAuthLogout = async function() {
+      if (!supabaseClient) return;
+      try {
+        await supabaseClient.auth.signOut();
+        currentUser = null;
+        toggleAuthViews(false);
+        updateSyncUI('offline', '⚪ Offline: Nicht angemeldet', 'Abgemeldet. Daten bleiben lokal gespeichert.');
+      } catch (e) {
+        console.error(e);
+      }
+    };
+
+    window.copySqlSnippet = function() {
+      const code = document.getElementById('sqlSnippetBlock')?.textContent || '';
+      navigator.clipboard.writeText(code).then(() => {
+        const hint = document.getElementById('copySqlFeedback');
+        if (hint) {
+          hint.style.display = 'block';
+          setTimeout(() => hint.style.display = 'none', 3000);
+        }
+      });
+    };
+
+    function triggerAutoSync() {
+      if (!supabaseClient || !currentUser) return;
+      clearTimeout(autoSyncTimer);
+      updateSyncUI('syncing', '🟡 Synchronisiere...', 'Änderungen werden übertragen...');
+      autoSyncTimer = setTimeout(() => {
+        pushCloudData();
+      }, 1000);
+    }
+
+    window.triggerManualSync = function() {
+      if (!supabaseClient || !currentUser) {
+        alert('Bitte melde dich zuerst mit deinem Supabase Account an.');
+        return;
+      }
+      pullCloudData(false).then(() => pushCloudData());
+    };
+
+    async function pushCloudData() {
+      if (!supabaseClient || !currentUser || isSyncing) return;
+      isSyncing = true;
+      updateSyncUI('syncing', '🟡 Synchronisiere...', 'Übertrage Daten in Supabase Cloud...');
+
+      try {
+        const payload = {
+          user_id: currentUser.id,
+          day_status: dayStatus,
+          day_comments: dayComments,
+          quiz_scores: dayQuizScores,
+          repeat_flags: dayRepeatFlags,
+          calendar_state: calendarState,
+          updated_at: new Date().toISOString()
+        };
+
+        const { error } = await supabaseClient.from('m2_progress').upsert(payload, { onConflict: 'user_id' });
+        if (error) throw error;
+
+        const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        updateSyncUI('connected', '🟢 Synced (' + timeStr + ')', 'Erfolgreich synchronisiert um ' + timeStr + ' Uhr.');
+      } catch (err) {
+        console.warn('Sync-Fehler:', err);
+        updateSyncUI('offline', '⚠️ Sync unvollständig', 'Lokale Daten intakt. Hinweis: Tabelle m2_progress prüfen.');
+      } finally {
+        isSyncing = false;
+      }
+    }
+
+    async function pullCloudData(silent = false) {
+      if (!supabaseClient || !currentUser) return;
+      try {
+        const { data, error } = await supabaseClient
+          .from('m2_progress')
+          .select('*')
+          .eq('user_id', currentUser.id)
+          .maybeSingle();
+
+        if (error) throw error;
+
+        if (data) {
+          if (data.day_status && typeof data.day_status === 'object') {
+            dayStatus = { ...dayStatus, ...data.day_status };
+            localStorage.setItem('m2_days_status_v4', JSON.stringify(dayStatus));
+          }
+          if (data.day_comments && typeof data.day_comments === 'object') {
+            Object.keys(data.day_comments).forEach(k => {
+              if (!dayComments[k] || dayComments[k].trim() === '') {
+                dayComments[k] = data.day_comments[k];
+              }
+            });
+            localStorage.setItem('m2_day_comments_v4', JSON.stringify(dayComments));
+          }
+          if (data.quiz_scores && typeof data.quiz_scores === 'object') {
+            dayQuizScores = { ...dayQuizScores, ...data.quiz_scores };
+            localStorage.setItem('m2_quiz_scores_v1', JSON.stringify(dayQuizScores));
+          }
+          if (data.repeat_flags && typeof data.repeat_flags === 'object') {
+            dayRepeatFlags = { ...dayRepeatFlags, ...data.repeat_flags };
+            localStorage.setItem('m2_repeat_flags_v1', JSON.stringify(dayRepeatFlags));
+          }
+          if (data.calendar_state && typeof data.calendar_state === 'object') {
+            calendarState = { ...calendarState, ...data.calendar_state };
+            localStorage.setItem('m2_cal_state_v4', JSON.stringify(calendarState));
+          }
+
+          renderDays();
+          renderCalendar();
+          updateGlobalProgress();
+          updateRepeatCountBadge();
+
+          const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+          updateSyncUI('connected', '🟢 Synced (' + timeStr + ')', 'Cloud-Daten erfolgreich geladen (' + timeStr + ' Uhr).');
+        } else {
+          pushCloudData();
+        }
+      } catch (err) {
+        console.warn('Fehler beim Laden von Supabase:', err);
+        if (!silent) {
+          alert('Hinweis beim Laden aus Supabase: ' + (err.message || 'Bitte prüfen, ob die Tabelle m2_progress existiert.'));
+        }
+      }
+    }
 
     // ---------------- TIMER ----------------
     let timerDuration = 45 * 60;
@@ -1392,6 +2032,7 @@
 
               localStorage.setItem('m2_cal_state_v4', JSON.stringify(calendarState));
               renderCalendar();
+              triggerAutoSync();
             };
           }
 
@@ -1472,6 +2113,7 @@
       localStorage.setItem('m2_days_status_v4', JSON.stringify(dayStatus));
       updateGlobalProgress();
       renderDays();
+      triggerAutoSync();
     };
 
     window.toggleCardOpen = function(dayNumber) {
@@ -1493,6 +2135,7 @@
     window.handleCommentInput = function(dayNumber, text) {
       dayComments[dayNumber] = text;
       localStorage.setItem('m2_day_comments_v4', JSON.stringify(dayComments));
+      triggerAutoSync();
 
       const hint = document.getElementById('save-hint-' + dayNumber);
       if (hint) {
@@ -1535,6 +2178,7 @@
         dayQuizScores[dayNumber] = num;
       }
       localStorage.setItem('m2_quiz_scores_v1', JSON.stringify(dayQuizScores));
+      triggerAutoSync();
 
       const fb = getScoreFeedback(dayQuizScores[dayNumber]);
       const badge = document.getElementById('score-badge-' + dayNumber);
@@ -1563,6 +2207,7 @@
       localStorage.setItem('m2_repeat_flags_v1', JSON.stringify(dayRepeatFlags));
       updateRepeatCountBadge();
       renderDays();
+      triggerAutoSync();
     };
 
     function updateRepeatCountBadge() {
@@ -1720,6 +2365,7 @@ window.setFilter = function(filter) {
     renderDays();
     updateTimerUI();
     updateRepeatCountBadge();
+    initSupabase();
   </script>
 </body>
 </html>
